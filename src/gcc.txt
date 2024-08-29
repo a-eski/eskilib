@@ -1,6 +1,5 @@
 --COMPILER OPTIONS
 --fsanitize not supported on windows: must use WSL2 to use address sanitizer and check for undefined behavior. Also setup valgrind.
-gcc -std=c90 -Wall -pedantic-errors -fsanitize=address,undefined eskilib_DoublyLinkedList.c -o eskilib_DoublyLinkedList
 --check out these options some more!
 -Wall -Wextra -Werror -Wabi -Wformat=2
 -mmitigate-rop -Wstack-protector -fstack-protector-strong -fstack-clash-protection -pie -fPIE -D_FORTIFY_SOURCE=2 -Wl,-z,rel -Wl,dynamicbase -Wl,nxcompat
@@ -19,46 +18,46 @@ Improve stack tests, improve arraylist tests, Rework Linked List, implement Doub
 
 --Run all tests
 --Windows(MSYS2 MinGW GCC)
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL *.c -o eskilib_tests
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_arraylist_tests.c eskilib_hashtable_tests.c eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_arraylist.c eskilib_hashtable.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o eskilib_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL *.c -o build/eskilib_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_arraylist_tests.c eskilib_hashtable_tests.c eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_arraylist.c eskilib_hashtable.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o build/eskilib_tests
 --Linux(GCC)
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL *.c -o eskilib_tests
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_arraylist_tests.c eskilib_hashtable_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_arraylist.c eskilib_hashtable.c eskilib_error_handler.c -o eskilib_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL *.c -o build/eskilib_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_arraylist_tests.c eskilib_hashtable_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_arraylist.c eskilib_hashtable.c eskilib_error_handler.c -o build/eskilib_tests
 
 --HashTable (WIP)
 --Windows
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c eskilib_error_handler.c -o eskilib_hashtable_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c eskilib_error_handler.c -o build/eskilib_hashtable_tests
 --Linux
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c eskilib_error_handler.c -o eskilib_hashtable_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c eskilib_error_handler.c -o build/eskilib_hashtable_tests
 
 --DoublyLinkedList (WIP)
 --Windows
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o eskilib_doublylinkedlist_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o build/eskilib_doublylinkedlist_tests
 --Linux
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o eskilib_doublylinkedlist_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o build/eskilib_doublylinkedlist_tests
 
 --Queue
 --Windows
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o eskilib_queue_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o build/eskilib_queue_tests
 --Linux
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o eskilib_queue_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o build/eskilib_queue_tests
 
 --ArrayList (dynamic array implementation)
 --Windows
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_arraylist_tests.c eskilib_test.c eskilib_arraylist.c eskilib_error_handler.c -o eskilib_arraylist_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_arraylist_tests.c eskilib_test.c eskilib_arraylist.c eskilib_error_handler.c -o build/eskilib_arraylist_tests
 --Linux
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_arraylist_tests.c eskilib_test.c eskilib_arraylist.c eskilib_error_handler.c -o eskilib_arraylist_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_arraylist_tests.c eskilib_test.c eskilib_arraylist.c eskilib_error_handler.c -o build/eskilib_arraylist_tests
 
 --LinkedList (singly linked list implementation)
 --Windows
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_linkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_error_handler.c -o eskilib_linkedlist_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_linkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_error_handler.c -o build/eskilib_linkedlist_tests
 --Linux
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_linkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_error_handler.c -o eskilib_linkedlist_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_linkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_error_handler.c -o build/eskilib_linkedlist_tests
 
 --Stack
 --Windows
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o eskilib_stack_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o build/eskilib_stack_tests
 --Windows (Release)
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o eskilib_stack_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o build/eskilib_stack_tests
 --Linux
-gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o eskilib_stack_tests
+gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o build/eskilib_stack_tests
