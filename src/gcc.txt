@@ -21,6 +21,7 @@ Improve stack tests, improve list tests, Rework Linked List, implement Doubly Li
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL *.c -o build/eskilib_tests
 gcc -std=c89 -Wall -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL -DNDEBUG *.c -o build/eskilib_tests
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_list_tests.c eskilib_hashtable_tests.c eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_list.c eskilib_hashtable.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o build/eskilib_tests
+
 --Linux(GCC)
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -g *.c -o build/eskilib_tests
 gcc -std=c89 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -DNDEBUG -g *.c -o build/eskilib_tests
@@ -45,7 +46,7 @@ gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_queue_tes
 --Linux
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o build/eskilib_queue_tests
 
---List (dynamic  implementation)
+--List (dynamic array implementation)
 --Windows
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_list_tests.c eskilib_test.c eskilib_list.c eskilib_error_handler.c -o build/eskilib_list_tests
 gcc -std=c89 -Wall -pedantic-errors -Wformat=2 eskilib_list_tests.c eskilib_test.c -DNDEBUG eskilib_list.c eskilib_error_handler.c -o build/eskilib_list_tests
