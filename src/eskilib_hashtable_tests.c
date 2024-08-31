@@ -31,6 +31,11 @@ void eskilib_hashtable_allocate_test()
 
 	eskilib_hashtable_free(hashTable);
 }
+
+void eskilib_hashtable_release_tests()
+{
+}
+
 void eskilib_hashtable_tests()
 {
 	#ifdef NDEBUG
@@ -40,10 +45,6 @@ void eskilib_hashtable_tests()
 	eskilib_test_run("eskilib_hashtable_allocate_default_size_test", eskilib_hashtable_allocate_default_size_test);
 	
 	eskilib_test_run("eskilib_hashtable_allocate_test", eskilib_hashtable_allocate_test);
-}
-
-void eskilib_hashtable_release_tests()
-{
 }
 
 #ifndef ESKILIB_TEST_ALL
