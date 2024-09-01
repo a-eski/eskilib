@@ -19,14 +19,14 @@ eskilib_Stack* eskilib_stack_allocate(const size_t sizeOfStack, const size_t siz
 	if (stack == NULL)
 		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Stack.\n");
 
-	stack->Elements = malloc(sizeOfStack * sizeOfElements);
+	stack->elements = malloc(sizeOfStack * sizeOfElements);
 
-	if (stack->Elements == NULL)
+	if (stack->elements == NULL)
 		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Stack->Elements.\n");
 
-	stack->Top = 0;
-	stack->IsEmpty = true;
-	stack->Size = sizeOfStack;
+	stack->top = 0;
+	stack->isEmpty = true;
+	stack->size = sizeOfStack;
 
 	return stack;
 }
@@ -36,39 +36,39 @@ void* eskilib_stack_pop(eskilib_Stack* stack)
 	void* elementToPop = NULL;	
 
 	assert(stack != NULL);
-        if (stack == NULL || stack->IsEmpty == true)
+        if (stack == NULL || stack->isEmpty == true)
         	return NULL;
 
-        elementToPop = stack->Elements[stack->Top];
-	if (stack->Top >= 1)
-		stack->Top = stack->Top - 1;
+        elementToPop = stack->elements[stack->top];
+	if (stack->top >= 1)
+		stack->top = stack->top - 1;
 	else
-		stack->IsEmpty = true;	
+		stack->isEmpty = true;	
 
 	return elementToPop;
 }
 
-bool eskilib_stack_push(void* element, eskilib_Stack* stack)
+enum eskilib_Stack_Result eskilib_stack_push(void* element, eskilib_Stack* stack)
 {
 	assert(stack != NULL);
 	if (stack == NULL)
-		return false;
+		return FAILURE_NULL_STACK;
 
 	assert(element != NULL);
 	if (element == NULL)
-		return false;
+		return FAILURE_NULL_ELEMENT;
 
-	if (stack->Top >= SIZE_MAX - 1 || stack->Top > stack->Size)
-		return false;
+	if (stack->top >= SIZE_MAX - 1 || stack->top > stack->size)
+		return FAILURE_OVERFLOW_PROTECTION;
 
-	if (stack->Top == 0 && stack->IsEmpty == true)
-		stack->IsEmpty = false;
+	if (stack->top == 0 && stack->isEmpty == true)
+		stack->isEmpty = false;
 	else
-		stack->Top = stack->Top + 1;
+		stack->top = stack->top + 1;
 
-	stack->Elements[stack->Top] = element;
+	stack->elements[stack->top] = element;
 
-	return true;
+	return SUCCESS;
 }
 
 void eskilib_stack_free(eskilib_Stack* stack)
@@ -77,8 +77,8 @@ void eskilib_stack_free(eskilib_Stack* stack)
 	if (stack == NULL)
 		return;
 
-	free(stack->Elements);
-	stack->Elements = NULL;
+	free(stack->elements);
+	stack->elements = NULL;
 
 	free(stack);
 	stack = NULL;

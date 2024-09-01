@@ -47,27 +47,16 @@ void eskilib_list_free(eskilib_List* list)
 
 enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
 {
-	enum eskilib_List_Result result = FAILURE;
-
 	assert(list != NULL);
 	if (list == NULL)
-	{
-		result = FAILURE_NULL_LIST;
-		return result;
-	}
+		return FAILURE_NULL_LIST;
 
 	assert(element != NULL);
 	if (element == NULL)
-	{
-		result = FAILURE_NULL_ELEMENT;
-		return result;
-	}
+		return FAILURE_NULL_ELEMENT;
 
 	if (list->position > list->size || list->position == SIZE_MAX - 1)
-	{
-		result = FAILURE_OVERFLOW_PROTECTION;
-		return result;
-	}
+		return FAILURE_OVERFLOW_PROTECTION;
 
 	if (list->position == list->size)
 	{
@@ -82,6 +71,5 @@ enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
 
 	list->elements[list->position++] = element;
 
-	result = SUCCESS;
-	return result;
+	return SUCCESS;
 }
