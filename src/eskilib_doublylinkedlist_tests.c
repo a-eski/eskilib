@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include "eskilib_doublylinkedlist.h"
@@ -10,8 +9,8 @@ void eskilib_doublylinkedlist_allocate_test()
 	eskilib_DoublyLinkedList* linkedList = eskilib_doublylinkedlist_allocate();
 
 	assert(linkedList != NULL);
-	assert(linkedList->First == NULL);
-	assert(linkedList->Last == NULL);
+	assert(linkedList->first == NULL);
+	assert(linkedList->last == NULL);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
@@ -28,13 +27,13 @@ void eskilib_doublylinkedlist_set_first_empty_list_test()
 
 	eskilib_doublylinkedlist_set_first(node, linkedList);
 
-	assert(linkedList->First->Previous == NULL);
-	assert(linkedList->First == node);
-	assert(*(size_t*)linkedList->First->Value == value);
+	assert(linkedList->first->previous == NULL);
+	assert(linkedList->first == node);
+	assert(*(size_t*)linkedList->first->value == value);
 
-	assert(linkedList->Last == node);
-	assert(*(size_t*)linkedList->Last->Value == value);
-	assert(linkedList->Last->Next == NULL);
+	assert(linkedList->last == node);
+	assert(*(size_t*)linkedList->last->value == value);
+	assert(linkedList->last->next == NULL);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
@@ -56,15 +55,15 @@ void eskilib_doublylinkedlist_set_first_nonempty_list_test()
 	eskilib_doublylinkedlist_set_first(nodeOne, linkedList);
 	eskilib_doublylinkedlist_set_first(nodeTwo, linkedList);
 
-	assert(linkedList->First->Previous == NULL);
-	assert(linkedList->First == nodeTwo);
-	assert(linkedList->First->Next == nodeOne);
-	assert(*(size_t*)linkedList->First->Value == valueTwo);
+	assert(linkedList->first->previous == NULL);
+	assert(linkedList->first == nodeTwo);
+	assert(linkedList->first->next == nodeOne);
+	assert(*(size_t*)linkedList->first->value == valueTwo);
 
-	assert(linkedList->Last->Previous == nodeTwo);
-	assert(linkedList->Last == nodeOne);
-	assert(linkedList->Last->Next == NULL);
-	assert(*(size_t*)linkedList->Last->Value == valueOne);
+	assert(linkedList->last->previous == nodeTwo);
+	assert(linkedList->last == nodeOne);
+	assert(linkedList->last->next == NULL);
+	assert(*(size_t*)linkedList->last->value == valueOne);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
@@ -81,13 +80,13 @@ void eskilib_doublylinkedlist_set_last_empty_list_test()
 
 	eskilib_doublylinkedlist_set_last(node, linkedList);
 
-	assert(linkedList->First->Previous == NULL);
-	assert(linkedList->First == node);
-	assert(*(size_t*)linkedList->First->Value == value);
+	assert(linkedList->first->previous == NULL);
+	assert(linkedList->first == node);
+	assert(*(size_t*)linkedList->first->value == value);
 
-	assert(linkedList->Last == node);
-	assert(*(size_t*)linkedList->Last->Value == value);
-	assert(linkedList->Last->Next == NULL);
+	assert(linkedList->last == node);
+	assert(*(size_t*)linkedList->last->value == value);
+	assert(linkedList->last->next == NULL);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
@@ -108,15 +107,15 @@ void eskilib_doublylinkedlist_set_last_nonempty_list_test()
 	eskilib_doublylinkedlist_set_last(nodeOne, linkedList);
 	eskilib_doublylinkedlist_set_last(nodeTwo, linkedList);
 
-	assert(linkedList->First->Previous == NULL);
-	assert(linkedList->First == nodeOne);
-	assert(linkedList->First->Next == nodeTwo);
-	assert(*(size_t*)linkedList->First->Value == valueOne);
+	assert(linkedList->first->previous == NULL);
+	assert(linkedList->first == nodeOne);
+	assert(linkedList->first->next == nodeTwo);
+	assert(*(size_t*)linkedList->first->value == valueOne);
 
-	assert(linkedList->Last->Previous == nodeOne);
-	assert(linkedList->Last == nodeTwo);
-	assert(linkedList->Last->Next == NULL);
-	assert(*(size_t*)linkedList->Last->Value == valueTwo);
+	assert(linkedList->last->previous == nodeOne);
+	assert(linkedList->last == nodeTwo);
+	assert(linkedList->last->next == NULL);
+	assert(*(size_t*)linkedList->last->value == valueTwo);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
@@ -137,19 +136,19 @@ void eskilib_doublylinkedlist_set_after_single_entry_list_test()
 	eskilib_doublylinkedlist_set_first(currentNode, linkedList);
 	eskilib_doublylinkedlist_set_after(currentNode, nodeToSetAfter, linkedList);
 
-	assert(linkedList->First->Previous == NULL);
-	assert(linkedList->First == currentNode);
-	assert(linkedList->First->Next == nodeToSetAfter);
-	assert(*(size_t*)linkedList->First->Value == valueOne);
+	assert(linkedList->first->previous == NULL);
+	assert(linkedList->first == currentNode);
+	assert(linkedList->first->next == nodeToSetAfter);
+	assert(*(size_t*)linkedList->first->value == valueOne);
 
-	assert(nodeToSetAfter->Previous == currentNode);
-	assert(nodeToSetAfter->Next == NULL);
-	assert(*(size_t*)nodeToSetAfter->Value = valueTwo);
+	assert(nodeToSetAfter->previous == currentNode);
+	assert(nodeToSetAfter->next == NULL);
+	assert(*(size_t*)nodeToSetAfter->value = valueTwo);
 
-	assert(linkedList->Last->Previous == currentNode);
-	assert(linkedList->Last == nodeToSetAfter);
-	assert(linkedList->Last->Next == NULL);
-	assert(*(size_t*)linkedList->Last->Value == valueTwo);
+	assert(linkedList->last->previous == currentNode);
+	assert(linkedList->last == nodeToSetAfter);
+	assert(linkedList->last->next == NULL);
+	assert(*(size_t*)linkedList->last->value == valueTwo);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
@@ -174,26 +173,34 @@ void eskilib_doublylinkedlist_set_after_in_middle_of_list_test()
 	eskilib_doublylinkedlist_set_last(lastNode, linkedList);
 	eskilib_doublylinkedlist_set_after(firstNode, nodeToSetAfter, linkedList);
 
-	assert(linkedList->First->Previous == NULL);
-	assert(linkedList->First == firstNode);
-	assert(linkedList->First->Next == nodeToSetAfter);
-	assert(*(size_t*)linkedList->First->Value == valueOne);
+	assert(linkedList->first->previous == NULL);
+	assert(linkedList->first == firstNode);
+	assert(linkedList->first->next == nodeToSetAfter);
+	assert(*(size_t*)linkedList->first->value == valueOne);
 
-	assert(nodeToSetAfter->Previous = firstNode);
-	assert(*(size_t*)nodeToSetAfter->Value == valueTwo);
-	assert(nodeToSetAfter->Next = lastNode);
+	assert(nodeToSetAfter->previous = firstNode);
+	assert(*(size_t*)nodeToSetAfter->value == valueTwo);
+	assert(nodeToSetAfter->next = lastNode);
 	
-	assert(linkedList->Last == lastNode);
-	assert(linkedList->Last->Previous == nodeToSetAfter);
-	assert(linkedList->Last == lastNode);
-	assert(linkedList->Last->Next == NULL);
-	assert(*(size_t*)linkedList->Last->Value == valueThree);
+	assert(linkedList->last == lastNode);
+	assert(linkedList->last->previous == nodeToSetAfter);
+	assert(linkedList->last == lastNode);
+	assert(linkedList->last->next == NULL);
+	assert(*(size_t*)linkedList->last->value == valueThree);
 
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
+void eskilib_doublylinkedlist_release_tests()
+{
+}
+
 void eskilib_doublylinkedlist_tests()
 {
+	#ifdef NDEBUG
+		eskilib_doublylinkedlist_release_tests();	
+	#endif /* ifdef NDEBUG */
+
 	eskilib_test_run("eskilib_doublylinkedlist_allocate_test", eskilib_doublylinkedlist_allocate_test);
 
 	eskilib_test_run("eskilib_doublylinkedlist_set_first_empty_list_test", eskilib_doublylinkedlist_set_first_empty_list_test);

@@ -11,8 +11,8 @@ void eskilib_hashtable_allocate_default_size_test()
 	hashTable = eskilib_hashtable_allocate(0, sizeof(size_t*));
 
 	assert(hashTable != NULL);
-	assert(hashTable->Size > 0);
-	assert(hashTable->Entries != NULL);
+	assert(hashTable->size > 0);
+	assert(hashTable->entries != NULL);
 
 	eskilib_hashtable_free(hashTable);
 }
@@ -26,8 +26,8 @@ void eskilib_hashtable_allocate_test()
 	hashTable = eskilib_hashtable_allocate(size, sizeof(size_t*));
 
 	assert(hashTable != NULL);
-	assert(hashTable->Size == size);
-	assert(hashTable->Entries != NULL);
+	assert(hashTable->size == size);
+	assert(hashTable->entries != NULL);
 
 	eskilib_hashtable_free(hashTable);
 }

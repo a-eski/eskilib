@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <assert.h>
-#include <stdbool.h>
 #include "eskilib_error_handler.h"
 #include "eskilib_doublylinkedlist.h"
 
@@ -11,8 +10,8 @@ eskilib_DoublyLinkedList* eskilib_doublylinkedlist_allocate()
 	if (linkedList == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_DoublyLinkedList.\n");
 
-	linkedList->First = NULL;
-	linkedList->Last = NULL;
+	linkedList->first = NULL;
+	linkedList->last = NULL;
 
 	return linkedList;
 }
@@ -26,12 +25,12 @@ void eskilib_doublylinkedlist_free(eskilib_DoublyLinkedList* linkedList)
 	if (linkedList == NULL)
 		return;
 
-	currentNode = linkedList->First;
+	currentNode = linkedList->first;
 
 	while (currentNode != NULL)
 	{
 		previousNode = currentNode;
-		currentNode = currentNode->Next;	
+		currentNode = currentNode->next;	
 		free(previousNode);
 	}
 
@@ -51,98 +50,98 @@ eskilib_DoublyLinkedList_LinkedNode* eskilib_doublylinkedlist_linkednode_allocat
 	if (node == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_DoublyLinkedList_LinkedNode.\n");
 
-	node->Value = value;
-	node->Next = NULL;
-	node->Previous = NULL;
+	node->value = value;
+	node->next = NULL;
+	node->previous = NULL;
 
 	return node;
 }
 
-bool eskilib_doublylinkedlist_set_first(eskilib_DoublyLinkedList_LinkedNode* nodeToSetFirst, eskilib_DoublyLinkedList* linkedList)
+enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_first(eskilib_DoublyLinkedList_LinkedNode* nodeToSetFirst, eskilib_DoublyLinkedList* linkedList)
 {
 	eskilib_DoublyLinkedList_LinkedNode* temporaryNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL)
-		return false;
+		return FAILURE_NULL_LINKEDLIST;
 
 	assert(nodeToSetFirst != NULL);
 	if (nodeToSetFirst == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
-	assert(nodeToSetFirst->Next == NULL);
-	if (nodeToSetFirst->Next != NULL)
-		return false;
+	assert(nodeToSetFirst->next == NULL);
+	if (nodeToSetFirst->next != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
 
-	assert(nodeToSetFirst->Previous == NULL);
-	if (nodeToSetFirst->Previous != NULL)
-		return false;
+	assert(nodeToSetFirst->previous == NULL);
+	if (nodeToSetFirst->previous != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
 
-	if (linkedList->First == NULL)
+	if (linkedList->first == NULL)
 	{
-		linkedList->First = nodeToSetFirst;
-		linkedList->First->Previous = NULL;
-		linkedList->Last = nodeToSetFirst;
-		linkedList->Last->Next = NULL;
-		return true;
+		linkedList->first = nodeToSetFirst;
+		linkedList->first->previous = NULL;
+		linkedList->last = nodeToSetFirst;
+		linkedList->last->next = NULL;
+		return SUCCESS;
 	}
 
-	temporaryNode = linkedList->First;
-	linkedList->First = nodeToSetFirst;
-	linkedList->First->Next = temporaryNode;
-	linkedList->First->Previous = NULL;
+	temporaryNode = linkedList->first;
+	linkedList->first = nodeToSetFirst;
+	linkedList->first->next = temporaryNode;
+	linkedList->first->previous = NULL;
 
-	if (temporaryNode == linkedList->Last)
+	if (temporaryNode == linkedList->last)
 	{
-		linkedList->Last->Previous = nodeToSetFirst;		
+		linkedList->last->previous = nodeToSetFirst;		
 	}
 
-	return true;
+	return SUCCESS;
 }
 
-bool eskilib_doublylinkedlist_set_last(eskilib_DoublyLinkedList_LinkedNode* nodeToSetLast, eskilib_DoublyLinkedList* linkedList)
+enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_last(eskilib_DoublyLinkedList_LinkedNode* nodeToSetLast, eskilib_DoublyLinkedList* linkedList)
 {
 	eskilib_DoublyLinkedList_LinkedNode* temporaryNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL)
-		return false;
+		return FAILURE_NULL_LINKEDLIST;
 
 	assert(nodeToSetLast != NULL);
 	if (nodeToSetLast == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
-	assert(nodeToSetLast->Next == NULL);
-	if (nodeToSetLast->Next != NULL)
-		return false;
+	assert(nodeToSetLast->next == NULL);
+	if (nodeToSetLast->next != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
 
-	assert(nodeToSetLast->Previous == NULL);
-	if (nodeToSetLast->Previous != NULL)
-		return false;
+	assert(nodeToSetLast->previous == NULL);
+	if (nodeToSetLast->previous != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
 
-	if (linkedList->Last == NULL)
+	if (linkedList->last == NULL)
 	{
-		linkedList->First = nodeToSetLast;
-		linkedList->First->Previous = NULL;
-		linkedList->Last = nodeToSetLast;
-		linkedList->Last->Next = NULL;
-		return true;
+		linkedList->first = nodeToSetLast;
+		linkedList->first->previous = NULL;
+		linkedList->last = nodeToSetLast;
+		linkedList->last->next = NULL;
+		return SUCCESS;
 	}
 
-	temporaryNode = linkedList->Last;
-	linkedList->Last = nodeToSetLast;
-	linkedList->Last->Next = NULL;
-	linkedList->Last->Previous = temporaryNode;
+	temporaryNode = linkedList->last;
+	linkedList->last = nodeToSetLast;
+	linkedList->last->next = NULL;
+	linkedList->last->previous = temporaryNode;
 
-	if (temporaryNode == linkedList->First)
+	if (temporaryNode == linkedList->first)
 	{
-		linkedList->First->Next = nodeToSetLast;
+		linkedList->first->next = nodeToSetLast;
 	}
 
-	return true;
+	return SUCCESS;
 }
 
-bool eskilib_doublylinkedlist_set_after(eskilib_DoublyLinkedList_LinkedNode* currentNode,
+enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_after(eskilib_DoublyLinkedList_LinkedNode* currentNode,
 					eskilib_DoublyLinkedList_LinkedNode* nodeToSetAfter,
 					eskilib_DoublyLinkedList* linkedList)
 {
@@ -150,20 +149,28 @@ bool eskilib_doublylinkedlist_set_after(eskilib_DoublyLinkedList_LinkedNode* cur
 	
 	assert(currentNode != NULL);
 	if (currentNode == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
 	assert(nodeToSetAfter != NULL);
 	if (nodeToSetAfter == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
-	if (currentNode == linkedList->Last)
+	if (currentNode == linkedList->last)
 		return eskilib_doublylinkedlist_set_last(nodeToSetAfter, linkedList);
 
-	temporaryNode = currentNode->Next;
-	currentNode->Next = nodeToSetAfter;
-	nodeToSetAfter->Previous = currentNode;
-	nodeToSetAfter->Next = temporaryNode;
-	temporaryNode->Previous = nodeToSetAfter;
+	assert(nodeToSetAfter->next == NULL);
+	if (nodeToSetAfter->next != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
+
+	assert(nodeToSetAfter->previous == NULL);
+	if (nodeToSetAfter->previous != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
+
+	temporaryNode = currentNode->next;
+	currentNode->next = nodeToSetAfter;
+	nodeToSetAfter->previous = currentNode;
+	nodeToSetAfter->next = temporaryNode;
+	temporaryNode->previous = nodeToSetAfter;
 	
-	return true;
+	return SUCCESS;
 }

@@ -18,15 +18,15 @@ eskilib_Queue* eskilib_queue_allocate(const size_t sizeOfQueue, const size_t siz
 	if (queue == NULL)
 		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Queue.\n");
 
-	queue->Elements = malloc(sizeOfQueue * sizeOfElements);
+	queue->elements = malloc(sizeOfQueue * sizeOfElements);
 
-	if (queue->Elements == NULL)
-		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Queue->Elements.\n");
+	if (queue->elements == NULL)
+		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Queue->elements.\n");
 
-	queue->First = 0;
-	queue->Last = 0;
-	queue->Size = sizeOfQueue;
-	queue->IsEmpty = true;
+	queue->first = 0;
+	queue->last = 0;
+	queue->size = sizeOfQueue;
+	queue->isEmpty = true;
 
 	return queue;
 }
@@ -37,34 +37,34 @@ void eskilib_queue_free(eskilib_Queue* queue)
 	if (queue == NULL)
 		return;
 
-	free(queue->Elements);
-	queue->Elements = NULL;
+	free(queue->elements);
+	queue->elements = NULL;
 
 	free(queue);
 	queue = NULL;
 }
 
-bool eskilib_queue_enqueue(void* element, eskilib_Queue* queue)
+enum eskilib_Queue_Result eskilib_queue_enqueue(void* element, eskilib_Queue* queue)
 {
 	assert(queue != NULL);
 	if (queue == NULL)
-		return false;
+		return FAILURE_NULL_QUEUE;
 
 	assert(element != NULL);
 	if (element == NULL)
-		return false;
+		return FAILURE_NULL_ELEMENT;
 
-	if (queue->Last == INT64_MAX - 1)
-		return false;
+	if (queue->last == INT64_MAX - 1)
+		return FAILURE_OVERFLOW_PROTECTION;
 
-	if (queue->IsEmpty == true)
-		queue->IsEmpty = false;
+	if (queue->isEmpty == true)
+		queue->isEmpty = false;
 	else
-		queue->Last++;
+		queue->last++;
 
-	queue->Elements[queue->Last] = element;
+	queue->elements[queue->last] = element;
 
-	return true;
+	return SUCCESS;
 }
 
 void* eskilib_queue_dequeue(eskilib_Queue* queue)
@@ -75,19 +75,19 @@ void* eskilib_queue_dequeue(eskilib_Queue* queue)
 	if (queue == NULL)
 		return NULL;
 
-	if (queue->IsEmpty == true || queue->First > queue->Last)
+	if (queue->isEmpty == true || queue->first > queue->last)
 		return NULL;
 
-	elementToDequeue = queue->Elements[queue->First];
+	elementToDequeue = queue->elements[queue->first];
 
-	if (queue->First == queue->Last && queue->IsEmpty == false)
+	if (queue->first == queue->last && queue->isEmpty == false)
 	{
-		queue->IsEmpty = true;
+		queue->isEmpty = true;
 
 		return elementToDequeue;
 	}
 	
-	queue->First++;
+	queue->first++;
 
 	return elementToDequeue;
 }
