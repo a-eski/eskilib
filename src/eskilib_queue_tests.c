@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -14,10 +13,10 @@ void eskilib_queue_allocate_test()
 	queue = eskilib_queue_allocate(ESKILIB_TEST_QUEUE_SIZE, sizeof(size_t*));
 
 	assert(queue != NULL);
-	assert(queue->First == 0);
-	assert(queue->Last == 0);
-	assert(queue->IsEmpty == true);
-	assert(queue->Elements != NULL);
+	assert(queue->first == 0);
+	assert(queue->last == 0);
+	assert(queue->isEmpty == true);
+	assert(queue->elements != NULL);
 
 	eskilib_queue_free(queue);
 }
@@ -26,7 +25,7 @@ void eskilib_queue_enqueue_empty_queue_test()
 {
 	eskilib_Queue* queue = NULL;
 	size_t* value = NULL;
-	bool enqueueResult = false;
+	enum eskilib_Queue_Result enqueueResult = FAILURE;
 
 	value = malloc(sizeof(size_t));
 	*value = 1001;
@@ -35,11 +34,11 @@ void eskilib_queue_enqueue_empty_queue_test()
 
 	enqueueResult = eskilib_queue_enqueue(value, queue);
 
-	assert(enqueueResult == true);
-	assert(queue->First == 0);
-	assert(queue->Last == 0);
-	assert(queue->IsEmpty == false);
-	assert(*(size_t*)queue->Elements[0] == *value);
+	assert(enqueueResult == SUCCESS);
+	assert(queue->first == 0);
+	assert(queue->last == 0);
+	assert(queue->isEmpty == false);
+	assert(*(size_t*)queue->elements[0] == *value);
 
 	free(value);
 	eskilib_queue_free(queue);
@@ -48,8 +47,8 @@ void eskilib_queue_enqueue_empty_queue_test()
 void eskilib_queue_enqueue_nonempty_queue_test()
 {
 	eskilib_Queue* queue = NULL;
-	bool enqueueResultOne = false;
-	bool enqueueResultTwo = false;
+	enum eskilib_Queue_Result enqueueResultOne = FAILURE;
+	enum eskilib_Queue_Result enqueueResultTwo = FAILURE;
 	size_t* valueOne = malloc(sizeof(size_t));
 	size_t* valueTwo = malloc(sizeof(size_t));
 	*valueOne = 1001;
@@ -60,13 +59,13 @@ void eskilib_queue_enqueue_nonempty_queue_test()
 	enqueueResultOne = eskilib_queue_enqueue(valueOne, queue);
 	enqueueResultTwo = eskilib_queue_enqueue(valueTwo, queue);
 
-	assert(enqueueResultOne == true);
-	assert(enqueueResultTwo == true);
-	assert(queue->First == 0);
-	assert(queue->Last == 1);
-	assert(queue->IsEmpty == false);
-	assert(*(size_t*)queue->Elements[0] == *valueOne);
-	assert(*(size_t*)queue->Elements[1] == *valueTwo);
+	assert(enqueueResultOne == SUCCESS);
+	assert(enqueueResultTwo == SUCCESS);
+	assert(queue->first == 0);
+	assert(queue->last == 1);
+	assert(queue->isEmpty == false);
+	assert(*(size_t*)queue->elements[0] == *valueOne);
+	assert(*(size_t*)queue->elements[1] == *valueTwo);
 
 	free(valueOne);
 	free(valueTwo);
@@ -82,9 +81,9 @@ void eskilib_queue_dequeue_empty_queue_test()
 
 	result = eskilib_queue_dequeue(queue);
 
-	assert(queue->First == 0);
-	assert(queue->Last == 0);
-	assert(queue->IsEmpty == true);
+	assert(queue->first == 0);
+	assert(queue->last == 0);
+	assert(queue->isEmpty == true);
 	assert(result == NULL);
 
 	eskilib_queue_free(queue);
@@ -93,7 +92,7 @@ void eskilib_queue_dequeue_empty_queue_test()
 void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test()
 {
 	eskilib_Queue* queue = NULL;
-	bool enqueueResult = false;
+	enum eskilib_Queue_Result enqueueResult = FAILURE;
 	size_t* valueOne = NULL;
 	size_t* result = NULL;
 	
@@ -106,10 +105,10 @@ void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test()
 
 	result = eskilib_queue_dequeue(queue);
 
-	assert(enqueueResult == true);
-	assert(queue->First == 0);
-	assert(queue->Last == 0);
-	assert(queue->IsEmpty == true);
+	assert(enqueueResult == SUCCESS);
+	assert(queue->first == 0);
+	assert(queue->last == 0);
+	assert(queue->isEmpty == true);
 	assert(*result == *valueOne);
 
 	free(valueOne);
@@ -119,8 +118,8 @@ void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test()
 void eskilib_queue_dequeue_nonempty_queue_test()
 {
 	eskilib_Queue* queue = NULL;
-	bool enqueueResultOne = false;
-	bool enqueueResultTwo = false;
+	enum eskilib_Queue_Result enqueueResultOne = false;
+	enum eskilib_Queue_Result enqueueResultTwo = false;
 	size_t* valueOne = NULL;
 	size_t* valueTwo = NULL;
 	size_t* result = NULL;
@@ -137,11 +136,11 @@ void eskilib_queue_dequeue_nonempty_queue_test()
 	
 	result = eskilib_queue_dequeue(queue);
 
-	assert(enqueueResultOne == true);
-	assert(enqueueResultTwo == true);
-	assert(queue->First == 1);
-	assert(queue->Last == 1);
-	assert(queue->IsEmpty == false);
+	assert(enqueueResultOne == SUCCESS);
+	assert(enqueueResultTwo == SUCCESS);
+	assert(queue->first == 1);
+	assert(queue->last == 1);
+	assert(queue->isEmpty == false);
 	assert(*result == *valueOne);
 
 	free(valueOne);

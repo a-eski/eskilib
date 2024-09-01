@@ -4,20 +4,29 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+enum eskilib_Queue_Result
+{
+	FAILURE_OVERFLOW_PROTECTION = -3,
+	FAILURE_NULL_ELEMENT = -2,
+	FAILURE_NULL_QUEUE = -1,
+	FAILURE = 0,
+	SUCCESS = 1
+};
+
 typedef struct
 {
-	size_t First;
-	size_t Last;
-	size_t Size;
-	bool IsEmpty;
-	void** Elements;
+	size_t first;
+	size_t last;
+	size_t size;
+	bool isEmpty;
+	void** elements;
 } eskilib_Queue;
 
 eskilib_Queue* eskilib_queue_allocate(const size_t sizeOfQueue, const size_t sizeOfElements);
 
 void eskilib_queue_free(eskilib_Queue* queue);
 
-bool eskilib_queue_enqueue(void* element, eskilib_Queue* queue);
+enum eskilib_Queue_Result eskilib_queue_enqueue(void* element, eskilib_Queue* queue);
 
 void* eskilib_queue_dequeue(eskilib_Queue* queue);
 

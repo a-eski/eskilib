@@ -1,7 +1,6 @@
 #ifndef eskilib_list_h
 #define eskilib_list_h
 
-#include <stdbool.h>
 #include <stdint.h>
 
 enum eskilib_List_Result
