@@ -11,7 +11,7 @@ void eskilib_linkedlist_allocate_test()
 	linkedList = eskilib_linkedlist_allocate();
 
 	assert(linkedList != NULL);
-	assert(linkedList->First == NULL);
+	assert(linkedList->first == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -24,8 +24,8 @@ void eskilib_linkedlist_linkednode_allocate_test()
 	node = eskilib_linkedlist_linkednode_allocate(&value);
 
 	assert(node != NULL);
-	assert(value == *(size_t*)node->Value);
-	assert(node->Next == NULL);
+	assert(value == *(size_t*)node->value);
+	assert(node->next == NULL);
 
 	free(node);
 }
@@ -35,17 +35,17 @@ void eskilib_linkedlist_set_first_on_empty_linkedlist_test()
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
 	size_t value = 1001;
-	bool setFirstResult = false;
+	enum eskilib_LinkedList_Result setFirstResult = FAILURE;
 
 	linkedList = eskilib_linkedlist_allocate();
 	node = eskilib_linkedlist_linkednode_allocate(&value);
 
 	setFirstResult = eskilib_linkedlist_set_first(node, linkedList);
 
-	assert(setFirstResult);
-	assert(linkedList->First == node);
-	assert(linkedList->First->Value == node->Value);
-	assert(linkedList->First->Next == NULL);
+	assert(setFirstResult == SUCCESS);
+	assert(linkedList->first == node);
+	assert(linkedList->first->value == node->value);
+	assert(linkedList->first->next == NULL);
 	
 	eskilib_linkedlist_free(linkedList);
 }
@@ -57,8 +57,8 @@ void eskilib_linkedlist_set_first_on_nonempty_linkedlist_test()
 	eskilib_LinkedList_LinkedNode* nextNode = NULL;
 	size_t valueOne = 1001;
 	size_t valueTwo = 2002;
-	bool setFirstResultOne = false;
-	bool setFirstResultTwo = false;
+	enum eskilib_LinkedList_Result setFirstResultOne = FAILURE;
+	enum eskilib_LinkedList_Result setFirstResultTwo = FAILURE;
 
 	linkedList = eskilib_linkedlist_allocate();
 	node = eskilib_linkedlist_linkednode_allocate(&valueOne);
@@ -67,13 +67,13 @@ void eskilib_linkedlist_set_first_on_nonempty_linkedlist_test()
 	setFirstResultOne = eskilib_linkedlist_set_first(node, linkedList);
 	setFirstResultTwo = eskilib_linkedlist_set_first(nextNode, linkedList);
 
-	assert(setFirstResultOne == true);
-	assert(setFirstResultTwo == true);
-	assert(linkedList->First == nextNode);
-	assert(linkedList->First->Value == nextNode->Value);
-	assert(linkedList->First->Next == node);
-	assert(linkedList->First->Next->Value == node->Value);
-	assert(linkedList->First->Next->Next == NULL);
+	assert(setFirstResultOne == SUCCESS);
+	assert(setFirstResultTwo == SUCCESS);
+	assert(linkedList->first == nextNode);
+	assert(linkedList->first->value == nextNode->value);
+	assert(linkedList->first->next == node);
+	assert(linkedList->first->next->value == node->value);
+	assert(linkedList->first->next->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -83,16 +83,16 @@ void eskilib_linkedlist_set_last_on_empty_linkedlist_test()
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
 	size_t value = 1001;
-	bool setLastResult = false;
+	enum eskilib_LinkedList_Result setLastResult = FAILURE;
 
 	linkedList = eskilib_linkedlist_allocate();
 	node = eskilib_linkedlist_linkednode_allocate(&value);
 
 	setLastResult = eskilib_linkedlist_set_last(node, linkedList);
 
-	assert(setLastResult == true);
-	assert(value == *(size_t*)linkedList->First->Value);
-	assert(linkedList->First->Next == NULL);
+	assert(setLastResult == SUCCESS);
+	assert(value == *(size_t*)linkedList->first->value);
+	assert(linkedList->first->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -104,8 +104,8 @@ void eskilib_linkedlist_set_last_on_nonempty_linkedlist_test()
 	eskilib_LinkedList_LinkedNode* nextNode = NULL;
 	size_t valueOne = 1001;
 	size_t valueTwo = 2002;
-	bool setLastResultOne = false;
-	bool setLastResultTwo = false;
+	enum eskilib_LinkedList_Result setLastResultOne = FAILURE;
+	enum eskilib_LinkedList_Result setLastResultTwo = FAILURE;
 
 	linkedList = eskilib_linkedlist_allocate();
 	node = eskilib_linkedlist_linkednode_allocate(&valueOne);
@@ -114,13 +114,13 @@ void eskilib_linkedlist_set_last_on_nonempty_linkedlist_test()
 	setLastResultOne = eskilib_linkedlist_set_last(node, linkedList);
 	setLastResultTwo = eskilib_linkedlist_set_last(nextNode, linkedList);
 
-	assert(setLastResultOne == true);
-	assert(setLastResultTwo == true);
-	assert(linkedList->First == node);
-	assert(valueOne == *(size_t*)linkedList->First->Value);
-	assert(linkedList->First->Next == nextNode);
-	assert(valueTwo == *(size_t*)linkedList->First->Next->Value);
-	assert(linkedList->First->Next->Next == NULL);
+	assert(setLastResultOne == SUCCESS);
+	assert(setLastResultTwo == SUCCESS);
+	assert(linkedList->first == node);
+	assert(valueOne == *(size_t*)linkedList->first->value);
+	assert(linkedList->first->next == nextNode);
+	assert(valueTwo == *(size_t*)linkedList->first->next->value);
+	assert(linkedList->first->next->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -134,9 +134,9 @@ void eskilib_linkedlist_set_after_test()
 	size_t valueOne = 1001;
 	size_t valueTwo = 2002;
 	size_t valueThree = 3003;
-	bool setFirstResult = false;
-	bool setLastResult = false;
-	bool setAfterResult = false;
+	enum eskilib_LinkedList_Result setFirstResult = FAILURE;
+	enum eskilib_LinkedList_Result setLastResult = FAILURE;
+	enum eskilib_LinkedList_Result setAfterResult = FAILURE;
 
 	linkedList = eskilib_linkedlist_allocate();
 	node = eskilib_linkedlist_linkednode_allocate(&valueOne);
@@ -146,24 +146,32 @@ void eskilib_linkedlist_set_after_test()
 	setFirstResult = eskilib_linkedlist_set_first(node, linkedList);
 	setLastResult = eskilib_linkedlist_set_last(secondNode, linkedList);
 
-	setAfterResult = eskilib_linkedlist_set_after(linkedList->First, thirdNode);
+	setAfterResult = eskilib_linkedlist_set_after(linkedList->first, thirdNode);
 
-	assert(setFirstResult == true);
-	assert(setLastResult == true);
-	assert(setAfterResult == true);
-	assert(linkedList->First == node);
-	assert(valueOne == *(size_t*)linkedList->First->Value);
-	assert(linkedList->First->Next == thirdNode);
-	assert(valueThree == *(size_t*)linkedList->First->Next->Value);
-	assert(linkedList->First->Next->Next == secondNode);
-	assert(linkedList->First->Next->Next->Value);
-	assert(linkedList->First->Next->Next->Next == NULL);
+	assert(setFirstResult == SUCCESS);
+	assert(setLastResult == SUCCESS);
+	assert(setAfterResult == SUCCESS);
+	assert(linkedList->first == node);
+	assert(valueOne == *(size_t*)linkedList->first->value);
+	assert(linkedList->first->next == thirdNode);
+	assert(valueThree == *(size_t*)linkedList->first->next->value);
+	assert(linkedList->first->next->next == secondNode);
+	assert(linkedList->first->next->next->value);
+	assert(linkedList->first->next->next->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
 
+void eskilib_linkedlist_release_tests()
+{
+}
+
 void eskilib_linkedlist_tests()
 {
+	#ifdef NDEBUG
+		eskilib_linkedlist_release_tests();	
+	#endif /* ifdef NDEBUG */
+
 	eskilib_test_run("eskilib_linkedlist_allocate_test", eskilib_linkedlist_allocate_test);
 
 	eskilib_test_run("eskilib_linkedlist_linkednode_allocate_test", eskilib_linkedlist_linkednode_allocate_test);

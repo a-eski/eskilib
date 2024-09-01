@@ -164,8 +164,16 @@ void eskilib_stack_pop_multiple_test()
 	eskilib_stack_free(stack);
 }
 
+void eskilib_stack_release_tests()
+{
+}
+
 void eskilib_stack_tests()
 {
+	#ifdef NDEBUG
+		eskilib_stack_release_tests();
+	#endif /* ifdef NDEBUG */
+
 	eskilib_test_run("eskilib_stack_allocate_test", eskilib_stack_allocate_test);
 
 	eskilib_test_run("eskilib_stack_push_empty_stack_test", eskilib_stack_push_empty_stack_test);

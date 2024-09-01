@@ -192,8 +192,16 @@ void eskilib_doublylinkedlist_set_after_in_middle_of_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
+void eskilib_doublylinkedlist_release_tests()
+{
+}
+
 void eskilib_doublylinkedlist_tests()
 {
+	#ifdef NDEBUG
+		eskilib_doublylinkedlist_release_tests();	
+	#endif /* ifdef NDEBUG */
+
 	eskilib_test_run("eskilib_doublylinkedlist_allocate_test", eskilib_doublylinkedlist_allocate_test);
 
 	eskilib_test_run("eskilib_doublylinkedlist_set_first_empty_list_test", eskilib_doublylinkedlist_set_first_empty_list_test);

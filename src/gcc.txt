@@ -3,7 +3,7 @@
 --check out these options some more!
 -Wall -Wextra -Werror -Wabi -Wformat=2
 -mmitigate-rop -Wstack-protector -fstack-protector-strong -fstack-clash-protection -pie -fPIE -D_FORTIFY_SOURCE=2 -Wl,-z,rel -Wl,dynamicbase -Wl,nxcompat
--Wstrict-overflow -fno-strict-overflow -fwrapv
+-Wstrict-overflow -fno-strict-overflow -fwrapv -Wstrict-overflow=3
 --Debug Symbols
 -g
 --linux specific
@@ -25,6 +25,7 @@ gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_AL
 --Linux(GCC)
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL *.c -o build/eskilib_tests
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -g *.c -o build/eskilib_tests
+gcc -std=c89 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -DNDEBUG *.c -o build/eskilib_tests
 gcc -std=c89 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -DNDEBUG -g *.c -o build/eskilib_tests
 gcc -std=c89 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_list_tests.c eskilib_hashtable_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_list.c eskilib_hashtable.c eskilib_error_handler.c -o build/eskilib_tests
 valgrind --leak-check=yes ./build/eskilib_tests

@@ -148,8 +148,16 @@ void eskilib_queue_dequeue_nonempty_queue_test()
 	eskilib_queue_free(queue);
 }
 
+void eskilib_queue_release_tests()
+{
+}
+
 void eskilib_queue_tests()
 {
+	#ifdef NDEBUG
+		eskilib_queue_release_tests();	
+	#endif /* ifdef NDEBUG */
+
 	eskilib_test_run("eskilib_queue_allocate_test", eskilib_queue_allocate_test);
 
 	eskilib_test_run("eskilib_queue_enqueue_empty_queue_test", eskilib_queue_enqueue_empty_queue_test);

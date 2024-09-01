@@ -11,7 +11,7 @@ eskilib_LinkedList* eskilib_linkedlist_allocate()
 	if (linkedList == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_LinkedList.\n");
 
-	linkedList->First = NULL;
+	linkedList->first = NULL;
 
 	return linkedList;
 }
@@ -25,12 +25,12 @@ void eskilib_linkedlist_free(eskilib_LinkedList* linkedList)
 	if (linkedList == NULL)
 		return;
 
-	currentNode = linkedList->First;
+	currentNode = linkedList->first;
 
 	while (currentNode != NULL)
 	{
 		previousNode = currentNode;
-		currentNode = currentNode->Next;	
+		currentNode = currentNode->next;	
 		free(previousNode);
 	}
 
@@ -44,92 +44,92 @@ eskilib_LinkedList_LinkedNode* eskilib_linkedlist_linkednode_allocate(void* valu
 	if (node == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_LinkedList_LinkedNode.\n");
 
-	node->Value = value;
-	node->Next = NULL;
+	node->value = value;
+	node->next = NULL;
 
 	return node;
 }
 
-bool eskilib_linkedlist_set_first(eskilib_LinkedList_LinkedNode* nodeToSetFirst, eskilib_LinkedList* linkedList)
+enum eskilib_LinkedList_Result eskilib_linkedlist_set_first(eskilib_LinkedList_LinkedNode* nodeToSetFirst, eskilib_LinkedList* linkedList)
 {
 	eskilib_LinkedList_LinkedNode* temporaryNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL)
-		return false;
+		return FAILURE_NULL_LINKEDLIST;
 
 	assert(nodeToSetFirst != NULL);
 	if (nodeToSetFirst == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
-	assert(nodeToSetFirst->Next == NULL);
-	if (nodeToSetFirst->Next != NULL)
-		return false;
+	assert(nodeToSetFirst->next == NULL);
+	if (nodeToSetFirst->next != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
 
-	if (linkedList->First == NULL)
+	if (linkedList->first == NULL)
 	{
-		linkedList->First = nodeToSetFirst;
-		return true;
+		linkedList->first = nodeToSetFirst;
+		return SUCCESS;
 	}
 
-	temporaryNode = linkedList->First;
-	linkedList->First = nodeToSetFirst;
-	linkedList->First->Next = temporaryNode;
+	temporaryNode = linkedList->first;
+	linkedList->first = nodeToSetFirst;
+	linkedList->first->next = temporaryNode;
 
-	return true;
+	return SUCCESS;
 }
 
 /* Not recommended for use unless you have a really good reason, as it has to traverse the entire list to get to the end. */
-bool eskilib_linkedlist_set_last(eskilib_LinkedList_LinkedNode* nodeToSetLast, eskilib_LinkedList* linkedList)
+enum eskilib_LinkedList_Result eskilib_linkedlist_set_last(eskilib_LinkedList_LinkedNode* nodeToSetLast, eskilib_LinkedList* linkedList)
 {
 	eskilib_LinkedList_LinkedNode* currentNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL)
-		return false;
+		return FAILURE_NULL_LINKEDLIST;
 
 	assert(nodeToSetLast != NULL);
 	if (nodeToSetLast == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
-	assert(nodeToSetLast->Next == NULL);
-	if (nodeToSetLast->Next != NULL)
-		return false;
+	assert(nodeToSetLast->next == NULL);
+	if (nodeToSetLast->next != NULL)
+		return FAILURE_ALREADY_LINKED_NODE;
 
-	if (linkedList->First == NULL)
+	if (linkedList->first == NULL)
 	{
-		linkedList->First = nodeToSetLast;
-		return true;
+		linkedList->first = nodeToSetLast;
+		return SUCCESS;
 	}
 
-	currentNode = linkedList->First;
+	currentNode = linkedList->first;
 	
-	while (currentNode->Next != NULL)
+	while (currentNode->next != NULL)
 	{
-		currentNode = currentNode->Next;
+		currentNode = currentNode->next;
 	}
 
-	currentNode->Next = nodeToSetLast;
-	nodeToSetLast->Next = NULL;
+	currentNode->next = nodeToSetLast;
+	nodeToSetLast->next = NULL;
 
-	return true;
+	return SUCCESS;
 }
 
-bool eskilib_linkedlist_set_after(eskilib_LinkedList_LinkedNode* currentNode, eskilib_LinkedList_LinkedNode* nodeToSetAfter)
+enum eskilib_LinkedList_Result eskilib_linkedlist_set_after(eskilib_LinkedList_LinkedNode* currentNode, eskilib_LinkedList_LinkedNode* nodeToSetAfter)
 {
 	eskilib_LinkedList_LinkedNode* temporaryNode = NULL;
 
 	assert(currentNode != NULL);
 	if (currentNode == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
 	assert(nodeToSetAfter != NULL);
 	if (nodeToSetAfter == NULL)
-		return false;
+		return FAILURE_NULL_NODE;
 
-	temporaryNode = currentNode->Next;
-	currentNode->Next = nodeToSetAfter;
-	nodeToSetAfter->Next = temporaryNode;
+	temporaryNode = currentNode->next;
+	currentNode->next = nodeToSetAfter;
+	nodeToSetAfter->next = temporaryNode;
 
-	return true;
+	return SUCCESS;
 }
