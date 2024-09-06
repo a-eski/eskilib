@@ -1,0 +1,8 @@
+/* List (dynamic array implementation) */
+/* Windows */
+gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_list_tests.c ../eskilib_test.c ../eskilib_error_handler.c -o bin/eskilib_list_tests
+gcc -std=c99 -Wall -pedantic-errors -Wformat=2 eskilib_list_tests.c ../eskilib_test.c -DNDEBUG ../eskilib_error_handler.c -o bin/eskilib_list_tests
+/* Linux */
+gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_list_tests.c ../eskilib_test.c ../eskilib_error_handler.c -o bin/eskilib_list_tests
+gcc -std=c99 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DNDEBUG eskilib_list_tests.c ../eskilib_test.c ../eskilib_error_handler.c -o bin/eskilib_list_tests
+
