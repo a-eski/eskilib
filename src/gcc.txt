@@ -1,28 +1,28 @@
---COMPILER OPTIONS
---fsanitize not supported on windows: must use WSL2 to use address sanitizer and check for undefined behavior. Also setup valgrind.
---check out these options some more!
+/* COMPILER OPTIONS */
+/* fsanitize not supported on windows: must use WSL2 to use address sanitizer and check for undefined behavior. */
+/* check out these options some more! */
 -Wall -Wextra -Werror -Wabi -Wformat=2
 -mmitigate-rop -Wstack-protector -fstack-protector-strong -fstack-clash-protection -pie -fPIE -D_FORTIFY_SOURCE=2 -Wl,-z,rel -Wl,dynamicbase -Wl,nxcompat
 -Wstrict-overflow -fno-strict-overflow -fwrapv -Wstrict-overflow=3
---Debug Symbols
+/* Debug Symbols */
 -g
---linux specific
+/* linux specific */
 -lc (link c stdlib)
 -L/usr/lib -lc (link c stdlib using path)
 
---IDEAS
+/* IDEAS */
 Todos: Rope,Vector,Tree,Set,Arena Allocator,Search Algorithms,Sorting Algorithms
 
---NEXT
+/* NEXT */
 Improve stack tests, improve list tests, Rework Linked List, implement Doubly Linked List, implement Hash Table
 
---Run all tests
---Windows(MSYS2 MinGW GCC)
+/* Run all tests */
+/* Windows(MSYS2 MinGW GCC) */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL *.c -o bin/eskilib_tests
 gcc -std=c99 -Wall -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL -DNDEBUG *.c -o bin/eskilib_tests
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_list_tests.c eskilib_hashtable_tests.c eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_list.c eskilib_hashtable.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o bin/eskilib_tests
 
---Linux(GCC)
+/* Linux(GCC) */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL *.c -o bin/eskilib_tests
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -g *.c -o bin/eskilib_tests
 gcc -std=c99 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL -DNDEBUG *.c -o bin/eskilib_tests
@@ -30,42 +30,42 @@ gcc -std=c99 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DES
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DESKILIB_TEST_ALL eskilib_tests.c eskilib_linkedlist_tests.c eskilib_queue_tests.c eskilib_stack_tests.c eskilib_list_tests.c eskilib_hashtable_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_queue.c eskilib_stack.c eskilib_list.c eskilib_hashtable.c eskilib_error_handler.c -o bin/eskilib_tests
 valgrind --leak-check=yes ./bin/eskilib_tests
 
---HashTable (WIP)
---Windows
+/* HashTable (WIP) */
+/* Windows */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c eskilib_error_handler.c -o bin/eskilib_hashtable_tests
---Linux
+/* Linux */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c eskilib_error_handler.c -o bin/eskilib_hashtable_tests
 
---DoublyLinkedList (WIP)
---Windows
+/* DoublyLinkedList (WIP) */
+/* Windows */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o bin/eskilib_doublylinkedlist_tests
---Linux
+/* Linux */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_doublylinkedlist_tests.c eskilib_test.c eskilib_doublylinkedlist.c eskilib_error_handler.c -o bin/eskilib_doublylinkedlist_tests
 
---Queue
---Windows
+/* Queue */
+/* Windows */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o bin/eskilib_queue_tests
---Linux
+/* Linux */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_queue_tests.c eskilib_test.c eskilib_queue.c eskilib_error_handler.c -o bin/eskilib_queue_tests
 
---List (dynamic array implementation)
---Windows
+/* List (dynamic array implementation) */
+/* Windows */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_list_tests.c eskilib_test.c eskilib_list.c eskilib_error_handler.c -o bin/eskilib_list_tests
 gcc -std=c99 -Wall -pedantic-errors -Wformat=2 eskilib_list_tests.c eskilib_test.c -DNDEBUG eskilib_list.c eskilib_error_handler.c -o bin/eskilib_list_tests
---Linux
+/* Linux */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_list_tests.c eskilib_test.c eskilib_list.c eskilib_error_handler.c -o bin/eskilib_list_tests
 gcc -std=c99 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DNDEBUG eskilib_list_tests.c eskilib_test.c eskilib_list.c eskilib_error_handler.c -o bin/eskilib_list_tests
 
---LinkedList (singly linked list implementation)
---Windows
+/* LinkedList (singly linked list implementation) */
+/* Windows */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_linkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_error_handler.c -o bin/eskilib_linkedlist_tests
---Linux
+/* Linux */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_linkedlist_tests.c eskilib_test.c eskilib_linkedlist.c eskilib_error_handler.c -o bin/eskilib_linkedlist_tests
 
---Stack
---Windows
+/* Stack */
+/* Windows */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o bin/eskilib_stack_tests
---Windows (Release)
+/* Windows (Release) */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o bin/eskilib_stack_tests
---Linux
+/* Linux */
 gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_stack_tests.c eskilib_test.c eskilib_stack.c eskilib_error_handler.c -o bin/eskilib_stack_tests
