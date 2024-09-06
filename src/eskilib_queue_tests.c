@@ -5,7 +5,7 @@
 
 #define ESKILIB_TEST_QUEUE_SIZE 10
 
-void eskilib_queue_malloc_test()
+void eskilib_queue_malloc_test(void)
 {
 	eskilib_Queue* queue = NULL;
 
@@ -20,7 +20,7 @@ void eskilib_queue_malloc_test()
 	eskilib_queue_free(queue);
 }
 
-void eskilib_queue_enqueue_empty_queue_test()
+void eskilib_queue_enqueue_empty_queue_test(void)
 {
 	eskilib_Queue* queue = NULL;
 	size_t* value = NULL;
@@ -43,7 +43,7 @@ void eskilib_queue_enqueue_empty_queue_test()
 	eskilib_queue_free(queue);
 }
 
-void eskilib_queue_enqueue_nonempty_queue_test()
+void eskilib_queue_enqueue_nonempty_queue_test(void)
 {
 	eskilib_Queue* queue = NULL;
 	enum eskilib_Queue_Result enqueueResultOne = FAILURE;
@@ -71,7 +71,7 @@ void eskilib_queue_enqueue_nonempty_queue_test()
 	eskilib_queue_free(queue);
 }
 
-void eskilib_queue_dequeue_empty_queue_test()
+void eskilib_queue_dequeue_empty_queue_test(void)
 {
 	eskilib_Queue* queue = NULL;
 	size_t* result = NULL;
@@ -88,7 +88,7 @@ void eskilib_queue_dequeue_empty_queue_test()
 	eskilib_queue_free(queue);
 }
 
-void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test()
+void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test(void)
 {
 	eskilib_Queue* queue = NULL;
 	enum eskilib_Queue_Result enqueueResult = FAILURE;
@@ -114,7 +114,7 @@ void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test()
 	eskilib_queue_free(queue);
 }
 
-void eskilib_queue_dequeue_nonempty_queue_test()
+void eskilib_queue_dequeue_nonempty_queue_test(void)
 {
 	eskilib_Queue* queue = NULL;
 	enum eskilib_Queue_Result enqueueResultOne = false;
@@ -147,14 +147,14 @@ void eskilib_queue_dequeue_nonempty_queue_test()
 	eskilib_queue_free(queue);
 }
 
-void eskilib_queue_release_tests()
+void eskilib_queue_release_tests(void)
 {
 }
 
-void eskilib_queue_tests()
+void eskilib_queue_tests(void)
 {
 	#ifdef NDEBUG
-		eskilib_queue_release_tests();	
+		eskilib_queue_release_tests();
 	#endif /* ifdef NDEBUG */
 
 	eskilib_test_run("eskilib_queue_malloc_test", eskilib_queue_malloc_test);

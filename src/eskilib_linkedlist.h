@@ -22,7 +22,7 @@ typedef struct
 	eskilib_LinkedList_LinkedNode* first;
 } eskilib_LinkedList;
 
-eskilib_LinkedList* eskilib_linkedlist_malloc();
+eskilib_LinkedList* eskilib_linkedlist_malloc(void);
 
 void eskilib_linkedlist_free(eskilib_LinkedList* linkedList);
 

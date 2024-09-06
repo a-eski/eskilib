@@ -3,7 +3,7 @@
 #include "eskilib_hashtable.h"
 #include "eskilib_test.h"
 
-void eskilib_hashtable_malloc_default_size_test()
+void eskilib_hashtable_malloc_default_size_test(void)
 {
 	eskilib_HashTable* hashTable = NULL;
 
@@ -16,7 +16,7 @@ void eskilib_hashtable_malloc_default_size_test()
 	eskilib_hashtable_free(hashTable);
 }
 
-void eskilib_hashtable_malloc_test()
+void eskilib_hashtable_malloc_test(void)
 {
 	const size_t size = 16;
 
@@ -31,11 +31,11 @@ void eskilib_hashtable_malloc_test()
 	eskilib_hashtable_free(hashTable);
 }
 
-void eskilib_hashtable_release_tests()
+void eskilib_hashtable_release_tests(void)
 {
 }
 
-void eskilib_hashtable_tests()
+void eskilib_hashtable_tests(void)
 {
 	#ifdef NDEBUG
 		eskilib_hashtable_release_tests();	

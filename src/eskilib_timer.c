@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 
-void eskilib_time_function(char* function_name, void (*function)())
+void eskilib_time_function(char* function_name, void (*function)(void))
 {
 	clock_t startTime;
 	clock_t endTime;

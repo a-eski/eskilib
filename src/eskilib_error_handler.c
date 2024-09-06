@@ -7,7 +7,7 @@ void eskilib_output_allocation_error_and_exit(char* errorMessage)
 	exit(EXIT_FAILURE);
 }
 
-void eskilib_output_allocation_error_and_execute(char* errorMessage, void (*function)())
+void eskilib_output_allocation_error_and_execute(char* errorMessage, void (*function)(void))
 {
 	fprintf(stderr, "%s", errorMessage);
 	function();

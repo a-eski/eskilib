@@ -3,7 +3,7 @@
 #include "eskilib_test.h"
 #include "eskilib_linkedlist.h"
 
-void eskilib_linkedlist_malloc_test()
+void eskilib_linkedlist_malloc_test(void)
 {
 	eskilib_LinkedList* linkedList = NULL;
 
@@ -15,7 +15,7 @@ void eskilib_linkedlist_malloc_test()
 	eskilib_linkedlist_free(linkedList);
 }
 
-void eskilib_linkedlist_linkednode_malloc_test()
+void eskilib_linkedlist_linkednode_malloc_test(void)
 {
 	eskilib_LinkedList_LinkedNode* node = NULL;
 	size_t value = 1001;
@@ -29,7 +29,7 @@ void eskilib_linkedlist_linkednode_malloc_test()
 	free(node);
 }
 
-void eskilib_linkedlist_set_first_on_empty_linkedlist_test()
+void eskilib_linkedlist_set_first_on_empty_linkedlist_test(void)
 {
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
@@ -49,7 +49,7 @@ void eskilib_linkedlist_set_first_on_empty_linkedlist_test()
 	eskilib_linkedlist_free(linkedList);
 }
 
-void eskilib_linkedlist_set_first_on_nonempty_linkedlist_test()
+void eskilib_linkedlist_set_first_on_nonempty_linkedlist_test(void)
 {
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
@@ -77,7 +77,7 @@ void eskilib_linkedlist_set_first_on_nonempty_linkedlist_test()
 	eskilib_linkedlist_free(linkedList);
 }
 
-void eskilib_linkedlist_set_last_on_empty_linkedlist_test()
+void eskilib_linkedlist_set_last_on_empty_linkedlist_test(void)
 {
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
@@ -96,7 +96,7 @@ void eskilib_linkedlist_set_last_on_empty_linkedlist_test()
 	eskilib_linkedlist_free(linkedList);
 }
 
-void eskilib_linkedlist_set_last_on_nonempty_linkedlist_test()
+void eskilib_linkedlist_set_last_on_nonempty_linkedlist_test(void)
 {
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
@@ -124,7 +124,7 @@ void eskilib_linkedlist_set_last_on_nonempty_linkedlist_test()
 	eskilib_linkedlist_free(linkedList);
 }
 
-void eskilib_linkedlist_set_after_test()
+void eskilib_linkedlist_set_after_test(void)
 {
 	eskilib_LinkedList* linkedList = NULL;
 	eskilib_LinkedList_LinkedNode* node = NULL;
@@ -161,11 +161,11 @@ void eskilib_linkedlist_set_after_test()
 	eskilib_linkedlist_free(linkedList);
 }
 
-void eskilib_linkedlist_release_tests()
+void eskilib_linkedlist_release_tests(void)
 {
 }
 
-void eskilib_linkedlist_tests()
+void eskilib_linkedlist_tests(void)
 {
 	#ifdef NDEBUG
 		eskilib_linkedlist_release_tests();	

@@ -1,6 +1,8 @@
 #ifndef eskilib_hashtable_h
 #define eskilib_hashtable_h
 
+#include <stdlib.h>
+
 enum eskilib_HashTable_Result
 {
 	FAILURE_ZERO_KEY_VALUE = -4,

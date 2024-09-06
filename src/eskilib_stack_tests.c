@@ -6,7 +6,7 @@
 
 #define ESKILIB_TEST_STACK_SIZE 10
 
-void eskilib_stack_malloc_test()
+void eskilib_stack_malloc_test(void)
 {
 	eskilib_Stack* stack = NULL;
 
@@ -19,7 +19,7 @@ void eskilib_stack_malloc_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_push_empty_stack_test()
+void eskilib_stack_push_empty_stack_test(void)
 {
 	eskilib_Stack* stack = NULL;
 	size_t* element = NULL;
@@ -41,7 +41,7 @@ void eskilib_stack_push_empty_stack_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_push_nonempty_stack_test()
+void eskilib_stack_push_nonempty_stack_test(void)
 {
 	eskilib_Stack* stack = NULL;
 	size_t* elementOne = NULL;
@@ -75,7 +75,7 @@ void eskilib_stack_push_nonempty_stack_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_push_full_stack_test()
+void eskilib_stack_push_full_stack_test(void)
 {
 	eskilib_Stack* stack = NULL;
 	size_t* element = NULL;
@@ -97,7 +97,7 @@ void eskilib_stack_push_full_stack_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_pop_empty_stack_test()
+void eskilib_stack_pop_empty_stack_test(void)
 {
 	eskilib_Stack* stack = NULL;
 	void* poppedElement = NULL;
@@ -113,7 +113,7 @@ void eskilib_stack_pop_empty_stack_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_pop_test()
+void eskilib_stack_pop_test(void)
 {
 	eskilib_Stack* stack = NULL;
 	size_t element = 1001;
@@ -132,7 +132,7 @@ void eskilib_stack_pop_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_pop_multiple_test()
+void eskilib_stack_pop_multiple_test(void)
 {
 	eskilib_Stack* stack = NULL;
 	size_t elementOne = 1001;
@@ -163,11 +163,11 @@ void eskilib_stack_pop_multiple_test()
 	eskilib_stack_free(stack);
 }
 
-void eskilib_stack_release_tests()
+void eskilib_stack_release_tests(void)
 {
 }
 
-void eskilib_stack_tests()
+void eskilib_stack_tests(void)
 {
 	#ifdef NDEBUG
 		eskilib_stack_release_tests();

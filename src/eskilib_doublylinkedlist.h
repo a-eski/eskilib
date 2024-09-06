@@ -24,7 +24,7 @@ typedef struct
 	eskilib_DoublyLinkedList_LinkedNode* last;
 } eskilib_DoublyLinkedList;
 
-eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc();
+eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc(void);
 
 void eskilib_doublylinkedlist_free(eskilib_DoublyLinkedList* linkedList);
 

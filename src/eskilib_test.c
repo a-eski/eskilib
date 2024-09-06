@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void eskilib_test_run(char* function_name, void (*function)())
+void eskilib_test_run(char* function_name, void (*function)(void))
 {
 	printf("\x1B[37m%s started.\n", function_name);
 
