@@ -24,11 +24,11 @@ typedef struct
 	eskilib_DoublyLinkedList_LinkedNode* last;
 } eskilib_DoublyLinkedList;
 
-eskilib_DoublyLinkedList* eskilib_doublylinkedlist_allocate();
+eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc();
 
 void eskilib_doublylinkedlist_free(eskilib_DoublyLinkedList* linkedList);
 
-eskilib_DoublyLinkedList_LinkedNode* eskilib_doublylinkedlist_linkednode_allocate(void* value);
+eskilib_DoublyLinkedList_LinkedNode* eskilib_doublylinkedlist_linkednode_malloc(void* value);
 
 enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_first(eskilib_DoublyLinkedList_LinkedNode* nodeToSetFirst, eskilib_DoublyLinkedList* linkedList);
 

@@ -5,7 +5,7 @@
 
 #define ESKILIB_HASHTABLE_DEFAULT_SIZE 100
 
-eskilib_HashTable* eskilib_hashtable_allocate(const size_t sizeOfHashTable, const size_t sizeOfValues)
+eskilib_HashTable* eskilib_hashtable_malloc(const size_t sizeOfHashTable, const size_t sizeOfValues)
 {
 	eskilib_HashTable* hashtable = NULL;
 	size_t hashTableSize = 0;

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 enum eskilib_Stack_Result
 {
@@ -21,7 +22,7 @@ typedef struct
 	void** elements;
 } eskilib_Stack;
 
-eskilib_Stack* eskilib_stack_allocate(const size_t sizeOfStack, const size_t sizeOfElements);
+eskilib_Stack* eskilib_stack_malloc(const size_t sizeOfStack, const size_t sizeOfElements);
 
 void* eskilib_stack_pop(eskilib_Stack* stack);
 

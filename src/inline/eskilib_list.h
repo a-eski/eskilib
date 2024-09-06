@@ -1,19 +1,41 @@
-#include <stdlib.h>
+#ifndef eskilib_list_h
+#define eskilib_list_h
+
+#include <stdint.h>
 #include <assert.h>
+#include <stdlib.h>
 #include "eskilib_error_handler.h"
-#include "eskilib_list.h"
 
 #define ESKILIB_LIST_DEFAULT_SIZE 8
 
-eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfElements)
+enum eskilib_List_Result
+{
+	FAILURE_OVERFLOW_PROTECTION = -3,
+	FAILURE_NULL_ELEMENT = -2,
+	FAILURE_NULL_LIST = -1,
+	FAILURE = 0,
+	SUCCESS = 1
+};
+
+#endif /* !eskilib_list_h */
+
+#ifndef eskilib_List_TYPE
+#error "eskilib_List_TYPE must be defined";
+#endif // !eskilib_List_TYPE
+
+typedef struct eskilib_List eskilib_List;
+struct eskilib_List
+{
+	size_t size;
+	size_t position;
+	eskilib_List_TYPE* elements;
+};
+
+static inline eskilib_List* eskilib_list_malloc(const size_t sizeOfList)
 {
 	eskilib_List* list = NULL;
 	size_t listSize = 0;
 
-	assert(sizeOfElements != 0);
-	if (sizeOfElements == 0)
-		return NULL;
-	
 	list = malloc(sizeof(eskilib_List));
 
 	if (list == NULL)
@@ -21,7 +43,7 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfEl
 
 	listSize = sizeOfList == 0 ? ESKILIB_LIST_DEFAULT_SIZE : sizeOfList;
 
-	list->elements = malloc(listSize * sizeOfElements);
+	list->elements = malloc(listSize * sizeof(eskilib_List_TYPE));
 
 	if (list->elements == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List->elements.\n");
@@ -32,7 +54,7 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfEl
 	return list;
 }
 
-void eskilib_list_free(eskilib_List* list)
+static inline void eskilib_list_free(eskilib_List* list)
 {
 	assert(list != NULL);
 	if (list == NULL)
@@ -45,15 +67,11 @@ void eskilib_list_free(eskilib_List* list)
 	list = NULL;
 }
 
-enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
+static inline enum eskilib_List_Result eskilib_list_add(eskilib_List_TYPE element, eskilib_List* list)
 {
 	assert(list != NULL);
 	if (list == NULL)
 		return FAILURE_NULL_LIST;
-
-	assert(element != NULL);
-	if (element == NULL)
-		return FAILURE_NULL_ELEMENT;
 
 	if (list->position > list->size || list->position == SIZE_MAX - 1)
 		return FAILURE_OVERFLOW_PROTECTION;
@@ -73,3 +91,6 @@ enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
 
 	return SUCCESS;
 }
+
+#undef eskilib_List_TYPE
+
