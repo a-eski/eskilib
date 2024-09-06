@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <assert.h>
 #include "eskilib_list.h"
 #include "eskilib_test.h"
 
@@ -9,53 +8,41 @@ void eskilib_list_malloc_no_sizeOfElement_set_test()
 	
 	list = eskilib_list_malloc(0, 0); 
 	
-	assert(list == NULL);
+	eskilib_assert(list == NULL);
 }
 
 void eskilib_list_malloc_default_size_test()
 {
 	eskilib_List* list = NULL;
-	size_t* element = NULL;
-
-	element = malloc(sizeof(element));
-	*element = 1001;
 	
-	list = eskilib_list_malloc(0, sizeof(element));
+	list = eskilib_list_malloc(0, sizeof(size_t));
 	
-	assert(list != NULL);
-	assert(list->elements != NULL);
-	assert(list->size > 0);/*just check greater than 0 so we don't depend on default size.*/
-	assert(list->position == 0);
+	eskilib_assert(list != NULL);
+	eskilib_assert(list->elements != NULL);
+	eskilib_assert(list->size > 0);/*just check greater than 0 so we don't depend on default size.*/
+	eskilib_assert(list->position == 0);
 
-	free(element);
 	eskilib_list_free(list);
 }
 
 void eskilib_list_malloc_nondefault_size_test()
 {
 	const size_t size = 16;
-
 	eskilib_List* list = NULL;
-	size_t* element = NULL;
-
-	element = malloc(sizeof(element));
-	*element = 1001;
 	
-	list = eskilib_list_malloc(size, sizeof(element));
+	list = eskilib_list_malloc(size, sizeof(size_t));
 	
-	assert(list != NULL);
-	assert(list->elements != NULL);
-	assert(list->size == size);
-	assert(list->position == 0);
+	eskilib_assert(list != NULL);
+	eskilib_assert(list->elements != NULL);
+	eskilib_assert(list->size == size);
+	eskilib_assert(list->position == 0);
 
-	free(element);
 	eskilib_list_free(list);
 }
 
 void eskilib_list_add_null_element_test()
 {
 	const size_t size = 16;
-
 	eskilib_List* list = NULL;
 	enum eskilib_List_Result addResult = FAILURE;
 	
@@ -63,8 +50,8 @@ void eskilib_list_add_null_element_test()
 
 	addResult = eskilib_list_add(NULL, list);
 	
-	assert(addResult == FAILURE_NULL_ELEMENT);
-	assert(list->position == 0);
+	eskilib_assert(addResult == FAILURE_NULL_ELEMENT);
+	eskilib_assert(list->position == 0);
 
 	eskilib_list_free(list);
 }
@@ -72,7 +59,6 @@ void eskilib_list_add_null_element_test()
 void eskilib_list_add_null_list_test()
 {
 	const size_t value = 1001;
-
 	size_t* element = NULL;
 	enum eskilib_List_Result addResult = FAILURE;
 
@@ -81,7 +67,7 @@ void eskilib_list_add_null_list_test()
 
 	addResult = eskilib_list_add(element, NULL);
 	
-	assert(addResult == FAILURE_NULL_LIST);
+	eskilib_assert(addResult == FAILURE_NULL_LIST);
 
 	free(element);
 }
@@ -102,11 +88,11 @@ void eskilib_list_add_one_element_test()
 
 	addResult = eskilib_list_add(element, list);
 	
-	assert(addResult == SUCCESS);
+	eskilib_assert(addResult == SUCCESS);
 	element = list->elements[0];
-	assert(*element == value);
-	assert(list->size == size);
-	assert(list->position == 1);
+	eskilib_assert(*element == value);
+	eskilib_assert(list->size == size);
+	eskilib_assert(list->position == 1);
 
 	free(element);
 	eskilib_list_free(list);
@@ -135,20 +121,20 @@ void eskilib_list_add_until_size_expanded_test()
 	List = eskilib_list_malloc(size, sizeof(elementOne));
 
 	addResult = eskilib_list_add(elementOne, List);
-	assert(addResult == SUCCESS);
+	eskilib_assert(addResult == SUCCESS);
 	addResult = eskilib_list_add(elementTwo, List);
-	assert(addResult == SUCCESS);
+	eskilib_assert(addResult == SUCCESS);
 	addResult = eskilib_list_add(elementThree, List);
-	assert(addResult == SUCCESS);
+	eskilib_assert(addResult == SUCCESS);
 	
 	elementOne = List->elements[0];
-	assert(*elementOne == valueOne);
+	eskilib_assert(*elementOne == valueOne);
 	elementTwo = List->elements[1];
-	assert(*elementTwo == valueTwo);
+	eskilib_assert(*elementTwo == valueTwo);
 	elementThree = List->elements[2];
-	assert(*elementThree == valueThree);
-	assert(List->size == size * 2);
-	assert(List->position == 3);
+	eskilib_assert(*elementThree == valueThree);
+	eskilib_assert(List->size == size * 2);
+	eskilib_assert(List->position == 3);
 
 	free(elementOne);
 	free(elementTwo);

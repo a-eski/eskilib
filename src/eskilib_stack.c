@@ -5,7 +5,7 @@
 #include "eskilib_error_handler.h"
 #include "eskilib_stack.h"
 
-eskilib_Stack* eskilib_stack_allocate(const size_t sizeOfStack, const size_t sizeOfElements)
+eskilib_Stack* eskilib_stack_malloc(const size_t sizeOfStack, const size_t sizeOfElements)
 {
 	eskilib_Stack* stack = NULL;
 	

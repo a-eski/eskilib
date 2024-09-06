@@ -24,7 +24,7 @@ typedef struct
 	eskilib_HashTable_Entry* entries;
 } eskilib_HashTable;
 
-eskilib_HashTable* eskilib_hashtable_allocate(const size_t sizeOfHashTable, const size_t sizeOfValues);
+eskilib_HashTable* eskilib_hashtable_malloc(const size_t sizeOfHashTable, const size_t sizeOfValues);
 
 void eskilib_hashtable_free(eskilib_HashTable* hashtable);
 

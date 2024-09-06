@@ -22,11 +22,11 @@ typedef struct
 	eskilib_LinkedList_LinkedNode* first;
 } eskilib_LinkedList;
 
-eskilib_LinkedList* eskilib_linkedlist_allocate();
+eskilib_LinkedList* eskilib_linkedlist_malloc();
 
 void eskilib_linkedlist_free(eskilib_LinkedList* linkedList);
 
-eskilib_LinkedList_LinkedNode* eskilib_linkedlist_linkednode_allocate(void* value);
+eskilib_LinkedList_LinkedNode* eskilib_linkedlist_linkednode_malloc(void* value);
 
 enum eskilib_LinkedList_Result eskilib_linkedlist_set_first(eskilib_LinkedList_LinkedNode* nodeToSetFirst, eskilib_LinkedList* linkedList);
 

@@ -4,7 +4,7 @@
 #include "eskilib_error_handler.h"
 #include "eskilib_linkedlist.h"
 
-eskilib_LinkedList* eskilib_linkedlist_allocate()
+eskilib_LinkedList* eskilib_linkedlist_malloc()
 {
 	eskilib_LinkedList* linkedList = malloc(sizeof(eskilib_LinkedList));
 
@@ -37,7 +37,7 @@ void eskilib_linkedlist_free(eskilib_LinkedList* linkedList)
 	free(linkedList);
 }
 
-eskilib_LinkedList_LinkedNode* eskilib_linkedlist_linkednode_allocate(void* value)
+eskilib_LinkedList_LinkedNode* eskilib_linkedlist_linkednode_malloc(void* value)
 {
 	eskilib_LinkedList_LinkedNode* node = malloc(sizeof(eskilib_LinkedList_LinkedNode));
 	

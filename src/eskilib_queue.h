@@ -2,6 +2,7 @@
 #define eskilib_queue_h
 
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 enum eskilib_Queue_Result
@@ -22,7 +23,7 @@ typedef struct
 	void** elements;
 } eskilib_Queue;
 
-eskilib_Queue* eskilib_queue_allocate(const size_t sizeOfQueue, const size_t sizeOfElements);
+eskilib_Queue* eskilib_queue_malloc(const size_t sizeOfQueue, const size_t sizeOfElements);
 
 void eskilib_queue_free(eskilib_Queue* queue);
 

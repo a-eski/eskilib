@@ -4,7 +4,7 @@
 #include "eskilib_queue.h"
 #include "eskilib_error_handler.h"
 
-eskilib_Queue* eskilib_queue_allocate(const size_t sizeOfQueue, const size_t sizeOfElements)
+eskilib_Queue* eskilib_queue_malloc(const size_t sizeOfQueue, const size_t sizeOfElements)
 {
 	eskilib_Queue* queue = NULL;
 
