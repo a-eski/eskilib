@@ -3,7 +3,7 @@
 #include "eskilib_error_handler.h"
 #include "eskilib_doublylinkedlist.h"
 
-eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc()
+eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc(void)
 {
 	eskilib_DoublyLinkedList* linkedList = malloc(sizeof(eskilib_DoublyLinkedList));
 

@@ -3,7 +3,7 @@
 #include "eskilib_doublylinkedlist.h"
 #include "eskilib_test.h"
 
-void eskilib_doublylinkedlist_malloc_test()
+void eskilib_doublylinkedlist_malloc_test(void)
 {
 	eskilib_DoublyLinkedList* linkedList = eskilib_doublylinkedlist_malloc();
 
@@ -14,7 +14,7 @@ void eskilib_doublylinkedlist_malloc_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_set_first_empty_list_test()
+void eskilib_doublylinkedlist_set_first_empty_list_test(void)
 {
 
 	eskilib_DoublyLinkedList* linkedList = NULL;
@@ -37,7 +37,7 @@ void eskilib_doublylinkedlist_set_first_empty_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_set_first_nonempty_list_test()
+void eskilib_doublylinkedlist_set_first_nonempty_list_test(void)
 {
 
 	eskilib_DoublyLinkedList* linkedList = NULL;
@@ -67,7 +67,7 @@ void eskilib_doublylinkedlist_set_first_nonempty_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_set_last_empty_list_test()
+void eskilib_doublylinkedlist_set_last_empty_list_test(void)
 {
 
 	eskilib_DoublyLinkedList* linkedList = NULL;
@@ -90,7 +90,7 @@ void eskilib_doublylinkedlist_set_last_empty_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_set_last_nonempty_list_test()
+void eskilib_doublylinkedlist_set_last_nonempty_list_test(void)
 {
 	eskilib_DoublyLinkedList* linkedList = NULL;
 	eskilib_DoublyLinkedList_LinkedNode* nodeOne = NULL;
@@ -119,7 +119,7 @@ void eskilib_doublylinkedlist_set_last_nonempty_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_set_after_single_entry_list_test()
+void eskilib_doublylinkedlist_set_after_single_entry_list_test(void)
 {
 	eskilib_DoublyLinkedList* linkedList = NULL;
 	eskilib_DoublyLinkedList_LinkedNode* currentNode = NULL;
@@ -152,7 +152,7 @@ void eskilib_doublylinkedlist_set_after_single_entry_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_set_after_in_middle_of_list_test()
+void eskilib_doublylinkedlist_set_after_in_middle_of_list_test(void)
 {
 	eskilib_DoublyLinkedList* linkedList = NULL;
 	eskilib_DoublyLinkedList_LinkedNode* firstNode = NULL;
@@ -190,11 +190,11 @@ void eskilib_doublylinkedlist_set_after_in_middle_of_list_test()
 	eskilib_doublylinkedlist_free(linkedList);
 }
 
-void eskilib_doublylinkedlist_release_tests()
+void eskilib_doublylinkedlist_release_tests(void)
 {
 }
 
-void eskilib_doublylinkedlist_tests()
+void eskilib_doublylinkedlist_tests(void)
 {
 	#ifdef NDEBUG
 		eskilib_doublylinkedlist_release_tests();	
