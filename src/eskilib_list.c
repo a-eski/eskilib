@@ -14,14 +14,14 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfEl
 	if (sizeOfElements == 0)
 		return NULL;
 	
-	list = malloc(sizeof(eskilib_List));
+	list = (eskilib_List*)malloc(sizeof(eskilib_List));
 
 	if (list == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List.\n");
 
 	listSize = sizeOfList == 0 ? ESKILIB_LIST_DEFAULT_SIZE : sizeOfList;
 
-	list->elements = malloc(listSize * sizeOfElements);
+	list->elements = (void**)malloc(listSize * sizeOfElements);
 
 	if (list->elements == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List->elements.\n");
@@ -61,7 +61,7 @@ enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
 	if (list->position == list->size)
 	{
 		list->size *= 2;
-		list->elements = realloc(list->elements, list->size * sizeof(element));
+		list->elements = (void**)realloc(list->elements, list->size * sizeof(element));
 
 		if (list->elements == NULL)
 		{
