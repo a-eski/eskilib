@@ -3,7 +3,4 @@
 gcc -std=c99 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DNDEBUG tests/eskilib_list_tests.c tests/eskilib_list_struct_tests.c tests/eskilib_list_value_tests.c ../eskilib_test.c ../eskilib_error_handler.c -o bin/eskilib_list_tests
 clang -std=c99 -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined -DNDEBUG tests/eskilib_list_tests.c tests/eskilib_list_struct_tests.c tests/eskilib_list_value_tests.c ../eskilib_test.c ../eskilib_error_handler.c -o bin/eskilib_list_tests
 
-/* Queue */
-gcc -std=c99 -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined tests/eskilib_queue_tests.c ../eskilib_test.c ../eskilib_error_handler.c -o bin/eskilib_queue_tests
-
 
