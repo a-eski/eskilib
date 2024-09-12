@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#define eskilib_assert(condition) if (!(condition)) printf("%s condition failed on line %d", __func__, __LINE__);
+#define eskilib_assert(condition) if (!(condition)) printf("%s condition failed on line %d\n", __func__, __LINE__);
 
 void eskilib_test_run(const char* function_name, void (*function)(void));
 
