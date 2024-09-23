@@ -10,12 +10,16 @@ char* eskilib_string_copy(char* dest, char* source, const uint_fast32_t maxBuffe
 	return (originalStringToSave);
 }
 
-int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint_fast32_t maxBufferSize) {
+bool eskilib_string_equals(char* stringOne, char* stringTwo, const uint_fast32_t maxStringSize) {
+	return eskilib_string_compare(stringOne, stringTwo, maxStringSize) == 0;
+}
+
+int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint_fast32_t maxStringSize) {
 	const unsigned char *p1 = (const unsigned char*)stringOne;
 	const unsigned char *p2 = (const unsigned char*)stringTwo;
 
-	for (uint_fast32_t i = 0; i <= maxBufferSize && *p1 && *p1 == *p2; i++) {
-		if (i == maxBufferSize)
+	for (uint_fast32_t i = 0; i <= maxStringSize && *p1 && *p1 == *p2; i++) {
+		if (i == maxStringSize)
 			return -1;
 		
 		++p1, ++p2;
