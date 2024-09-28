@@ -36,7 +36,7 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList)
 {
 	eskilib_List* list = NULL;
 	size_t listSize = 0;
-	
+
 	list = malloc(sizeof(eskilib_List));
 
 	if (list == NULL)
