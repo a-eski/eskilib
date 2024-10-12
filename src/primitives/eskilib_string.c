@@ -1,4 +1,5 @@
 #include "eskilib_string.h"
+#include <stdint.h>
 
 char* eskilib_string_copy(char* dest, char* source, const uint_fast32_t maxBufferSize) {
 	char* originalStringToSave = source;
@@ -38,5 +39,34 @@ int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint
 	}
 
 	return ( *p1 > *p2 ) - ( *p2  > *p1 );
+}
+
+char* eskilib_string_concat(const char* stringOne, uint_fast32_t lengthOne,
+			    const char* stringTwo, uint_fast32_t lengthTwo)
+{
+	char* result = malloc(sizeof(char) * (lengthOne + lengthTwo - 1));
+
+	for (uint_fast32_t i = 0; i < lengthOne && stringOne[i] != '\0'; i++) {
+		*result = stringOne[i];
+		++result;
+	}
+
+	for (uint_fast32_t i = lengthOne; i < lengthOne + lengthTwo; i++) {
+		*result = stringTwo[i];
+		++result;
+	}
+
+	return result;
+}
+
+char* eskilib_string_replace(char* string, uint_fast32_t length, char value)
+{
+	for (uint_fast32_t i = 0; i < length; i++) {
+		if (*string == value)
+			string = value;
+		++string;
+	}
+
+	return string;
 }
 
