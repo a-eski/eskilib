@@ -44,14 +44,27 @@ int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint
 char* eskilib_string_concat(const char* stringOne, uint_fast32_t lengthOne,
 			    const char* stringTwo, uint_fast32_t lengthTwo)
 {
-	return "";
+	char* result = malloc(sizeof(char) * (lengthOne + lengthTwo - 1));
+
+	for (uint_fast32_t i = 0; i < lengthOne && stringOne[i] != '\0'; i++) {
+		*result = stringOne[i];
+		++result;
+	}
+
+	for (uint_fast32_t i = lengthOne; i < lengthOne + lengthTwo; i++) {
+		*result = stringTwo[i];
+		++result;
+	}
+
+	return result;
 }
 
 char* eskilib_string_replace(char* string, uint_fast32_t length, char value)
 {
 	for (uint_fast32_t i = 0; i < length; i++) {
-		if (string[i] == value)
-			string[i] = value;
+		if (*string == value)
+			string = value;
+		++string;
 	}
 
 	return string;
