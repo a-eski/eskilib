@@ -26,6 +26,17 @@ bool eskilib_string_equals(char* stringOne, char* stringTwo, const uint_fast32_t
 	return (( *p1 > *p2 ) - ( *p2  > *p1 )) == 0;
 }
 
+/*[[nodiscard]]
+bool eskilib_string_equals_unsafe(char* stringOne, char* stringTwo) {
+	const unsigned char *p1 = (const unsigned char*)stringOne;
+	const unsigned char *p2 = (const unsigned char*)stringTwo;
+
+	while (*p1 && *p1 == *p2)
+		++p1, ++p2;
+
+	return (( *p1 > *p2 ) - ( *p2  > *p1 )) == 0;
+}*/
+
 [[nodiscard]]
 int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint_fast32_t maxStringSize) {
 	const unsigned char *p1 = (const unsigned char*)stringOne;
@@ -41,7 +52,7 @@ int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint
 	return ( *p1 > *p2 ) - ( *p2  > *p1 );
 }
 
-char* eskilib_string_concat(const char* stringOne, uint_fast32_t lengthOne,
+/*char* eskilib_string_concat(const char* stringOne, uint_fast32_t lengthOne,
 			    const char* stringTwo, uint_fast32_t lengthTwo)
 {
 	char* result = malloc(sizeof(char) * (lengthOne + lengthTwo - 1));
@@ -68,5 +79,5 @@ char* eskilib_string_replace(char* string, uint_fast32_t length, char value)
 	}
 
 	return string;
-}
+}*/
 

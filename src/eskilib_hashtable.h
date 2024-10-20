@@ -1,40 +1,45 @@
 #ifndef eskilib_hashtable_h
 #define eskilib_hashtable_h
 
+#include <stdint.h>
 #include <stdlib.h>
+
+#include "./primitives/eskilib_string.h"
 
 enum eskilib_HashTable_Result
 {
-	FAILURE_ZERO_KEY_VALUE = -4,
-	FAILURE_OVERFLOW_PROTECTION = -3,
-	FAILURE_NULL_ENTRY = -2,
-	FAILURE_NULL_HASHTABLE = -1,
-	FAILURE = 0,
-	SUCCESS = 1
+	HT_FAILURE_ZERO_KEY_VALUE = -4,
+	HT_FAILURE_OVERFLOW_PROTECTION = -3,
+	HT_MALLOC_FAILURE = -2,
+	HT_FAILURE_NULL_REFERENCE = -1,
+	HT_FAILURE = 0,
+	HT_SUCCESS = 1
 };
 
-typedef struct
+struct eskilib_HashTable_Entry
 {
-	size_t key;
-	void* value;
-} eskilib_HashTable_Entry;
+	const char* key;
+	uint_fast32_t key_length;
+	const char* value;
+	uint_fast32_t value_length;
+};
 
-typedef struct
+struct eskilib_HashTable
 {
 	size_t size;
 	size_t position;
-	eskilib_HashTable_Entry* entries;
-} eskilib_HashTable;
+	struct eskilib_HashTable_Entry* entries;
+};
 
-eskilib_HashTable* eskilib_hashtable_malloc(const size_t sizeOfHashTable, const size_t sizeOfValues);
+enum eskilib_HashTable_Result eskilib_hashtable_malloc(const size_t sizeOfHashTable, struct eskilib_HashTable* hashtable);
 
-void eskilib_hashtable_free(eskilib_HashTable* hashtable);
+void eskilib_hashtable_free(struct eskilib_HashTable* hashtable);
 
-size_t eskilib_hashtable_add(void* value, eskilib_HashTable* hashtable);
+const char* eskilib_hashtable_add(char* key, char* value, struct eskilib_HashTable* hashtable);
 
-enum eskilib_HashTable_Result eskilib_hashtable_remove(const size_t key, eskilib_HashTable* hashtable);
+enum eskilib_HashTable_Result eskilib_hashtable_remove(char* key, struct eskilib_HashTable* hashtable);
 
-eskilib_HashTable_Entry* eskilib_hashtable_get(const size_t key, eskilib_HashTable* hashtable);
+struct eskilib_HashTable_Entry* eskilib_hashtable_get(char* key, struct eskilib_HashTable* hashtable);
 
 #endif /* !eskilib_hashtable_h */
 
