@@ -1,136 +1,133 @@
+#include "eskilib_hashtable.h"
+
 #include <assert.h>
 #include <stdint.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "eskilib_hashtable.h"
+
 #include "primitives/eskilib_string.h"
 
-#define ESKILIB_HASHTABLE_DEFAULT_SIZE 100
-#define ESKILIB_HASHTABLE_SIZE_MULTIPLIER 2
+bool eskilib_hashtable_malloc(struct eskilib_HashTable* table) {
+    table->length = 0;
+    table->capacity = ESKILIB_HASHTABLE_DEFAULT_CAPACITY;
+
+    table->entries = calloc(table->capacity, sizeof(struct eskilib_HashTable_Entry));
+    if (table->entries == NULL) {
+        return false;
+    }
+    return true;
+}
+
+void eskilib_hashtable_free(struct eskilib_HashTable* table) {
+    for (size_t i = 0; i < table->capacity; i++) {
+        free((char*)table->entries[i].key);
+    }
+
+    free(table->entries);
+}
 
 #define ESKILIB_FNV_OFFSET 14695981039346656037UL
 #define ESKILIB_FNV_PRIME 1099511628211UL
 
-// fowler noll vo hash function
-uint_fast64_t eskilib_hash(char* key) {
-	 uint_fast64_t hash = ESKILIB_FNV_OFFSET;
-	for (char* p = key; *p; ++p) {
-		hash ^= (uint_fast64_t)(unsigned char)(*p);
-		hash *= ESKILIB_FNV_PRIME;
-	}
+// 64-bit FNV-1a hash
+uint64_t eskilib_hashtable_key(const char* key) {
+    uint64_t hash = ESKILIB_FNV_OFFSET;
+    for (const char* p = key; *p; p++) {
+        hash ^= (uint64_t)(unsigned char)(*p);
+        hash *= ESKILIB_FNV_PRIME;
+    }
 
-	return hash;
+    return hash;
 }
 
-enum eskilib_HashTable_Result eskilib_hashtable_malloc(const size_t sizeOfHashTable, struct eskilib_HashTable* hashtable) {
-	size_t hashTableSize = sizeOfHashTable == 0 ? ESKILIB_HASHTABLE_DEFAULT_SIZE : sizeOfHashTable;
+struct eskilib_String eskilib_hashtable_get(const char* key, struct eskilib_HashTable* table) {
+    uint64_t hash = eskilib_hashtable_key(key);
+    size_t index = (size_t)(hash & (uint64_t)(table->capacity - 1));
 
-	hashtable->entries = calloc(hashTableSize, sizeof(char));
-	if (hashtable->entries == NULL)
-		return HT_MALLOC_FAILURE;
+    while (table->entries[index].key != NULL) {
+        if (strcmp(key, table->entries[index].key) == 0) {
+            return table->entries[index].value;
+        }
 
-	hashtable->size = hashTableSize;
-	hashtable->position = 0;
+        index++; //linear probing
+        if (index >= table->capacity) {
+            index = 0; //at end of ht, wrap around
+        }
+    }
 
-	return HT_SUCCESS;
+    return (struct eskilib_String){ .value = NULL, .length = 0 };
 }
 
-enum eskilib_HashTable_Result eskilib_hashtable_realloc(struct eskilib_HashTable* hashtable) {
-	hashtable->size = hashtable->size * ESKILIB_HASHTABLE_SIZE_MULTIPLIER;
+const char* eskilib_hashtable_set_entry(struct eskilib_HashTable_Entry* entries, size_t capacity, const char* key, struct eskilib_String value, size_t* plength) {
+    uint64_t hash = eskilib_hashtable_key(key);
+    size_t index = (size_t)(hash & (uint64_t)(capacity - 1));
 
-	hashtable->entries = realloc(hashtable->entries, hashtable->size * sizeof(struct eskilib_HashTable_Entry));
-	if (hashtable->entries == NULL)
-		return HT_MALLOC_FAILURE;
+    while (entries[index].key != NULL) {
+        if (strcmp(key, entries[index].key) == 0) {
+            entries[index].value = value;
+            return entries[index].key;
+        }
 
-	return HT_SUCCESS;
+        index++; //linear probing
+        if (index >= capacity) {
+            index = 0; // at end of ht, wrap around
+        }
+    }
+
+    if (plength != NULL) {
+        key = strdup(key);
+        if (key == NULL) {
+            return NULL;
+        }
+        (*plength)++;
+    }
+
+    entries[index].key = (char*)key;
+    entries[index].value = value;
+    return key;
 }
 
-void eskilib_hashtable_free(struct eskilib_HashTable* hashtable) {
-	assert(hashtable != NULL);
-	if (hashtable == NULL)
-		return;
+bool eskilib_hashtable_expand(struct eskilib_HashTable* table) {
+    size_t new_capacity = table->capacity * 2;
+    if (new_capacity < table->capacity) {
+        return false;
+    }
 
-	if (hashtable->position > 0) {
-		for (size_t i = 0; i < hashtable->size; i++) {
-			free((char*)hashtable->entries->key);
-			free((char*)hashtable->entries->value);
-		}
-	}
+    struct eskilib_HashTable_Entry* new_entries = calloc(new_capacity, sizeof(struct eskilib_HashTable_Entry));
+    if (new_entries == NULL) {
+        return false;
+    }
 
-	free(hashtable->entries);
-	hashtable->entries = NULL;
+    // Iterate entries, move all non-empty ones to new table's entries.
+    for (size_t i = 0; i < table->capacity; i++) {
+        struct eskilib_HashTable_Entry entry = table->entries[i];
+        if (entry.key != NULL) {
+            eskilib_hashtable_set_entry(new_entries, new_capacity, entry.key,
+                         entry.value, NULL);
+        }
+    }
+
+    free(table->entries);
+    table->entries = new_entries;
+    table->capacity = new_capacity;
+    return true;
 }
 
-const char* eskilib_hashtable_add(char* key, char* value, struct eskilib_HashTable* hashtable) {
-	assert(hashtable != NULL);
-	assert(value != NULL);
-	assert(key != NULL);
+const char* eskilib_hashtable_set(const char* key, struct eskilib_String value, struct eskilib_HashTable* table) {
+    assert(value.value != NULL && value.length > 0);
+    if (value.value == NULL || value.length == 0) {
+        return NULL;
+    }
 
-	if (hashtable->position >= hashtable->size / ESKILIB_HASHTABLE_SIZE_MULTIPLIER) {
-		if (eskilib_hashtable_realloc(hashtable) != HT_SUCCESS)
-			return NULL;
-	}
+    if (table->length >= table->capacity / 2) {
+        if (!eskilib_hashtable_expand(table)) {
+            return NULL;
+        }
+    }
 
-	uint_fast64_t hash = eskilib_hash(key);
-	size_t index = (size_t)(hash & (uint_fast64_t)(hashtable->size - 1));
-
-	while (hashtable->entries[index].key != NULL) {
-		if (hashtable->entries[index].key != NULL && eskilib_string_equals((char*)key, (char*)hashtable->entries[index].key, 255)) {
-			hashtable->entries[index].value = value;
-			return hashtable->entries->key;
-		}
-
-		++index;
-		if (index >= hashtable->size)
-			index = 0;
-	}
-
-	key = strdup(key);
-	if (key == NULL) {
-		return NULL;
-	}
-
-	hashtable->position++;
-	hashtable->entries->key = key;
-	hashtable->entries->value = value;
-	return key;
-}
-
-enum eskilib_HashTable_Result eskilib_hashtable_remove(char* key, struct eskilib_HashTable* hashtable) {
-	assert(hashtable != NULL);
-	if (hashtable == NULL)
-		return HT_FAILURE_NULL_REFERENCE;
-
-	assert(key != 0);
-	if (key == 0)
-		return HT_FAILURE_ZERO_KEY_VALUE;
-
-	return HT_FAILURE;
-}
-
-struct eskilib_HashTable_Entry* eskilib_hashtable_get(char* key, struct eskilib_HashTable* hashtable) {
-	assert(hashtable != NULL);
-	if (hashtable == NULL)
-		return NULL;
-
-	assert(key != NULL);
-	if (key == NULL)
-		return NULL;
-
-	uint_fast64_t hash = eskilib_hash(key);
-	size_t index = (size_t)(hash & (uint_fast64_t)(hashtable->size - 1));
-
-	while (hashtable->entries[index].key != NULL) {
-		if (eskilib_string_equals((char*)key, (char*)hashtable->entries[index].key, hashtable->entries[index].key_length))
-			return &hashtable->entries[index];
-
-		++index;
-		if (index >= hashtable->size)
-			index = 0;
-	}
-
-	return NULL;
+    return eskilib_hashtable_set_entry(table->entries, table->capacity, key, value,
+                        &table->length);
 }
 
