@@ -52,6 +52,16 @@ int_fast32_t eskilib_string_compare(char* stringOne, char* stringTwo, const uint
 	return ( *p1 > *p2 ) - ( *p2  > *p1 );
 }
 
+struct eskilib_String eskilib_string_concatenate(struct eskilib_String destination, struct eskilib_String source) {
+	struct eskilib_String originalStringToSave = destination;
+
+	while (*destination.value)
+		++destination.value;
+	while ((*destination.value++ = *source.value++));
+
+	return originalStringToSave;
+}
+
 /*char* eskilib_string_concat(const char* stringOne, uint_fast32_t lengthOne,
 			    const char* stringTwo, uint_fast32_t lengthTwo)
 {
