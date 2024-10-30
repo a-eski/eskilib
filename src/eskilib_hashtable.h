@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "primitives/eskilib_string.h"
+#include "eskilib_string.h"
 
 #define ESKILIB_HASHTABLE_DEFAULT_CAPACITY 100
 

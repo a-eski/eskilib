@@ -180,7 +180,7 @@ void eskilib_doublylinkedlist_set_after_in_middle_of_list_test(void)
 	eskilib_assert(nodeToSetAfter->previous = firstNode);
 	eskilib_assert(*(size_t*)nodeToSetAfter->value == valueTwo);
 	eskilib_assert(nodeToSetAfter->next = lastNode);
-	
+
 	eskilib_assert(linkedList->last == lastNode);
 	eskilib_assert(linkedList->last->previous == nodeToSetAfter);
 	eskilib_assert(linkedList->last == lastNode);
@@ -197,17 +197,17 @@ void eskilib_doublylinkedlist_release_tests(void)
 void eskilib_doublylinkedlist_tests(void)
 {
 	#ifdef NDEBUG
-		eskilib_doublylinkedlist_release_tests();	
+		eskilib_doublylinkedlist_release_tests();
 	#endif /* ifdef NDEBUG */
 
 	eskilib_test_run("eskilib_doublylinkedlist_malloc_test", eskilib_doublylinkedlist_malloc_test);
 
 	eskilib_test_run("eskilib_doublylinkedlist_set_first_empty_list_test", eskilib_doublylinkedlist_set_first_empty_list_test);
-	
+
 	eskilib_test_run("eskilib_doublylinkedlist_set_first_nonempty_list_test", eskilib_doublylinkedlist_set_first_nonempty_list_test);
-	
+
 	eskilib_test_run("eskilib_doublylinkedlist_set_last_empty_list_test", eskilib_doublylinkedlist_set_last_empty_list_test);
-	
+
 	eskilib_test_run("eskilib_doublylinkedlist_set_last_nonempty_list_test", eskilib_doublylinkedlist_set_last_nonempty_list_test);
 
 	eskilib_test_run("eskilib_doublylinkedlist_set_after_single_entry_list_test", eskilib_doublylinkedlist_set_after_single_entry_list_test);
