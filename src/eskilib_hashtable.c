@@ -5,8 +5,6 @@
 
 #include "eskilib_hashtable.h"
 
-#include "primitives/eskilib_string.h"
-
 bool eskilib_hashtable_malloc(struct eskilib_HashTable* table) {
     table->length = 0;
     table->capacity = ESKILIB_HASHTABLE_DEFAULT_CAPACITY;

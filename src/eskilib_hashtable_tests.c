@@ -2,7 +2,6 @@
 #include <stddef.h>
 #include "eskilib_hashtable.h"
 #include "eskilib_test.h"
-#include "primitives/eskilib_string.h"
 
 void eskilib_hashtable_malloc_default_size_test(void) {
 
