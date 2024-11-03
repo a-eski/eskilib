@@ -2,14 +2,14 @@
 #define eskilib_list_h
 
 #include <stdlib.h>
+#include <stddef.h>
 #include <stdint.h>
 #include <assert.h>
 #include "../eskilib_error_handler.h"
 
 #define ESKILIB_LIST_DEFAULT_SIZE 8
 
-enum eskilib_List_Result
-{
+enum eskilib_List_Result {
 	FAILURE_OVERFLOW_PROTECTION = -3,
 	FAILURE_NULL_ELEMENT = -2,
 	FAILURE_NULL_LIST = -1,
@@ -23,21 +23,18 @@ enum eskilib_List_Result
 #error "Must define ESKILIB_LIST_TYPE"
 #endif /* !ESKILIB_LIST_TYPE */
 
-typedef struct eskilib_List eskilib_List;
-struct eskilib_List
-{
+struct eskilib_List {
 	size_t size;
 	size_t position;
 	ESKILIB_LIST_TYPE* elements;
 };
 
 static inline
-eskilib_List* eskilib_list_malloc(const size_t sizeOfList)
-{
-	eskilib_List* list = NULL;
+struct eskilib_List* eskilib_list_malloc(const size_t sizeOfList) {
+	struct eskilib_List* list = NULL;
 	size_t listSize = 0;
 
-	list = malloc(sizeof(eskilib_List));
+	list = malloc(sizeof(struct eskilib_List));
 
 	if (list == NULL)
 		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List.\n");
@@ -56,8 +53,7 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList)
 }
 
 static inline
-void eskilib_list_free(eskilib_List* list)
-{
+void eskilib_list_free(struct eskilib_List* list) {
 	assert(list != NULL);
 	if (list == NULL)
 		return;
@@ -70,8 +66,7 @@ void eskilib_list_free(eskilib_List* list)
 }
 
 static inline
-enum eskilib_List_Result eskilib_list_add(ESKILIB_LIST_TYPE element, eskilib_List* list)
-{
+enum eskilib_List_Result eskilib_list_add(ESKILIB_LIST_TYPE element, struct eskilib_List* list) {
 	assert(list != NULL);
 	if (list == NULL)
 		return FAILURE_NULL_LIST;
