@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "eskilib_test.h"
-#include "eskilib_queue.h"
+#include "../eskilib_test.h"
+#include "../eskilib_queue.h"
 
 #define ESKILIB_TEST_QUEUE_SIZE 10
 
@@ -94,7 +94,7 @@ void eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test(void)
 	enum eskilib_Queue_Result enqueueResult = FAILURE;
 	size_t* valueOne = NULL;
 	size_t* result = NULL;
-	
+
 	queue = eskilib_queue_malloc(ESKILIB_TEST_QUEUE_SIZE, sizeof(valueOne));
 
 	valueOne = malloc(sizeof(size_t));
@@ -122,7 +122,7 @@ void eskilib_queue_dequeue_nonempty_queue_test(void)
 	size_t* valueOne = NULL;
 	size_t* valueTwo = NULL;
 	size_t* result = NULL;
-	
+
 	queue = eskilib_queue_malloc(ESKILIB_TEST_QUEUE_SIZE, sizeof(valueOne));
 
 	valueOne = malloc(sizeof(size_t));
@@ -132,7 +132,7 @@ void eskilib_queue_dequeue_nonempty_queue_test(void)
 
 	enqueueResultOne = eskilib_queue_enqueue(valueOne, queue);
 	enqueueResultTwo = eskilib_queue_enqueue(valueTwo, queue);
-	
+
 	result = eskilib_queue_dequeue(queue);
 
 	eskilib_assert(enqueueResultOne == SUCCESS);
@@ -153,6 +153,8 @@ void eskilib_queue_release_tests(void)
 
 void eskilib_queue_tests(void)
 {
+	eskilib_test_start();
+
 	#ifdef NDEBUG
 		eskilib_queue_release_tests();
 	#endif /* ifdef NDEBUG */
@@ -168,6 +170,8 @@ void eskilib_queue_tests(void)
 	eskilib_test_run("eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test", eskilib_queue_dequeue_nonempty_queue_to_empty_queue_test);
 
 	eskilib_test_run("eskilib_queue_dequeue_nonempty_queue_test", eskilib_queue_dequeue_nonempty_queue_test);
+
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL

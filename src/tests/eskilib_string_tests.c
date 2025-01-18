@@ -101,6 +101,8 @@ void eskilib_string_release_tests(void)
 
 void eskilib_string_tests(void)
 {
+	eskilib_test_start();
+
 	#ifdef NDEBUG
 		eskilib_string_release_tests();
 	#endif /* ifdef NDEBUG */
@@ -114,6 +116,8 @@ void eskilib_string_tests(void)
 	eskilib_test_run("eskilib_string_contains_false_test", eskilib_string_contains_false_test);
 	eskilib_test_run("eskilib_string_contains_true_test", eskilib_string_contains_true_test);
 	eskilib_test_run("eskilib_string_contains_end_of_string_test", eskilib_string_contains_end_of_string_test);
+
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL

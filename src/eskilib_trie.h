@@ -3,6 +3,7 @@
 #ifndef eskilib_trie_h
 #define eskilib_trie_h
 
+#include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -28,16 +29,16 @@ struct eskilib_Trie* eskilib_trie_malloc();
 
 void eskilib_trie_free(struct eskilib_Trie* tree);
 
-void eskilib_trie_add(char* string, uint_fast32_t length, struct eskilib_Trie* tree);
+void eskilib_trie_add(char* string, size_t length, struct eskilib_Trie* tree);
 void eskilib_trie_add_string(struct eskilib_String string, struct eskilib_Trie* tree);
-void eskilib_trie_add_multiple(struct eskilib_String* strings, uint_fast32_t count, struct eskilib_Trie* tree);
+void eskilib_trie_add_multiple(struct eskilib_String* strings, int count, struct eskilib_Trie* tree);
 
-struct eskilib_Trie* eskilib_trie_search(char* string, uint_fast32_t length, struct eskilib_Trie* tree);
+struct eskilib_Trie* eskilib_trie_search(char* string, size_t length, struct eskilib_Trie* tree);
 struct eskilib_Trie* eskilib_trie_search_string(struct eskilib_String string, struct eskilib_Trie* tree);
 
 // gets all matches based on a search into matches. returns matches_length;
-uint_fast32_t eskilib_trie_get(char* search,
-				       uint_fast32_t search_length,
+size_t eskilib_trie_get(char* search,
+				       size_t search_length,
 				       char* matches[],
 				       const uint_fast32_t max_match_length,
 				       struct eskilib_Trie* tree);

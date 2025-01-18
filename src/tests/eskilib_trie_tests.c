@@ -282,7 +282,7 @@ void eskilib_trie_matches_test(void) {
 	constexpr uint_fast32_t max_match_length = 256;
 	char* autocomplete[max_match_length] = {0};
 
-	uint_fast32_t match_count = eskilib_trie_get("ls | ", 6, autocomplete, max_match_length, tree);
+	size_t match_count = eskilib_trie_get("ls | ", 6, autocomplete, max_match_length, tree);
 
 	eskilib_assert(match_count == 3);
 	eskilib_assert(eskilib_string_equals(autocomplete[0], "sort", 5) == true);
@@ -314,7 +314,7 @@ void eskilib_trie_matches_no_results_test(void) {
 	constexpr uint_fast32_t max_match_length = 256;
 	char* autocomplete[max_match_length] = {0};
 
-	uint_fast32_t match_count = eskilib_trie_get("n", 2, autocomplete, max_match_length, tree);
+	size_t match_count = eskilib_trie_get("n", 2, autocomplete, max_match_length, tree);
 
 	eskilib_assert(match_count == 0);
 	eskilib_assert(autocomplete[0] == NULL);
@@ -338,7 +338,7 @@ void eskilib_trie_matches_multiple_test(void) {
 	constexpr uint_fast32_t max_match_length = 256;
 	char* autocomplete[max_match_length] = {0};
 
-	uint_fast32_t match_count = eskilib_trie_get("ls | ", 6, autocomplete, max_match_length, tree);
+	size_t match_count = eskilib_trie_get("ls | ", 6, autocomplete, max_match_length, tree);
 
 	eskilib_assert(match_count == 3);
 	eskilib_assert(eskilib_string_equals(autocomplete[0], "sort", 5) == true);
@@ -391,7 +391,7 @@ void eskilib_trie_matches_multiple_simulation_test(void) {
 	constexpr uint_fast32_t max_match_length = 256;
 	char* autocomplete[max_match_length] = {0};
 
-	uint_fast32_t match_count = eskilib_trie_get("l", 2, autocomplete, max_match_length, tree);
+	size_t match_count = eskilib_trie_get("l", 2, autocomplete, max_match_length, tree);
 
 	eskilib_assert(match_count == 5);
 	eskilib_assert(eskilib_string_equals(autocomplete[0], "s", 2) == true);
@@ -427,6 +427,7 @@ void eskilib_trie_matches_multiple_simulation_test(void) {
 }
 
 void eskilib_trie_tests(void) {
+	eskilib_test_start();
 	eskilib_test_run("eskilib_trie_add_length_mismatch_test", eskilib_trie_add_length_mismatch_test);
 	eskilib_test_run("eskilib_trie_add_test", eskilib_trie_add_test);
 	eskilib_test_run("eskilib_trie_add_duplicate_test", eskilib_trie_add_duplicate_test);
@@ -439,6 +440,7 @@ void eskilib_trie_tests(void) {
 	eskilib_test_run("eskilib_trie_matches_no_results_test", eskilib_trie_matches_no_results_test);
 	eskilib_test_run("eskilib_trie_matches_multiple_test", eskilib_trie_matches_multiple_test);
 	eskilib_test_run("eskilib_trie_matches_multiple_simulation_test", eskilib_trie_matches_multiple_simulation_test);
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL

@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include "eskilib_doublylinkedlist.h"
-#include "eskilib_test.h"
+#include "../eskilib_doublylinkedlist.h"
+#include "../eskilib_test.h"
 
 void eskilib_doublylinkedlist_malloc_test(void)
 {
@@ -196,6 +196,8 @@ void eskilib_doublylinkedlist_release_tests(void)
 
 void eskilib_doublylinkedlist_tests(void)
 {
+	eskilib_test_start();
+
 	#ifdef NDEBUG
 		eskilib_doublylinkedlist_release_tests();
 	#endif /* ifdef NDEBUG */
@@ -213,6 +215,8 @@ void eskilib_doublylinkedlist_tests(void)
 	eskilib_test_run("eskilib_doublylinkedlist_set_after_single_entry_list_test", eskilib_doublylinkedlist_set_after_single_entry_list_test);
 
 	eskilib_test_run("eskilib_doublylinkedlist_set_after_in_middle_of_list_test", eskilib_doublylinkedlist_set_after_in_middle_of_list_test);
+
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL

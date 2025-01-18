@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stddef.h>
-#include "eskilib_hashtable.h"
-#include "eskilib_test.h"
+#include "../eskilib_hashtable.h"
+#include "../eskilib_test.h"
 
 void eskilib_hashtable_malloc_default_size_test(void) {
 
@@ -97,6 +97,8 @@ void eskilib_hashtable_release_tests(void) {
 }
 
 void eskilib_hashtable_tests(void) {
+	eskilib_test_start();
+
 	#ifdef NDEBUG
 		eskilib_hashtable_release_tests();
 	#endif /* ifdef NDEBUG */
@@ -105,6 +107,8 @@ void eskilib_hashtable_tests(void) {
 	eskilib_test_run("eskilib_hashtable_add_one_test", eskilib_hashtable_add_one_test);
 	eskilib_test_run("eskilib_hashtable_add_multiple_test", eskilib_hashtable_add_multiple_test);
 	eskilib_test_run("eskilib_hashtable_add_duplicate_test", eskilib_hashtable_add_duplicate_test);
+
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL
