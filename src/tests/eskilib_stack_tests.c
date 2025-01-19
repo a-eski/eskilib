@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "eskilib_test.h"
-#include "eskilib_stack.h"
+#include "../eskilib_test.h"
+#include "../eskilib_stack.h"
 
 #define ESKILIB_TEST_STACK_SIZE 10
 
@@ -128,7 +128,7 @@ void eskilib_stack_pop_test(void)
 	eskilib_assert(stack->top == 0);
 	eskilib_assert(stack->isEmpty == true);
 	eskilib_assert(*(size_t*)poppedElement == element);
-	
+
 	eskilib_stack_free(stack);
 }
 
@@ -169,6 +169,8 @@ void eskilib_stack_release_tests(void)
 
 void eskilib_stack_tests(void)
 {
+	eskilib_test_start();
+
 	#ifdef NDEBUG
 		eskilib_stack_release_tests();
 	#endif /* ifdef NDEBUG */
@@ -180,12 +182,14 @@ void eskilib_stack_tests(void)
 	eskilib_test_run("eskilib_stack_push_nonempty_stack_test", eskilib_stack_push_nonempty_stack_test);
 
 	eskilib_test_run("eskilib_stack_push_full_stack_test", eskilib_stack_push_full_stack_test);
-	
+
 	eskilib_test_run("eskilib_stack_pop_empty_stack_test", eskilib_stack_pop_empty_stack_test);
 
 	eskilib_test_run("eskilib_stack_pop_test", eskilib_stack_pop_test);
 
 	eskilib_test_run("eskilib_stack_pop_multiple_test", eskilib_stack_pop_multiple_test);
+
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL

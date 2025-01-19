@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "eskilib_test.h"
-#include "eskilib_linkedlist.h"
+#include "../eskilib_test.h"
+#include "../eskilib_linkedlist.h"
 
 void eskilib_linkedlist_malloc_test(void)
 {
@@ -45,7 +45,7 @@ void eskilib_linkedlist_set_first_on_empty_linkedlist_test(void)
 	eskilib_assert(linkedList->first == node);
 	eskilib_assert(linkedList->first->value == node->value);
 	eskilib_assert(linkedList->first->next == NULL);
-	
+
 	eskilib_linkedlist_free(linkedList);
 }
 
@@ -167,8 +167,10 @@ void eskilib_linkedlist_release_tests(void)
 
 void eskilib_linkedlist_tests(void)
 {
+	eskilib_test_start();
+
 	#ifdef NDEBUG
-		eskilib_linkedlist_release_tests();	
+		eskilib_linkedlist_release_tests();
 	#endif /* ifdef NDEBUG */
 
 	eskilib_test_run("eskilib_linkedlist_malloc_test", eskilib_linkedlist_malloc_test);
@@ -184,6 +186,8 @@ void eskilib_linkedlist_tests(void)
 	eskilib_test_run("eskilib_linkedlist_set_first_on_nonempty_linkedlist_test", eskilib_linkedlist_set_first_on_nonempty_linkedlist_test);
 
 	eskilib_test_run("eskilib_linkedlist_set_after_test", eskilib_linkedlist_set_after_test);
+
+	eskilib_test_finish();
 }
 
 #ifndef ESKILIB_TEST_ALL
