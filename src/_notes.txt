@@ -1,1 +1,1 @@
-gcc -std=c2x -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eskilib_hashtable_tests.c eskilib_test.c eskilib_hashtable.c primitives/eskilib_string.c -o bin/eskilib_hashtable_tests
+gcc -std=c2x -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined eski_hashtable_tests.c eski_test.c eski_hashtable.c primitives/eski_string.c -o bin/eski_hashtable_tests

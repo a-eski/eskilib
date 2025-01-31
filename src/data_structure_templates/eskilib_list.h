@@ -1,15 +1,15 @@
-#ifndef eskilib_list_h
-#define eskilib_list_h
+#ifndef eski_list_h
+#define eski_list_h
 
 #include <stdlib.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <assert.h>
-#include "../eskilib_error_handler.h"
+#include "../eski_error_handler.h"
 
-#define ESKILIB_LIST_DEFAULT_SIZE 8
+#define ESKI_LIST_DEFAULT_SIZE 8
 
-enum eskilib_List_Result {
+enum eski_List_Result {
 	FAILURE_OVERFLOW_PROTECTION = -3,
 	FAILURE_NULL_ELEMENT = -2,
 	FAILURE_NULL_LIST = -1,
@@ -17,34 +17,34 @@ enum eskilib_List_Result {
 	SUCCESS = 1
 };
 
-#endif /* !eskilib_list_h */
+#endif /* !eski_list_h */
 
-#ifndef ESKILIB_LIST_TYPE
-#error "Must define ESKILIB_LIST_TYPE"
-#endif /* !ESKILIB_LIST_TYPE */
+#ifndef ESKI_LIST_TYPE
+#error "Must define ESKI_LIST_TYPE"
+#endif /* !ESKI_LIST_TYPE */
 
-struct eskilib_List {
+struct eski_List {
 	size_t size;
 	size_t position;
-	ESKILIB_LIST_TYPE* elements;
+	ESKI_LIST_TYPE* elements;
 };
 
 static inline
-struct eskilib_List* eskilib_list_malloc(const size_t sizeOfList) {
-	struct eskilib_List* list = NULL;
+struct eski_List* eski_list_malloc(const size_t sizeOfList) {
+	struct eski_List* list = NULL;
 	size_t listSize = 0;
 
-	list = malloc(sizeof(struct eskilib_List));
+	list = malloc(sizeof(struct eski_List));
 
 	if (list == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List.\n");
+		eski_output_allocation_error_and_exit("Failed to allocate eski_List.\n");
 
-	listSize = sizeOfList == 0 ? ESKILIB_LIST_DEFAULT_SIZE : sizeOfList;
+	listSize = sizeOfList == 0 ? ESKI_LIST_DEFAULT_SIZE : sizeOfList;
 
-	list->elements = malloc(listSize * sizeof(ESKILIB_LIST_TYPE));
+	list->elements = malloc(listSize * sizeof(ESKI_LIST_TYPE));
 
 	if (list->elements == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List->elements.\n");
+		eski_output_allocation_error_and_exit("Failed to allocate eski_List->elements.\n");
 
 	list->size = listSize;
 	list->position = 0;
@@ -53,7 +53,7 @@ struct eskilib_List* eskilib_list_malloc(const size_t sizeOfList) {
 }
 
 static inline
-void eskilib_list_free(struct eskilib_List* list) {
+void eski_list_free(struct eski_List* list) {
 	assert(list != NULL);
 	if (list == NULL)
 		return;
@@ -66,7 +66,7 @@ void eskilib_list_free(struct eskilib_List* list) {
 }
 
 static inline
-enum eskilib_List_Result eskilib_list_add(ESKILIB_LIST_TYPE element, struct eskilib_List* list) {
+enum eski_List_Result eski_list_add(ESKI_LIST_TYPE element, struct eski_List* list) {
 	assert(list != NULL);
 	if (list == NULL)
 		return FAILURE_NULL_LIST;
@@ -85,7 +85,7 @@ enum eskilib_List_Result eskilib_list_add(ESKILIB_LIST_TYPE element, struct eski
 
 		if (list->elements == NULL)
 		{
-			eskilib_output_allocation_error_and_exit("Error reallocating eskilib_List->elements.\n");
+			eski_output_allocation_error_and_exit("Error reallocating eski_List->elements.\n");
 		}
 	}
 
@@ -94,5 +94,4 @@ enum eskilib_List_Result eskilib_list_add(ESKILIB_LIST_TYPE element, struct eski
 	return SUCCESS;
 }
 
-#undef ESKILIB_LIST_TYPE
-
+#undef ESKI_LIST_TYPE
