@@ -25,6 +25,14 @@ struct eski_Trie_Matches {
 	struct eski_String* entries;
 };
 
+static inline int eski_trie_index_get(char character) {
+	return (int)character - ' ';
+}
+
+static inline char eski_trie_char_get(int position) {
+	return (char)position + ' ';
+}
+
 struct eski_Trie* eski_trie_malloc();
 
 void eski_trie_free(struct eski_Trie* tree);
@@ -43,7 +51,7 @@ size_t eski_trie_get(char* search,
 				       const uint_fast32_t max_match_length,
 				       struct eski_Trie* tree);
 
-int eski_trie_map_char(char character);
-char eski_trie_map_position(int position);
+int eski_trie_index_get(char character);
+char eski_trie_char_get(int position);
 
 #endif // !eski_trie_h

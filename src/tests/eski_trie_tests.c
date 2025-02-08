@@ -8,7 +8,7 @@
 
 void eski_trie_add_length_mismatch_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string = { .value = "and", .length = 3 };
 	eski_trie_add(string.value, string.length, tree);
@@ -20,7 +20,7 @@ void eski_trie_add_length_mismatch_test(void) {
 
 void eski_trie_add_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string = { .value = "and", .length = 4 };
 	eski_trie_add(string.value, string.length, tree);
@@ -52,7 +52,7 @@ void eski_trie_add_test(void) {
 
 void eski_trie_add_duplicate_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string = { .value = "and", .length = 4 };
 	eski_trie_add(string.value, string.length, tree);
@@ -78,7 +78,7 @@ void eski_trie_add_duplicate_test(void) {
 
 void eski_trie_add_multiple_unrelated_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string_one = { .value = "ls", .length = 3 };
 	eski_trie_add(string_one.value, string_one.length, tree);
@@ -116,7 +116,7 @@ void eski_trie_add_multiple_unrelated_test(void) {
 
 void eski_trie_add_multiple_related_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string_one = { .value = "gene", .length = 5 };
 	eski_trie_add(string_one.value, string_one.length, tree);
@@ -176,7 +176,7 @@ void eski_trie_add_multiple_related_test(void) {
 
 void eski_trie_search_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string_one = { .value = "gene", .length = 5 };
 	eski_trie_add(string_one.value, string_one.length, tree);
@@ -198,7 +198,7 @@ void eski_trie_search_test(void) {
 
 void eski_trie_search_commands_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	eski_trie_add_string((struct eski_String){ .value = "ls", .length = 3 }, tree);
 	eski_trie_add_string((struct eski_String){ .value = "ls | sort", .length = 10 }, tree);
@@ -247,7 +247,7 @@ void eski_trie_search_commands_test(void) {
 
 void eski_trie_search_no_results_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	struct eski_String string_one = { .value = "gene", .length = 5 };
 	eski_trie_add_string(string_one, tree);
@@ -265,7 +265,7 @@ void eski_trie_search_no_results_test(void) {
 
 void eski_trie_matches_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	eski_trie_add_string((struct eski_String){ .value = "ls", .length = 3 }, tree);
 	eski_trie_add_string((struct eski_String){ .value = "ls | wc -c", .length = 11 }, tree);
@@ -300,7 +300,7 @@ void eski_trie_matches_test(void) {
 
 void eski_trie_matches_no_results_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	eski_trie_add_string((struct eski_String){ .value = "ls", .length = 3 }, tree);
 	eski_trie_add_string((struct eski_String){ .value = "ls | wc -c", .length = 11 }, tree);
@@ -324,7 +324,7 @@ void eski_trie_matches_no_results_test(void) {
 
 void eski_trie_matches_multiple_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	eski_trie_add_string((struct eski_String){ .value = "ls", .length = 3 }, tree);
 	eski_trie_add_string((struct eski_String){ .value = "ls | wc -c", .length = 11 }, tree);
@@ -375,7 +375,7 @@ void eski_trie_matches_multiple_test(void) {
 
 void eski_trie_matches_multiple_simulation_test(void) {
 	struct eski_Trie* tree = eski_trie_malloc();
-	eski_assert(tree != NULL);
+	eski_assert(tree);
 
 	eski_trie_add_string((struct eski_String){ .value = "ls", .length = 3 }, tree);
 	eski_trie_add_string((struct eski_String){ .value = "ls | wc -c", .length = 11 }, tree);
