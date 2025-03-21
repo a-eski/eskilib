@@ -1,10 +1,10 @@
-gcc -std=c2x -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined,leak -g ./src/eski/eski_string.c ./src/eski/eski_test.c ./src/eski/eski_trie.c ./src/eski/tests/eski_trie_tests.c -o ./bin/eski_trie_tests &&
-./bin/eski_trie_tests
+gcc -std=c2x -Wall -Wextra -Werror -pedantic-errors -Wformat=2 -fsanitize=address,undefined,leak -g ./src/eski/eskilib_string.c ./src/eski/eskilib_test.c ./src/eski/eskilib_trie.c ./src/eski/tests/eskilib_trie_tests.c -o ./bin/eskilib_trie_tests &&
+./bin/eskilib_trie_tests
 
 
-gcc -std=c2x -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined,leak -g ./src/eski/eski_string.c ./src/eski/eski_test.c ./src/eski/eski_trie.c ./src/eski/tests/eski_trie_tests.c -o ./bin/eski_trie_tests &&
-./bin/eski_trie_tests
+gcc -std=c2x -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined,leak -g ./src/eski/eskilib_string.c ./src/eski/eskilib_test.c ./src/eski/eskilib_trie.c ./src/eski/tests/eskilib_trie_tests.c -o ./bin/eskilib_trie_tests &&
+./bin/eskilib_trie_tests
 
 
-gcc -std=c2x -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined,leak -g ./src/eski/eski_string.c ./src/eski/eski_test.c ./src/eski/tests/eski_string_tests.c -o ./bin/eski_string_tests &&
-./bin/eski_string_tests
+gcc -std=c2x -Wall -pedantic-errors -Wformat=2 -fsanitize=address,undefined,leak -g ./src/eski/eskilib_string.c ./src/eski/eskilib_test.c ./src/eski/tests/eskilib_string_tests.c -o ./bin/eskilib_string_tests &&
+./bin/eskilib_string_tests
