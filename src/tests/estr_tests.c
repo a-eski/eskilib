@@ -1,3 +1,5 @@
+/* Copyright (C) eskilib by Alex Eski 2025 */
+
 #include <stdlib.h>
 
 #include "../estr.h"

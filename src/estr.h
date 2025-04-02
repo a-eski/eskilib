@@ -1,8 +1,7 @@
-/* Copyright eskilib by Alex Eski 2025 */
+/* Copyright (C) eskilib by Alex Eski 2025 */
 
-#pragma once
-#ifndef ESKILIB_STR_H_
-#define ESKILIB_STR_H_
+#ifndef ESKILIB_ESTR_H_
+#define ESKILIB_ESTR_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,19 +14,18 @@ extern "C" {
 
 #include "eskilib_defines.h"
 
-#define estr_Empty ((const struct estr){.val = NULL, .len = 0})
-
-// WARN: currently all string functions using this code incorporate null terminator in len
-// TODO: fix this, use len everywhere without null terminator... .len = sizeof(str) - 1
-#define estr_New_Literal(str) (struct estr){ .val = str, .len = sizeof(str) };
-#define estr_New(str, str_len) (struct estr){ .val = str, .len = str_len };
-
 struct estr {
     size_t len;
     char* val;
 };
-
 typedef struct estr estr;
+
+#define estr_Empty ((estr){.val = NULL, .len = 0})
+
+// WARN: currently all string functions using this code incorporate null terminator in len
+// TODO: fix this, use len everywhere without null terminator... .len = sizeof(str) - 1
+#define estr_New_Literal(str) (estr){ .val = str, .len = sizeof(str) };
+#define estr_New(str, str_len) (estr){ .val = str, .len = str_len };
 
 // A simple wrapper for memcmp that checks if lens match before calling memcmp.
 eskilib_nodiscard
@@ -58,4 +56,4 @@ bool estr_compare_const(const char* const str, const size_t str_len,
 }
 #endif
 
-#endif /* !ESKILIB_STR_H_ */
+#endif /* !ESKILIB_ESTR_H_ */

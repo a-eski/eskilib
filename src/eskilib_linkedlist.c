@@ -1,6 +1,5 @@
-/* Copyright (c) eskilib by Alex Eski 2024 */
+/* Copyright (C) eskilib by Alex Eski 2024 */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "eskilib_error_handler.h"

@@ -1,4 +1,4 @@
-/* Copyright (c) eskilib by Alex Eski 2024 */
+/* Copyright (C) eskilib by Alex Eski 2024 */
 
 #ifndef ESKILIB_TRIE_H_
 #define ESKILIB_TRIE_H_
@@ -22,7 +22,7 @@ struct eskilib_Trie {
 
 struct eskilib_Trie_Matches {
 	uint_fast32_t count;
-	struct estr* entries;
+	estr* entries;
 };
 
 static inline int eskilib_trie_index_get(char character) {
@@ -38,11 +38,11 @@ struct eskilib_Trie* eskilib_trie_malloc();
 void eskilib_trie_free(struct eskilib_Trie* tree);
 
 void eskilib_trie_add(char* str, size_t len, struct eskilib_Trie* tree);
-void eskilib_trie_add_str(struct estr str, struct eskilib_Trie* tree);
-void eskilib_trie_add_multiple(struct estr* strs, int count, struct eskilib_Trie* tree);
+void eskilib_trie_add_str(estr str, struct eskilib_Trie* tree);
+void eskilib_trie_add_multiple(estr* strs, int count, struct eskilib_Trie* tree);
 
 struct eskilib_Trie* eskilib_trie_search(char* str, size_t len, struct eskilib_Trie* tree);
-struct eskilib_Trie* eskilib_trie_search_str(struct estr str, struct eskilib_Trie* tree);
+struct eskilib_Trie* eskilib_trie_search_str(estr str, struct eskilib_Trie* tree);
 
 // gets all matches based on a search into matches. returns matches_len;
 size_t eskilib_trie_get(char* search,

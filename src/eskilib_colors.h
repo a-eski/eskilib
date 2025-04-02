@@ -1,5 +1,6 @@
 /* Copyright eskilib by Alex Eski 2024 */
 
+#pragma once
 #ifndef ESKILIB_COLORS_H_
 #define ESKILIB_COLORS_H_
 
