@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include "eskilib_error_handler.h"
+
 #include "eskilib_list.h"
 
 #define eskilib_LIST_DEFAULT_SIZE 8
@@ -18,15 +18,17 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfEl
 
 	list = (eskilib_List*)malloc(sizeof(eskilib_List));
 
-	if (list == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List.\n");
+	if (!list) {
+		return NULL;
+	}
 
 	listSize = sizeOfList == 0 ? eskilib_LIST_DEFAULT_SIZE : sizeOfList;
 
 	list->elements = (void**)malloc(listSize * sizeOfElements);
 
-	if (list->elements == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_List->elements.\n");
+	if (!list->elements) {
+		return NULL;
+	}
 
 	list->size = listSize;
 	list->position = 0;
@@ -65,9 +67,9 @@ enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
 		list->size *= 2;
 		list->elements = (void**)realloc(list->elements, list->size * sizeof(element));
 
-		if (list->elements == NULL)
+		if (!list->elements)
 		{
-			eskilib_output_allocation_error_and_exit("Error reallocating eskilib_List->elements.\n");
+			return FAILURE_MALLOC;
 		}
 	}
 

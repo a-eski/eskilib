@@ -3,6 +3,10 @@
 #ifndef eskilib_stack_h
 #define eskilib_stack_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -31,5 +35,9 @@ void* eskilib_stack_pop(eskilib_Stack* stack);
 enum eskilib_Stack_Result eskilib_stack_push(void* element, eskilib_Stack* stack);
 
 void eskilib_stack_free(eskilib_Stack* stack);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !eskilib_stack_h */

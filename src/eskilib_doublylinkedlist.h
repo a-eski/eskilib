@@ -1,6 +1,10 @@
 #ifndef ESKILIB_DOUBLYLINKEDLIST_H_
 #define ESKILIB_DOUBLYLINKEDLIST_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum eskilib_DoublyLinkedList_Result
 {
 	FAILURE_ALREADY_LINKED_NODE = -4,
@@ -41,5 +45,9 @@ enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_after(eskilib_
 /*
 enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_before(eskilib_DoublyLinkedList_LinkedNode* currentNode, eskilib_DoublyLinkedList_LinkedNode* nodeToSetBefore);
 */
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !ESKILIB_DOUBLYLINKEDLIST_H_ */

@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+
 #include "eskilib_queue.h"
-#include "eskilib_error_handler.h"
 
 eskilib_Queue* eskilib_queue_malloc(const size_t sizeOfQueue, const size_t sizeOfElements)
 {
@@ -17,13 +17,15 @@ eskilib_Queue* eskilib_queue_malloc(const size_t sizeOfQueue, const size_t sizeO
 
 	queue = malloc(sizeof(eskilib_Queue));
 
-	if (queue == NULL)
-		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Queue.\n");
+	if (queue == NULL) {
+		return NULL;
+	}
 
 	queue->elements = malloc(sizeOfQueue * sizeOfElements);
 
-	if (queue->elements == NULL)
-		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Queue->elements.\n");
+	if (queue->elements == NULL) {
+		return NULL;
+	}
 
 	queue->first = 0;
 	queue->last = 0;
@@ -39,8 +41,10 @@ void eskilib_queue_free(eskilib_Queue* queue)
 	if (queue == NULL)
 		return;
 
-	free(queue->elements);
-	queue->elements = NULL;
+	if (queue->elements) {
+		free(queue->elements);
+		queue->elements = NULL;
+	}
 
 	free(queue);
 	queue = NULL;

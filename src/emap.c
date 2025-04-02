@@ -8,19 +8,19 @@
 #include "emap.h"
 #include "estr.h"
 
-bool emap_malloc(struct emap* hmap)
+bool emap_malloc(emap* hmap)
 {
     hmap->size = 0;
     hmap->capacity = EMAP_DEFAULT_CAPACITY;
 
-    hmap->entries = calloc(hmap->capacity, sizeof(struct emap_Entry));
+    hmap->entries = calloc(hmap->capacity, sizeof(emap_Entry));
     if (hmap->entries == NULL) {
         return false;
     }
     return true;
 }
 
-void emap_free(struct emap* hmap)
+void emap_free(emap* hmap)
 {
     for (size_t i = 0; i < hmap->capacity; i++) {
         if (hmap->entries[i].key)
@@ -45,7 +45,7 @@ uint64_t emap_key(const char* key)
     return hash;
 }
 
-struct estr emap_get(const char* key, struct emap* hmap)
+estr emap_get(const char* key, emap* hmap)
 {
     uint64_t hash = emap_key(key);
     size_t index = (size_t)(hash & (uint64_t)(hmap->capacity - 1));
@@ -64,7 +64,7 @@ struct estr emap_get(const char* key, struct emap* hmap)
     return estr_Empty;
 }
 
-bool emap_exists(const char* key, struct emap* hmap)
+bool emap_exists(const char* key, emap* hmap)
 {
     uint64_t hash = emap_key(key);
     size_t index = (size_t)(hash & (uint64_t)(hmap->capacity - 1));
@@ -83,8 +83,8 @@ bool emap_exists(const char* key, struct emap* hmap)
     return false;
 }
 
-const char* emap_set_entry(struct emap_Entry* entries, size_t capacity, const char* key,
-                                        struct estr value, size_t* plen)
+const char* emap_set_entry(emap_Entry* entries, size_t capacity, const char* key,
+                                        estr value, size_t* plen)
 {
     uint64_t hash = emap_key(key);
     size_t index = (size_t)(hash & (uint64_t)(capacity - 1));
@@ -114,21 +114,21 @@ const char* emap_set_entry(struct emap_Entry* entries, size_t capacity, const ch
     return key;
 }
 
-bool emap_expand(struct emap* hmap)
+bool emap_expand(emap* hmap)
 {
     size_t new_capacity = hmap->capacity * 2;
     if (new_capacity < hmap->capacity) {
         return false;
     }
 
-    struct emap_Entry* new_entries = calloc(new_capacity, sizeof(struct emap_Entry));
+    emap_Entry* new_entries = calloc(new_capacity, sizeof(emap_Entry));
     if (new_entries == NULL) {
         return false;
     }
 
     // Iterate entries, move all non-empty ones to new table's entries.
     for (size_t i = 0; i < hmap->capacity; i++) {
-        struct emap_Entry entry = hmap->entries[i];
+        emap_Entry entry = hmap->entries[i];
         if (entry.key != NULL) {
             emap_set_entry(new_entries, new_capacity, entry.key, entry.value, NULL);
         }
@@ -140,7 +140,7 @@ bool emap_expand(struct emap* hmap)
     return true;
 }
 
-const char* emap_set(const char* key, struct estr value, struct emap* hmap)
+const char* emap_set(const char* key, estr value, emap* hmap)
 {
     assert(value.val != NULL && value.len > 0);
     if (value.val == NULL || value.len == 0) {

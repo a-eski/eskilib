@@ -2,15 +2,16 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include "eskilib_error_handler.h"
+
 #include "eskilib_linkedlist.h"
 
 eskilib_LinkedList* eskilib_linkedlist_malloc(void)
 {
 	eskilib_LinkedList* linkedList = malloc(sizeof(eskilib_LinkedList));
 
-	if (linkedList == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_LinkedList.\n");
+	if (!linkedList) {
+		return NULL;
+	}
 
 	linkedList->first = NULL;
 
@@ -23,13 +24,13 @@ void eskilib_linkedlist_free(eskilib_LinkedList* linkedList)
 	eskilib_LinkedList_LinkedNode* previousNode = NULL;
 
 	assert(linkedList != NULL);
-	if (linkedList == NULL)
+	if (linkedList == NULL) {
 		return;
+	}
 
 	currentNode = linkedList->first;
 
-	while (currentNode != NULL)
-	{
+	while (currentNode != NULL) {
 		previousNode = currentNode;
 		currentNode = currentNode->next;
 		free(previousNode);
@@ -42,8 +43,9 @@ eskilib_LinkedList_LinkedNode* eskilib_linkedlist_linkednode_malloc(void* value)
 {
 	eskilib_LinkedList_LinkedNode* node = malloc(sizeof(eskilib_LinkedList_LinkedNode));
 
-	if (node == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_LinkedList_LinkedNode.\n");
+	if (!node) {
+		return NULL;
+	}
 
 	node->value = value;
 	node->next = NULL;

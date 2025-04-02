@@ -3,11 +3,16 @@
 #ifndef ESKILIB_LIST_H_
 #define ESKILIB_LIST_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <stdint.h>
 
 enum eskilib_List_Result
 {
+	FAILURE_MALLOC = -4,
 	FAILURE_OVERFLOW_PROTECTION = -3,
 	FAILURE_NULL_ELEMENT = -2,
 	FAILURE_NULL_LIST = -1,
@@ -27,5 +32,9 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfEl
 void eskilib_list_free(eskilib_List* list);
 
 enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !ESKILIB_LIST_H_ */

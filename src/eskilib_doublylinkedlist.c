@@ -1,14 +1,15 @@
 #include <stdlib.h>
 #include <assert.h>
-#include "eskilib_error_handler.h"
+
 #include "eskilib_doublylinkedlist.h"
 
 eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc(void)
 {
 	eskilib_DoublyLinkedList* linkedList = malloc(sizeof(eskilib_DoublyLinkedList));
 
-	if (linkedList == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_DoublyLinkedList.\n");
+	if (linkedList == NULL) {
+		return NULL;
+	}
 
 	linkedList->first = NULL;
 	linkedList->last = NULL;
@@ -22,8 +23,9 @@ void eskilib_doublylinkedlist_free(eskilib_DoublyLinkedList* linkedList)
 	eskilib_DoublyLinkedList_LinkedNode* previousNode = NULL;
 
 	assert(linkedList != NULL);
-	if (linkedList == NULL)
+	if (linkedList == NULL) {
 		return;
+	}
 
 	currentNode = linkedList->first;
 
@@ -42,13 +44,15 @@ eskilib_DoublyLinkedList_LinkedNode* eskilib_doublylinkedlist_linkednode_malloc(
 	eskilib_DoublyLinkedList_LinkedNode* node = NULL;
 
 	assert(value != NULL);
-	if (value == NULL)
+	if (value == NULL) {
 		return NULL;
+	}
 
 	node = malloc(sizeof(eskilib_DoublyLinkedList_LinkedNode));
 
-	if (node == NULL)
-		eskilib_output_allocation_error_and_exit("Failed to allocate eskilib_DoublyLinkedList_LinkedNode.\n");
+	if (node == NULL) {
+		return NULL;
+	}
 
 	node->value = value;
 	node->next = NULL;

@@ -1,10 +1,9 @@
-/* Copyright eskilib by Alex Eski 2025 */
+/* Copyright (C) eskilib by Alex Eski 2025 */
 
-#pragma once
-#ifndef ESKILIB_DEFINES_H_
-#define ESKILIB_DEFINES_H_
+#ifndef ESKILIB_DEFS_H_
+#define ESKILIB_DEFS_H_
 
-// eskilib_nodiscard: an attribute qualifier wrapper for [[nodiscard]].
+// enodiscard: an attribute qualifier wrapper for [[nodiscard]].
 // If not using c2x/c23, does nothing, otherwise use [[nodiscard]] attribute.
 // Useful to help with refactors and preventing bugs from not checking return values.
 
@@ -14,12 +13,12 @@
 
 #if __has_c_attribute(nodiscard)
 #if __STDC_VERSION__ >= 202000
-#define eskilib_nodiscard [[nodiscard]]
+#define enodiscard [[nodiscard]]
 #else
-#define eskilib_nodiscard
+#define enodiscard
 #endif
 #else
-#define eskilib_nodiscard
+#define enodiscard
 #endif
 
-#endif // !ESKILIB_DEFINES_H_
+#endif // !ESKILIB_DEFS_H_

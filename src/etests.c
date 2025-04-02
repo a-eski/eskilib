@@ -7,7 +7,7 @@
 #include "tests/emap_tests.h"
 #include "tests/eskilib_doublylinkedlist_tests.h"
 #include "tests/estr_tests.h"
-#include "tests/eskilib_trie_tests.h"
+#include "tests/etrie_tests.h"
 
 int main(void)
 {
@@ -25,7 +25,7 @@ int main(void)
 
     estr_tests();
 
-    eskilib_trie_tests();
+    etrie_tests();
 
     return 0;
 }

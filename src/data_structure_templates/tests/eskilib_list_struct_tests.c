@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdint.h>
-#include "../../eskilib_test.h"
+#include "../../etest.h"
 
 struct eskilib_Data
 {
@@ -17,10 +17,10 @@ void eskilib_list_malloc_default_size_struct_test(void)
 
 	list = eskilib_list_malloc(0);
 
-	eskilib_assert(list != NULL);
-	eskilib_assert(list->elements != NULL);
-	eskilib_assert(list->size > 0);/*just check greater than 0 so we don't depend on default size.*/
-	eskilib_assert(list->position == 0);
+	eassert(list != NULL);
+	eassert(list->elements != NULL);
+	eassert(list->size > 0);/*just check greater than 0 so we don't depend on default size.*/
+	eassert(list->position == 0);
 
 	eskilib_list_free(list);
 }
@@ -32,10 +32,10 @@ void eskilib_list_malloc_nondefault_size_struct_test(void)
 
 	list = eskilib_list_malloc(size);
 
-	eskilib_assert(list != NULL);
-	eskilib_assert(list->elements != NULL);
-	eskilib_assert(list->size == size);
-	eskilib_assert(list->position == 0);
+	eassert(list != NULL);
+	eassert(list->elements != NULL);
+	eassert(list->size == size);
+	eassert(list->position == 0);
 
 	eskilib_list_free(list);
 }
@@ -50,8 +50,8 @@ void eskilib_list_malloc_nondefault_size_struct_test(void)
 //
 // 	addResult = eskilib_list_add(NULL, list);
 //
-// 	eskilib_assert(addResult == FAILURE_NULL_ELEMENT);
-// 	eskilib_assert(list->position == 0);
+// 	eassert(addResult == FAILURE_NULL_ELEMENT);
+// 	eassert(list->position == 0);
 //
 // 	eskilib_list_free(list);
 // }
@@ -63,7 +63,7 @@ void eskilib_list_add_null_list_struct_test(void)
 
 	addResult = eskilib_list_add(data, NULL);
 
-	eskilib_assert(addResult == FAILURE_NULL_LIST);
+	eassert(addResult == FAILURE_NULL_LIST);
 }
 
 void eskilib_list_add_one_element_struct_test(void)
@@ -77,11 +77,11 @@ void eskilib_list_add_one_element_struct_test(void)
 
 	addResult = eskilib_list_add(data, list);
 
-	eskilib_assert(addResult == SUCCESS);
-	eskilib_assert(list->elements[0].count == data.count);
-	eskilib_assert(list->elements[0].name == data.name);
-	eskilib_assert(list->size == size);
-	eskilib_assert(list->position == 1);
+	eassert(addResult == SUCCESS);
+	eassert(list->elements[0].count == data.count);
+	eassert(list->elements[0].name == data.name);
+	eassert(list->size == size);
+	eassert(list->position == 1);
 
 	eskilib_list_free(list);
 }
@@ -98,20 +98,20 @@ void eskilib_list_add_until_size_expanded_struct_test(void)
 	list = eskilib_list_malloc(size);
 
 	addResult = eskilib_list_add(dataOne, list);
-	eskilib_assert(addResult == SUCCESS);
+	eassert(addResult == SUCCESS);
 	addResult = eskilib_list_add(dataTwo, list);
-	eskilib_assert(addResult == SUCCESS);
+	eassert(addResult == SUCCESS);
 	addResult = eskilib_list_add(dataThree, list);
-	eskilib_assert(addResult == SUCCESS);
+	eassert(addResult == SUCCESS);
 
-	eskilib_assert(list->elements[0].count == dataOne.count);
-	eskilib_assert(list->elements[0].name == dataOne.name);
-	eskilib_assert(list->elements[1].count == dataTwo.count);
-	eskilib_assert(list->elements[1].name == dataTwo.name);
-	eskilib_assert(list->elements[2].count == dataThree.count);
-	eskilib_assert(list->elements[2].name == dataThree.name);
-	eskilib_assert(list->size == size * 2);
-	eskilib_assert(list->position == 3);
+	eassert(list->elements[0].count == dataOne.count);
+	eassert(list->elements[0].name == dataOne.name);
+	eassert(list->elements[1].count == dataTwo.count);
+	eassert(list->elements[1].name == dataTwo.name);
+	eassert(list->elements[2].count == dataThree.count);
+	eassert(list->elements[2].name == dataThree.name);
+	eassert(list->size == size * 2);
+	eassert(list->position == 3);
 
 	eskilib_list_free(list);
 }
@@ -130,20 +130,20 @@ void eskilib_list_add_10_struct_test(void)
 		if (i % 2 == 0)
 		{
 			addResult = eskilib_list_add(dataOne, list);
-			eskilib_assert(addResult == SUCCESS);
-			eskilib_assert(list->elements[i].count == dataOne.count);
-			eskilib_assert(list->elements[i].name == dataOne.name);
+			eassert(addResult == SUCCESS);
+			eassert(list->elements[i].count == dataOne.count);
+			eassert(list->elements[i].name == dataOne.name);
 		}
 		else
 		{
 			addResult = eskilib_list_add(dataTwo, list);
-			eskilib_assert(addResult == SUCCESS);
-			eskilib_assert(list->elements[i].count == dataTwo.count);
-			eskilib_assert(list->elements[i].name == dataTwo.name);
+			eassert(addResult == SUCCESS);
+			eassert(list->elements[i].count == dataTwo.count);
+			eassert(list->elements[i].name == dataTwo.name);
 		}
 	}
 
-	eskilib_assert(list->position == 10);
+	eassert(list->position == 10);
 
 	eskilib_list_free(list);
 
@@ -151,25 +151,23 @@ void eskilib_list_add_10_struct_test(void)
 
 void eskilib_list_release_struct_tests(void)
 {
-	// eskilib_test_run(eskilib_list_add_null_element_struct_test);
-
-	eskilib_test_run(eskilib_list_add_null_list_struct_test);
+	// etest_run(eskilib_list_add_null_element_struct_test);
+	etest_run(eskilib_list_add_null_list_struct_test);
 }
 
 void eskilib_list_struct_tests(void)
 {
+	etest_start();
+
 	#ifdef NDEBUG
 		eskilib_list_release_struct_tests();
 	#endif /* ifdef NDEBUG */
 
-	eskilib_test_run(eskilib_list_malloc_default_size_struct_test);
+	etest_run(eskilib_list_malloc_default_size_struct_test);
+	etest_run(eskilib_list_malloc_nondefault_size_struct_test);
+	etest_run(eskilib_list_add_one_element_struct_test);
+	etest_run(eskilib_list_add_until_size_expanded_struct_test);
+	etest_run(eskilib_list_add_10_struct_test);
 
-	eskilib_test_run(eskilib_list_malloc_nondefault_size_struct_test);
-
-	eskilib_test_run(eskilib_list_add_one_element_struct_test);
-
-	eskilib_test_run(eskilib_list_add_until_size_expanded_struct_test);
-
-	eskilib_test_run(eskilib_list_add_10_struct_test);
+	etest_finish();
 }
-

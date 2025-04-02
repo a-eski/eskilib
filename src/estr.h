@@ -12,7 +12,7 @@ extern "C" {
 #include <string.h>
 #include <stdbool.h>
 
-#include "eskilib_defines.h"
+#include "edefs.h"
 
 struct estr {
     size_t len;
@@ -28,7 +28,7 @@ typedef struct estr estr;
 #define estr_New(str, str_len) (estr){ .val = str, .len = str_len };
 
 // A simple wrapper for memcmp that checks if lens match before calling memcmp.
-eskilib_nodiscard
+enodiscard
 static inline
 bool estr_compare(char* str, size_t str_len, char* str_two, size_t str_two_len)
 {
@@ -40,7 +40,7 @@ bool estr_compare(char* str, size_t str_len, char* str_two, size_t str_two_len)
 }
 
 
-eskilib_nodiscard
+enodiscard
 static inline
 bool estr_compare_const(const char* const str, const size_t str_len,
                                   const char* const str_two, const size_t str_two_len)
