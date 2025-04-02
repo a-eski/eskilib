@@ -30,19 +30,19 @@ void eskilib_trie_free(struct eskilib_Trie* tree) {
 	free(tree);
 }
 
-void eskilib_trie_add(char* string, size_t length, struct eskilib_Trie* tree) {
-	assert(string);
+void eskilib_trie_add(char* str, size_t length, struct eskilib_Trie* tree) {
+	assert(str);
 	assert(length > 0);
 	assert(tree);
 
 	int index = 0;
 
-	for (size_t i = 0; i < length - 1; i++) { //string.length - 1 because it includes null terminator
-		index = (int)string[i] - ' ';
+	for (size_t i = 0; i < length - 1; i++) { //str.length - 1 because it includes null terminator
+		index = (int)str[i] - ' ';
 		if (tree->nodes[index] == NULL) {
 			tree->nodes[index] = calloc(1, sizeof(struct eskilib_Trie));
 			tree->nodes[index]->is_end_of_a_word = false;
-			tree->nodes[index]->letter = string[i];
+			tree->nodes[index]->letter = str[i];
 		}
 
 		tree = tree->nodes[index];
@@ -51,19 +51,19 @@ void eskilib_trie_add(char* string, size_t length, struct eskilib_Trie* tree) {
 	tree->is_end_of_a_word = true;
 }
 
-void eskilib_trie_add_string(struct eskilib_String string, struct eskilib_Trie* tree) {
+void eskilib_trie_add_str(struct estr str, struct eskilib_Trie* tree) {
 	assert(tree);
-	assert(string.value);
-	assert(string.length > 0);
+	assert(str.value);
+	assert(str.length > 0);
 
 	int index = 0;
 
-	for (size_t i = 0; i < string.length - 1; i++) { //string.length - 1 because it includes null terminator
-		index = eskilib_trie_index_get(string.value[i]);
+	for (size_t i = 0; i < str.length - 1; i++) { //str.length - 1 because it includes null terminator
+		index = eskilib_trie_index_get(str.value[i]);
 		if (tree->nodes[index] == NULL) {
 			tree->nodes[index] = calloc(1, sizeof(struct eskilib_Trie));
 			tree->nodes[index]->is_end_of_a_word = false;
-			tree->nodes[index]->letter = string.value[i];
+			tree->nodes[index]->letter = str.value[i];
 		}
 
 		tree = tree->nodes[index];
@@ -72,23 +72,23 @@ void eskilib_trie_add_string(struct eskilib_String string, struct eskilib_Trie* 
 	tree->is_end_of_a_word = true;
 }
 
-void eskilib_trie_add_multiple(struct eskilib_String* strings, int count, struct eskilib_Trie* tree) {
-	assert(tree && strings);
+void eskilib_trie_add_multiple(struct estr* strs, int count, struct eskilib_Trie* tree) {
+	assert(tree && strs);
 
 	for (int i = 0; i < count; i++) {
-		eskilib_trie_add_string(strings[i], tree);
+		eskilib_trie_add_str(strs[i], tree);
 	}
 }
 
-struct eskilib_Trie* eskilib_trie_search(char* string, size_t length, struct eskilib_Trie* tree) {
+struct eskilib_Trie* eskilib_trie_search(char* str, size_t length, struct eskilib_Trie* tree) {
 	assert(tree);
-	assert(string);
+	assert(str);
 	assert(length > 0);
 
 	int index = 0;
 
 	for (size_t i = 0; i < length - 1; i++) {
-		index = eskilib_trie_index_get(string[i]);
+		index = eskilib_trie_index_get(str[i]);
 		if (tree->nodes[index] == NULL) {
 			return NULL;
 		}
@@ -99,15 +99,15 @@ struct eskilib_Trie* eskilib_trie_search(char* string, size_t length, struct esk
 	return tree;
 }
 
-struct eskilib_Trie* eskilib_trie_search_string(struct eskilib_String string, struct eskilib_Trie* tree) {
+struct eskilib_Trie* eskilib_trie_search_str(struct estr str, struct eskilib_Trie* tree) {
 	assert(tree);
-	assert(string.value);
-	assert(string.length > 0);
+	assert(str.value);
+	assert(str.length > 0);
 
 	int index = 0;
 
-	for (size_t i = 0; i < string.length - 1; i++) {
-		index = eskilib_trie_index_get(string.value[i]);
+	for (size_t i = 0; i < str.length - 1; i++) {
+		index = eskilib_trie_index_get(str.value[i]);
 		if (tree->nodes[index] == NULL) {
 			return NULL;
 		}
@@ -119,7 +119,7 @@ struct eskilib_Trie* eskilib_trie_search_string(struct eskilib_String string, st
 }
 
 void eskilib_trie_match(char* matches[],
-				size_t* string_position,
+				size_t* str_pos,
 				size_t* matches_position,
 				const uint_fast32_t max_match_length,
 				struct eskilib_Trie* tree) {
@@ -131,35 +131,35 @@ void eskilib_trie_match(char* matches[],
 					return;
 				}
 
-				if (*string_position > 0 && *matches_position > 0) {
+				if (*str_pos > 0 && *matches_position > 0) {
 					strcpy(matches[*matches_position], matches[*matches_position - 1]);
 				}
 			}
 
-			matches[*matches_position][*string_position] = tree->nodes[i]->letter;
-			++*string_position;
-			matches[*matches_position][*string_position] = '\0';
+			matches[*matches_position][*str_pos] = tree->nodes[i]->letter;
+			++*str_pos;
+			matches[*matches_position][*str_pos] = '\0';
 
 			if (tree->nodes[i]->is_end_of_a_word == true && *matches_position + 1 < max_match_length) {
 				++*matches_position;
 			}
 
-			eskilib_trie_match(matches, string_position, matches_position, max_match_length, tree->nodes[i]);
+			eskilib_trie_match(matches, str_pos, matches_position, max_match_length, tree->nodes[i]);
 
 			if (matches[*matches_position] != NULL) {
 				++*matches_position;
 			}
 
-			*string_position = *string_position - 1;
+			*str_pos = *str_pos - 1;
 		}
 	}
 }
 
 size_t eskilib_trie_matches(char* matches[], const uint_fast32_t max_match_length, struct eskilib_Trie* tree) {
-	size_t string_position = 0;
+	size_t str_pos = 0;
 	size_t matches_position = 0;
 
-	eskilib_trie_match(matches, &string_position, &matches_position, max_match_length, tree);
+	eskilib_trie_match(matches, &str_pos, &matches_position, max_match_length, tree);
 
 	return matches_position;
 }

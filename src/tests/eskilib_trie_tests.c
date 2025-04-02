@@ -4,14 +4,14 @@
 
 #include "../eskilib_trie.h"
 #include "../eskilib_test.h"
-#include "../eskilib_string.h"
+#include "../estr.h"
 
 void eskilib_trie_add_length_mismatch_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string = { .value = "and", .length = 3 };
-	eskilib_trie_add(string.value, string.length, tree);
+	struct estr str = { .value = "and", .length = 3 };
+	eskilib_trie_add(str.value, str.length, tree);
 
 	//not crashing is a test pass here
 
@@ -22,8 +22,8 @@ void eskilib_trie_add_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string = { .value = "and", .length = 4 };
-	eskilib_trie_add(string.value, string.length, tree);
+	struct estr str = { .value = "and", .length = 4 };
+	eskilib_trie_add(str.value, str.length, tree);
 
 	// sanity check: unrelated letters are null
 	eskilib_assert(tree->nodes[eskilib_trie_index_get('b')] == NULL);
@@ -54,9 +54,9 @@ void eskilib_trie_add_duplicate_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string = { .value = "and", .length = 4 };
-	eskilib_trie_add(string.value, string.length, tree);
-	eskilib_trie_add_string(string, tree);
+	struct estr str = { .value = "and", .length = 4 };
+	eskilib_trie_add(str.value, str.length, tree);
+	eskilib_trie_add_str(str, tree);
 
 	struct eskilib_Trie* first_node = tree->nodes[eskilib_trie_index_get('a')];
 	eskilib_assert(first_node != NULL);
@@ -80,10 +80,10 @@ void eskilib_trie_add_multiple_unrelated_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string_one = { .value = "ls", .length = 3 };
-	eskilib_trie_add(string_one.value, string_one.length, tree);
-	struct eskilib_String string_two = { .value = "echo", .length = 5 };
-	eskilib_trie_add_string(string_two, tree);
+	struct estr str_one = { .value = "ls", .length = 3 };
+	eskilib_trie_add(str_one.value, str_one.length, tree);
+	struct estr str_two = { .value = "echo", .length = 5 };
+	eskilib_trie_add_str(str_two, tree);
 
 	struct eskilib_Trie* ls_first_node = tree->nodes[eskilib_trie_index_get('l')];
 	eskilib_assert(ls_first_node != NULL);
@@ -118,12 +118,12 @@ void eskilib_trie_add_multiple_related_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string_one = { .value = "gene", .length = 5 };
-	eskilib_trie_add(string_one.value, string_one.length, tree);
-	struct eskilib_String string_two = { .value = "genetic", .length = 8 };
-	eskilib_trie_add_string(string_two, tree);
-	struct eskilib_String string_three = { .value = "genius", .length = 7 };
-	eskilib_trie_add_string(string_three, tree);
+	struct estr str_one = { .value = "gene", .length = 5 };
+	eskilib_trie_add(str_one.value, str_one.length, tree);
+	struct estr str_two = { .value = "genetic", .length = 8 };
+	eskilib_trie_add_str(str_two, tree);
+	struct estr str_three = { .value = "genius", .length = 7 };
+	eskilib_trie_add_str(str_three, tree);
 
 	// gene
 	struct eskilib_Trie* first_node = tree->nodes[eskilib_trie_index_get('g')];
@@ -178,15 +178,15 @@ void eskilib_trie_search_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string_one = { .value = "gene", .length = 5 };
-	eskilib_trie_add(string_one.value, string_one.length, tree);
-	struct eskilib_String string_two = { .value = "genetic", .length = 8 };
-	eskilib_trie_add(string_two.value, string_two.length, tree);
-	struct eskilib_String string_three = { .value = "genius", .length = 7 };
-	eskilib_trie_add_string(string_three, tree);
+	struct estr str_one = { .value = "gene", .length = 5 };
+	eskilib_trie_add(str_one.value, str_one.length, tree);
+	struct estr str_two = { .value = "genetic", .length = 8 };
+	eskilib_trie_add(str_two.value, str_two.length, tree);
+	struct estr str_three = { .value = "genius", .length = 7 };
+	eskilib_trie_add_str(str_three, tree);
 
-	struct eskilib_String string_search = { .value = "gen", .length = 4 };
-	struct eskilib_Trie* result = eskilib_trie_search(string_search.value, string_search.length, tree);
+	struct estr str_search = { .value = "gen", .length = 4 };
+	struct eskilib_Trie* result = eskilib_trie_search(str_search.value, str_search.length, tree);
 	eskilib_assert(result != NULL);
 	struct eskilib_Trie* result_e = result->nodes[eskilib_trie_index_get('e')];
 	eskilib_assert(result_e != NULL);
@@ -200,13 +200,13 @@ void eskilib_trie_search_commands_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls", .length = 3 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort | wc -c", .length = 18 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls > t.txt", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "cat t.txt", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "rm t.txt", .length = 9 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ss", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort | wc -c", .length = 18 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls > t.txt", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "cat t.txt", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "rm t.txt", .length = 9 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ss", .length = 3 }, tree);
 
 	struct eskilib_Trie* result = tree->nodes[eskilib_trie_index_get('l')];
 	eskilib_assert(result != NULL);
@@ -221,7 +221,7 @@ void eskilib_trie_search_commands_test(void) {
 	eskilib_assert(result->is_end_of_a_word == false);
 	eskilib_assert(result->letter == ' ');
 
-	struct eskilib_Trie* search_result = eskilib_trie_search_string((struct eskilib_String){ .value = "ls | ", .length = 6 }, tree);
+	struct eskilib_Trie* search_result = eskilib_trie_search_str((struct estr){ .value = "ls | ", .length = 6 }, tree);
 	eskilib_assert(search_result != NULL);
 	eskilib_assert(search_result->is_end_of_a_word == false);
 	eskilib_assert(search_result->letter == ' ');
@@ -249,15 +249,15 @@ void eskilib_trie_search_no_results_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	struct eskilib_String string_one = { .value = "gene", .length = 5 };
-	eskilib_trie_add_string(string_one, tree);
-	struct eskilib_String string_two = { .value = "genetic", .length = 8 };
-	eskilib_trie_add_string(string_two, tree);
-	struct eskilib_String string_three = { .value = "genius", .length = 7 };
-	eskilib_trie_add_string(string_three, tree);
+	struct estr str_one = { .value = "gene", .length = 5 };
+	eskilib_trie_add_str(str_one, tree);
+	struct estr str_two = { .value = "genetic", .length = 8 };
+	eskilib_trie_add_str(str_two, tree);
+	struct estr str_three = { .value = "genius", .length = 7 };
+	eskilib_trie_add_str(str_three, tree);
 
-	struct eskilib_String string_search = { .value = "ls", .length = 3 };
-	struct eskilib_Trie* search_result = eskilib_trie_search_string(string_search, tree);
+	struct estr str_search = { .value = "ls", .length = 3 };
+	struct eskilib_Trie* search_result = eskilib_trie_search_str(str_search, tree);
 	eskilib_assert(search_result == NULL);
 
 	eskilib_trie_free(tree);
@@ -267,16 +267,16 @@ void eskilib_trie_matches_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls", .length = 3 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | wc -c", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort | wc -c", .length = 18 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls > t.txt", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "cat t.txt", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "rm t.txt", .length = 9 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ss", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | wc -c", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort | wc -c", .length = 18 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls > t.txt", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "cat t.txt", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "rm t.txt", .length = 9 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ss", .length = 3 }, tree);
 
-	struct eskilib_Trie* search_result = eskilib_trie_search_string((struct eskilib_String){ .value = "ls | ", .length = 6 }, tree);
+	struct eskilib_Trie* search_result = eskilib_trie_search_str((struct estr){ .value = "ls | ", .length = 6 }, tree);
 	eskilib_assert(search_result != NULL);
 
 	constexpr uint_fast32_t max_match_length = 256;
@@ -302,14 +302,14 @@ void eskilib_trie_matches_no_results_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls", .length = 3 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | wc -c", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort | wc -c", .length = 18 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls > t.txt", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "cat t.txt", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "rm t.txt", .length = 9 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ss", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | wc -c", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort | wc -c", .length = 18 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls > t.txt", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "cat t.txt", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "rm t.txt", .length = 9 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ss", .length = 3 }, tree);
 
 	constexpr uint_fast32_t max_match_length = 256;
 	char* autocomplete[max_match_length] = {0};
@@ -326,14 +326,14 @@ void eskilib_trie_matches_multiple_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls", .length = 3 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | wc -c", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort | wc -c", .length = 18 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls > t.txt", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "cat t.txt", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "rm t.txt", .length = 9 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ss", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | wc -c", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort | wc -c", .length = 18 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls > t.txt", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "cat t.txt", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "rm t.txt", .length = 9 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ss", .length = 3 }, tree);
 
 	constexpr uint_fast32_t max_match_length = 256;
 	char* autocomplete[max_match_length] = {0};
@@ -377,14 +377,14 @@ void eskilib_trie_matches_multiple_simulation_test(void) {
 	struct eskilib_Trie* tree = eskilib_trie_malloc();
 	eskilib_assert(tree);
 
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls", .length = 3 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | wc -c", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls | sort | wc -c", .length = 18 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ls > t.txt", .length = 11 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "cat t.txt", .length = 10 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "rm t.txt", .length = 9 }, tree);
-	eskilib_trie_add_string((struct eskilib_String){ .value = "ss", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls", .length = 3 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | wc -c", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls | sort | wc -c", .length = 18 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ls > t.txt", .length = 11 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "cat t.txt", .length = 10 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "rm t.txt", .length = 9 }, tree);
+	eskilib_trie_add_str((struct estr){ .value = "ss", .length = 3 }, tree);
 	eskilib_trie_add("nvim", 5, tree);
 	eskilib_trie_add("nvim .", 7, tree);
 
@@ -446,7 +446,8 @@ void eskilib_trie_tests(void) {
 }
 
 #ifndef ESKILIB_TEST_ALL
-int main(void) {
+int main(void)
+{
 	eskilib_trie_tests();
 
 	return EXIT_SUCCESS;
