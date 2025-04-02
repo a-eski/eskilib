@@ -1,3 +1,6 @@
+/* Copyright eskilib by Alex Eski 2025 */
+
+#pragma once
 #ifndef ESKILIB_DEFINES_H_
 #define ESKILIB_DEFINES_H_
 

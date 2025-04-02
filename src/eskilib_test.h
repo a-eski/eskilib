@@ -1,4 +1,4 @@
-/* Copyright eskilib (c) by Alex Eski 2024 */
+/* Copyright eskilib (C) by Alex Eski 2024 */
 
 #ifndef ESKILIB_TEST_H_
 #define ESKILIB_TEST_H_
