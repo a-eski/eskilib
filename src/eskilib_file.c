@@ -5,7 +5,9 @@
 
 // simple fgets implementation that returns the number of characters read
 eskilib_nodiscard
-int eskilib_fgets(char* const input, const size_t input_len, FILE* const restrict file)
+int eskilib_fgets(char* const input,
+                  const size_t input_len,
+                  FILE* const restrict file)
 {
     register int character;
     register char* buffer = input;
@@ -27,9 +29,9 @@ int eskilib_fgets(char* const input, const size_t input_len, FILE* const restric
 
 eskilib_nodiscard
 int eskilib_fgets_delimited(char* const input,
-                                              const size_t input_len,
-                                              FILE* const restrict file,
-                                              const char delimiter)
+                            const size_t input_len,
+                            FILE* const restrict file,
+                            const char delimiter)
 {
     register int character;
     register char* buffer = input;

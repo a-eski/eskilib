@@ -6,7 +6,7 @@
 #include "tests/eskilib_list_tests.h"
 #include "tests/eskilib_hashtable_tests.h"
 #include "tests/eskilib_doublylinkedlist_tests.h"
-#include "tests/eskilib_string_tests.h"
+#include "tests/estr_tests.h"
 #include "tests/eskilib_trie_tests.h"
 
 int main(void)
@@ -23,7 +23,7 @@ int main(void)
 
 	eskilib_doublylinkedlist_tests();
 
-	eskilib_string_tests();
+	estr_tests();
 
 	eskilib_trie_tests();
 

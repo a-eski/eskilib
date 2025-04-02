@@ -6,13 +6,13 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include "eskilib_string.h"
+#include "estr.h"
 
 #define ESKILIB_HASHTABLE_DEFAULT_CAPACITY 100
 
 struct eskilib_HashTable_Entry {
     const char* key;
-    struct eskilib_String value;
+    struct estr value;
 };
 
 struct eskilib_HashTable {
@@ -25,10 +25,10 @@ bool eskilib_hashtable_malloc(struct eskilib_HashTable* table);
 
 void eskilib_hashtable_free(struct eskilib_HashTable* table);
 
-struct eskilib_String eskilib_hashtable_get(const char* key, struct eskilib_HashTable* table);
+struct estr eskilib_hashtable_get(const char* key, struct eskilib_HashTable* table);
 
 bool eskilib_hashtable_exists(const char* key, struct eskilib_HashTable* table);
 
-const char* eskilib_hashtable_set(const char* key, struct eskilib_String value, struct eskilib_HashTable* table);
+const char* eskilib_hashtable_set(const char* key, struct estr value, struct eskilib_HashTable* table);
 
 #endif // ESKILIB_HASHTABLE_H_
