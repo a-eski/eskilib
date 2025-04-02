@@ -84,7 +84,7 @@ bool eskilib_hashtable_exists(const char* key, struct eskilib_HashTable* table)
 }
 
 const char* eskilib_hashtable_set_entry(struct eskilib_HashTable_Entry* entries, size_t capacity, const char* key,
-                                        struct estr value, size_t* plength)
+                                        struct estr value, size_t* plen)
 {
     uint64_t hash = eskilib_hashtable_key(key);
     size_t index = (size_t)(hash & (uint64_t)(capacity - 1));
@@ -101,12 +101,12 @@ const char* eskilib_hashtable_set_entry(struct eskilib_HashTable_Entry* entries,
         }
     }
 
-    if (plength != NULL) {
+    if (plen != NULL) {
         key = strdup(key);
         if (key == NULL) {
             return NULL;
         }
-        (*plength)++;
+        (*plen)++;
     }
 
     entries[index].key = (char*)key;
@@ -142,8 +142,8 @@ bool eskilib_hashtable_expand(struct eskilib_HashTable* table)
 
 const char* eskilib_hashtable_set(const char* key, struct estr value, struct eskilib_HashTable* table)
 {
-    assert(value.value != NULL && value.length > 0);
-    if (value.value == NULL || value.length == 0) {
+    assert(value.val != NULL && value.len > 0);
+    if (value.val == NULL || value.len == 0) {
         return NULL;
     }
 

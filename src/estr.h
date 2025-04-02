@@ -15,19 +15,21 @@ extern "C" {
 
 #include "eskilib_defines.h"
 
-#define estr_Empty ((const struct estr){.value = NULL, .length = 0})
+#define estr_Empty ((const struct estr){.val = NULL, .len = 0})
 
-// WARN: currently all string functions using this code incorporate null terminator in length
-// TODO: fix this, use length everywhere without null terminator... .length = sizeof(str) - 1
-#define estr_New_Literal(str) (struct estr){ .value = str, .length = sizeof(str) };
-#define estr_New(str, len) (struct estr){ .value = str, .length = len };
+// WARN: currently all string functions using this code incorporate null terminator in len
+// TODO: fix this, use len everywhere without null terminator... .len = sizeof(str) - 1
+#define estr_New_Literal(str) (struct estr){ .val = str, .len = sizeof(str) };
+#define estr_New(str, str_len) (struct estr){ .val = str, .len = str_len };
 
 struct estr {
-    size_t length;
-    char* value;
+    size_t len;
+    char* val;
 };
 
-// A simple wrapper for memcmp that checks if lengths match before calling memcmp.
+typedef struct estr estr;
+
+// A simple wrapper for memcmp that checks if lens match before calling memcmp.
 eskilib_nodiscard
 static inline
 bool estr_compare(char* str, size_t str_len, char* str_two, size_t str_two_len)
