@@ -3,6 +3,10 @@
 #ifndef ESKILIB_LINKEDLIST_H_
 #define ESKILIB_LINKEDLIST_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum eskilib_LinkedList_Result
 {
 	FAILURE_ALREADY_LINKED_NODE = -4,
@@ -36,5 +40,9 @@ enum eskilib_LinkedList_Result eskilib_linkedlist_set_first(eskilib_LinkedList_L
 enum eskilib_LinkedList_Result eskilib_linkedlist_set_last(eskilib_LinkedList_LinkedNode* nodeToSetLast, eskilib_LinkedList* linkedList);
 
 enum eskilib_LinkedList_Result eskilib_linkedlist_set_after(eskilib_LinkedList_LinkedNode* currentNode, eskilib_LinkedList_LinkedNode* nodeToSetAfter);
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif /* !ESKILIB_LINKEDLIST_H_ */

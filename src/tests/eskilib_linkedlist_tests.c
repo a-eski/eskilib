@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../eskilib_test.h"
+#include "../etest.h"
 #include "../eskilib_linkedlist.h"
 
 void eskilib_linkedlist_malloc_test(void)
@@ -9,8 +9,8 @@ void eskilib_linkedlist_malloc_test(void)
 
 	linkedList = eskilib_linkedlist_malloc();
 
-	eskilib_assert(linkedList != NULL);
-	eskilib_assert(linkedList->first == NULL);
+	eassert(linkedList != NULL);
+	eassert(linkedList->first == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -22,9 +22,9 @@ void eskilib_linkedlist_linkednode_malloc_test(void)
 
 	node = eskilib_linkedlist_linkednode_malloc(&value);
 
-	eskilib_assert(node != NULL);
-	eskilib_assert(value == *(size_t*)node->value);
-	eskilib_assert(node->next == NULL);
+	eassert(node != NULL);
+	eassert(value == *(size_t*)node->value);
+	eassert(node->next == NULL);
 
 	free(node);
 }
@@ -41,10 +41,10 @@ void eskilib_linkedlist_set_first_on_empty_linkedlist_test(void)
 
 	setFirstResult = eskilib_linkedlist_set_first(node, linkedList);
 
-	eskilib_assert(setFirstResult == SUCCESS);
-	eskilib_assert(linkedList->first == node);
-	eskilib_assert(linkedList->first->value == node->value);
-	eskilib_assert(linkedList->first->next == NULL);
+	eassert(setFirstResult == SUCCESS);
+	eassert(linkedList->first == node);
+	eassert(linkedList->first->value == node->value);
+	eassert(linkedList->first->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -66,13 +66,13 @@ void eskilib_linkedlist_set_first_on_nonempty_linkedlist_test(void)
 	setFirstResultOne = eskilib_linkedlist_set_first(node, linkedList);
 	setFirstResultTwo = eskilib_linkedlist_set_first(nextNode, linkedList);
 
-	eskilib_assert(setFirstResultOne == SUCCESS);
-	eskilib_assert(setFirstResultTwo == SUCCESS);
-	eskilib_assert(linkedList->first == nextNode);
-	eskilib_assert(linkedList->first->value == nextNode->value);
-	eskilib_assert(linkedList->first->next == node);
-	eskilib_assert(linkedList->first->next->value == node->value);
-	eskilib_assert(linkedList->first->next->next == NULL);
+	eassert(setFirstResultOne == SUCCESS);
+	eassert(setFirstResultTwo == SUCCESS);
+	eassert(linkedList->first == nextNode);
+	eassert(linkedList->first->value == nextNode->value);
+	eassert(linkedList->first->next == node);
+	eassert(linkedList->first->next->value == node->value);
+	eassert(linkedList->first->next->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -89,9 +89,9 @@ void eskilib_linkedlist_set_last_on_empty_linkedlist_test(void)
 
 	setLastResult = eskilib_linkedlist_set_last(node, linkedList);
 
-	eskilib_assert(setLastResult == SUCCESS);
-	eskilib_assert(value == *(size_t*)linkedList->first->value);
-	eskilib_assert(linkedList->first->next == NULL);
+	eassert(setLastResult == SUCCESS);
+	eassert(value == *(size_t*)linkedList->first->value);
+	eassert(linkedList->first->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -113,13 +113,13 @@ void eskilib_linkedlist_set_last_on_nonempty_linkedlist_test(void)
 	setLastResultOne = eskilib_linkedlist_set_last(node, linkedList);
 	setLastResultTwo = eskilib_linkedlist_set_last(nextNode, linkedList);
 
-	eskilib_assert(setLastResultOne == SUCCESS);
-	eskilib_assert(setLastResultTwo == SUCCESS);
-	eskilib_assert(linkedList->first == node);
-	eskilib_assert(valueOne == *(size_t*)linkedList->first->value);
-	eskilib_assert(linkedList->first->next == nextNode);
-	eskilib_assert(valueTwo == *(size_t*)linkedList->first->next->value);
-	eskilib_assert(linkedList->first->next->next == NULL);
+	eassert(setLastResultOne == SUCCESS);
+	eassert(setLastResultTwo == SUCCESS);
+	eassert(linkedList->first == node);
+	eassert(valueOne == *(size_t*)linkedList->first->value);
+	eassert(linkedList->first->next == nextNode);
+	eassert(valueTwo == *(size_t*)linkedList->first->next->value);
+	eassert(linkedList->first->next->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -147,16 +147,16 @@ void eskilib_linkedlist_set_after_test(void)
 
 	setAfterResult = eskilib_linkedlist_set_after(linkedList->first, thirdNode);
 
-	eskilib_assert(setFirstResult == SUCCESS);
-	eskilib_assert(setLastResult == SUCCESS);
-	eskilib_assert(setAfterResult == SUCCESS);
-	eskilib_assert(linkedList->first == node);
-	eskilib_assert(valueOne == *(size_t*)linkedList->first->value);
-	eskilib_assert(linkedList->first->next == thirdNode);
-	eskilib_assert(valueThree == *(size_t*)linkedList->first->next->value);
-	eskilib_assert(linkedList->first->next->next == secondNode);
-	eskilib_assert(linkedList->first->next->next->value);
-	eskilib_assert(linkedList->first->next->next->next == NULL);
+	eassert(setFirstResult == SUCCESS);
+	eassert(setLastResult == SUCCESS);
+	eassert(setAfterResult == SUCCESS);
+	eassert(linkedList->first == node);
+	eassert(valueOne == *(size_t*)linkedList->first->value);
+	eassert(linkedList->first->next == thirdNode);
+	eassert(valueThree == *(size_t*)linkedList->first->next->value);
+	eassert(linkedList->first->next->next == secondNode);
+	eassert(linkedList->first->next->next->value);
+	eassert(linkedList->first->next->next->next == NULL);
 
 	eskilib_linkedlist_free(linkedList);
 }
@@ -167,34 +167,24 @@ void eskilib_linkedlist_release_tests(void)
 
 void eskilib_linkedlist_tests(void)
 {
-	eskilib_test_start();
+	etest_start();
 
-	#ifdef NDEBUG
-		eskilib_linkedlist_release_tests();
-	#endif /* ifdef NDEBUG */
+	etest_run(eskilib_linkedlist_malloc_test);
+	etest_run(eskilib_linkedlist_linkednode_malloc_test);
+	etest_run(eskilib_linkedlist_set_first_on_empty_linkedlist_test);
+	etest_run(eskilib_linkedlist_set_first_on_nonempty_linkedlist_test);
+	etest_run(eskilib_linkedlist_set_last_on_empty_linkedlist_test);
+	etest_run(eskilib_linkedlist_set_first_on_nonempty_linkedlist_test);
+	etest_run(eskilib_linkedlist_set_after_test);
 
-	eskilib_test_run(eskilib_linkedlist_malloc_test);
-
-	eskilib_test_run(eskilib_linkedlist_linkednode_malloc_test);
-
-	eskilib_test_run(eskilib_linkedlist_set_first_on_empty_linkedlist_test);
-
-	eskilib_test_run(eskilib_linkedlist_set_first_on_nonempty_linkedlist_test);
-
-	eskilib_test_run(eskilib_linkedlist_set_last_on_empty_linkedlist_test);
-
-	eskilib_test_run(eskilib_linkedlist_set_first_on_nonempty_linkedlist_test);
-
-	eskilib_test_run(eskilib_linkedlist_set_after_test);
-
-	eskilib_test_finish();
+	etest_finish();
 }
 
-#ifndef ESKILIB_TEST_ALL
+#ifndef etest_ALL
 int main(void)
 {
 	eskilib_linkedlist_tests();
 
 	return 0;
 }
-#endif /* ifndef ESKILIB_TEST_ALL */
+#endif /* ifndef etest_ALL */

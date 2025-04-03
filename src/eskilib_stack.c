@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include "eskilib_error_handler.h"
+
 #include "eskilib_stack.h"
 
 eskilib_Stack* eskilib_stack_malloc(const size_t sizeOfStack, const size_t sizeOfElements)
@@ -18,13 +18,15 @@ eskilib_Stack* eskilib_stack_malloc(const size_t sizeOfStack, const size_t sizeO
 
 	stack = malloc(sizeof(eskilib_Stack));
 
-	if (stack == NULL)
-		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Stack.\n");
+	if (stack == NULL) {
+		return NULL;
+	}
 
 	stack->elements = malloc(sizeOfStack * sizeOfElements);
 
-	if (stack->elements == NULL)
-		eskilib_output_allocation_error_and_exit("Error allocating eskilib_Stack->Elements.\n");
+	if (stack->elements == NULL) {
+		return NULL;
+	}
 
 	stack->top = 0;
 	stack->isEmpty = true;

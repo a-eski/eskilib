@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "../eskilib_list.h"
-#include "../eskilib_test.h"
+#include "../etest.h"
 
 void eskilib_list_malloc_no_sizeOfElement_set_test(void)
 {
@@ -8,7 +8,7 @@ void eskilib_list_malloc_no_sizeOfElement_set_test(void)
 
 	list = eskilib_list_malloc(0, 0);
 
-	eskilib_assert(list == NULL);
+	eassert(list == NULL);
 }
 
 void eskilib_list_malloc_default_size_test(void)
@@ -17,10 +17,10 @@ void eskilib_list_malloc_default_size_test(void)
 
 	list = eskilib_list_malloc(0, sizeof(size_t));
 
-	eskilib_assert(list != NULL);
-	eskilib_assert(list->elements != NULL);
-	eskilib_assert(list->size > 0);/*just check greater than 0 so we don't depend on default size.*/
-	eskilib_assert(list->position == 0);
+	eassert(list != NULL);
+	eassert(list->elements != NULL);
+	eassert(list->size > 0);/*just check greater than 0 so we don't depend on default size.*/
+	eassert(list->position == 0);
 
 	eskilib_list_free(list);
 }
@@ -32,10 +32,10 @@ void eskilib_list_malloc_nondefault_size_test(void)
 
 	list = eskilib_list_malloc(size, sizeof(size_t));
 
-	eskilib_assert(list != NULL);
-	eskilib_assert(list->elements != NULL);
-	eskilib_assert(list->size == size);
-	eskilib_assert(list->position == 0);
+	eassert(list != NULL);
+	eassert(list->elements != NULL);
+	eassert(list->size == size);
+	eassert(list->position == 0);
 
 	eskilib_list_free(list);
 }
@@ -50,8 +50,8 @@ void eskilib_list_add_null_element_test(void)
 
 	addResult = eskilib_list_add(NULL, list);
 
-	eskilib_assert(addResult == FAILURE_NULL_ELEMENT);
-	eskilib_assert(list->position == 0);
+	eassert(addResult == FAILURE_NULL_ELEMENT);
+	eassert(list->position == 0);
 
 	eskilib_list_free(list);
 }
@@ -66,7 +66,7 @@ void eskilib_list_add_null_list_test(void)
 
 	addResult = eskilib_list_add(element, NULL);
 
-	eskilib_assert(addResult == FAILURE_NULL_LIST);
+	eassert(addResult == FAILURE_NULL_LIST);
 
 	free(element);
 }
@@ -85,10 +85,10 @@ void eskilib_list_add_one_element_test(void)
 
 	addResult = eskilib_list_add(element, list);
 
-	eskilib_assert(addResult == SUCCESS);
-	eskilib_assert(*(size_t*)list->elements[0] == *element);
-	eskilib_assert(list->size == size);
-	eskilib_assert(list->position == 1);
+	eassert(addResult == SUCCESS);
+	eassert(*(size_t*)list->elements[0] == *element);
+	eassert(list->size == size);
+	eassert(list->position == 1);
 
 	free(element);
 	eskilib_list_free(list);
@@ -113,17 +113,17 @@ void eskilib_list_add_until_size_expanded_test(void)
 	list = eskilib_list_malloc(size, sizeof(elementOne));
 
 	addResult = eskilib_list_add(elementOne, list);
-	eskilib_assert(addResult == SUCCESS);
+	eassert(addResult == SUCCESS);
 	addResult = eskilib_list_add(elementTwo, list);
-	eskilib_assert(addResult == SUCCESS);
+	eassert(addResult == SUCCESS);
 	addResult = eskilib_list_add(elementThree, list);
-	eskilib_assert(addResult == SUCCESS);
+	eassert(addResult == SUCCESS);
 
-	eskilib_assert(*(size_t*)list->elements[0] == *elementOne);
-	eskilib_assert(*(size_t*)list->elements[1] == *elementTwo);
-	eskilib_assert(*(size_t*)list->elements[2] == *elementThree);
-	eskilib_assert(list->size == size * 2);
-	eskilib_assert(list->position == 3);
+	eassert(*(size_t*)list->elements[0] == *elementOne);
+	eassert(*(size_t*)list->elements[1] == *elementTwo);
+	eassert(*(size_t*)list->elements[2] == *elementThree);
+	eassert(list->size == size * 2);
+	eassert(list->position == 3);
 
 	free(elementOne);
 	free(elementTwo);
@@ -133,37 +133,32 @@ void eskilib_list_add_until_size_expanded_test(void)
 
 void eskilib_list_release_tests(void)
 {
-	eskilib_test_run(eskilib_list_malloc_no_sizeOfElement_set_test);
-
-	eskilib_test_run(eskilib_list_add_null_element_test);
-
-	eskilib_test_run(eskilib_list_add_null_list_test);
+	etest_run(eskilib_list_malloc_no_sizeOfElement_set_test);
+	etest_run(eskilib_list_add_null_element_test);
+	etest_run(eskilib_list_add_null_list_test);
 }
 
 void eskilib_list_tests(void)
 {
-	eskilib_test_start();
+	etest_start();
 
 	#ifdef NDEBUG
 		eskilib_list_release_tests();
 	#endif /* ifdef NDEBUG */
 
-	eskilib_test_run(eskilib_list_malloc_default_size_test);
+	etest_run(eskilib_list_malloc_default_size_test);
+	etest_run(eskilib_list_malloc_nondefault_size_test);
+	etest_run(eskilib_list_add_one_element_test);
+	etest_run(eskilib_list_add_until_size_expanded_test);
 
-	eskilib_test_run(eskilib_list_malloc_nondefault_size_test);
-
-	eskilib_test_run(eskilib_list_add_one_element_test);
-
-	eskilib_test_run(eskilib_list_add_until_size_expanded_test);
-
-	eskilib_test_finish();
+	etest_finish();
 }
 
-#ifndef ESKILIB_TEST_ALL
+#ifndef etest_ALL
 int main(void)
 {
 	eskilib_list_tests();
 
 	return 0;
 }
-#endif /* ifndef ESKILIB_TEST_ALL */
+#endif /* ifndef etest_ALL */

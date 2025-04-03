@@ -3,6 +3,10 @@
 #ifndef eskilib_queue_h
 #define eskilib_queue_h
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -32,5 +36,9 @@ void eskilib_queue_free(eskilib_Queue* queue);
 enum eskilib_Queue_Result eskilib_queue_enqueue(void* element, eskilib_Queue* queue);
 
 void* eskilib_queue_dequeue(eskilib_Queue* queue);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !eskilib_queue_h */

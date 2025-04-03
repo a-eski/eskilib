@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "../estr.h"
-#include "../eskilib_test.h"
+#include "../etest.h"
 
 void estr_compare_no_len_test(void)
 {
@@ -11,7 +11,7 @@ void estr_compare_no_len_test(void)
 
     bool result = estr_compare(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_null_test(void)
@@ -20,7 +20,7 @@ void estr_compare_null_test(void)
 
     bool result = estr_compare(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_empty_string_test(void)
@@ -29,7 +29,7 @@ void estr_compare_empty_string_test(void)
 
     bool result = estr_compare(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_true_test(void)
@@ -38,7 +38,7 @@ void estr_compare_true_test(void)
 
     bool result = estr_compare(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(result);
+    eassert(result);
 }
 
 void estr_compare_false_test(void)
@@ -48,7 +48,7 @@ void estr_compare_false_test(void)
 
     bool result = estr_compare(s1.val, s1.len, s2.val, s2.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_mismatched_lens_false_test(void)
@@ -58,7 +58,7 @@ void estr_compare_mismatched_lens_false_test(void)
 
     bool result = estr_compare(s1.val, s1.len, s2.val, s2.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_partial_comparison_true_test(void)
@@ -68,7 +68,7 @@ void estr_compare_partial_comparison_true_test(void)
 
     bool result = estr_compare(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(result);
+    eassert(result);
 }
 
 void estr_compare_partial_comparison_false_test(void)
@@ -78,7 +78,7 @@ void estr_compare_partial_comparison_false_test(void)
 
     bool result = estr_compare(s1.val, s1.len, s2.val, s2.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_const_no_len_test(void)
@@ -87,7 +87,7 @@ void estr_compare_const_no_len_test(void)
 
     bool result = estr_compare_const(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_const_null_test(void)
@@ -96,7 +96,7 @@ void estr_compare_const_null_test(void)
 
     bool result = estr_compare_const(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_const_empty_string_test(void)
@@ -105,7 +105,7 @@ void estr_compare_const_empty_string_test(void)
 
     bool result = estr_compare_const(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_const_true_test(void)
@@ -114,7 +114,7 @@ void estr_compare_const_true_test(void)
 
     bool result = estr_compare_const(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(result);
+    eassert(result);
 }
 
 void estr_compare_const_false_test(void)
@@ -124,7 +124,7 @@ void estr_compare_const_false_test(void)
 
     bool result = estr_compare_const(s1.val, s1.len, s2.val, s2.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_const_mismatched_lens_false_test(void)
@@ -134,7 +134,7 @@ void estr_compare_const_mismatched_lens_false_test(void)
 
     bool result = estr_compare_const(s1.val, s1.len, s2.val, s2.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_compare_const_partial_comparison_true_test(void)
@@ -144,7 +144,7 @@ void estr_compare_const_partial_comparison_true_test(void)
 
     bool result = estr_compare_const(str.val, str.len, str.val, str.len);
 
-    eskilib_assert(result);
+    eassert(result);
 }
 
 void estr_compare_const_partial_comparison_false_test(void)
@@ -154,38 +154,38 @@ void estr_compare_const_partial_comparison_false_test(void)
 
     bool result = estr_compare_const(s1.val, s1.len, s2.val, s2.len);
 
-    eskilib_assert(!result);
+    eassert(!result);
 }
 
 void estr_tests(void)
 {
-    eskilib_test_start();
+    etest_start();
 
-    eskilib_test_run(estr_compare_no_len_test);
-    eskilib_test_run(estr_compare_null_test);
-    eskilib_test_run(estr_compare_empty_string_test);
-    eskilib_test_run(estr_compare_true_test);
-    eskilib_test_run(estr_compare_false_test);
-    eskilib_test_run(estr_compare_mismatched_lens_false_test);
-    eskilib_test_run(estr_compare_partial_comparison_true_test);
-    eskilib_test_run(estr_compare_partial_comparison_false_test);
-    eskilib_test_run(estr_compare_const_no_len_test);
-    eskilib_test_run(estr_compare_const_null_test);
-    eskilib_test_run(estr_compare_const_empty_string_test);
-    eskilib_test_run(estr_compare_const_true_test);
-    eskilib_test_run(estr_compare_const_false_test);
-    eskilib_test_run(estr_compare_const_mismatched_lens_false_test);
-    eskilib_test_run(estr_compare_const_partial_comparison_true_test);
-    eskilib_test_run(estr_compare_const_partial_comparison_false_test);
+    etest_run(estr_compare_no_len_test);
+    etest_run(estr_compare_null_test);
+    etest_run(estr_compare_empty_string_test);
+    etest_run(estr_compare_true_test);
+    etest_run(estr_compare_false_test);
+    etest_run(estr_compare_mismatched_lens_false_test);
+    etest_run(estr_compare_partial_comparison_true_test);
+    etest_run(estr_compare_partial_comparison_false_test);
+    etest_run(estr_compare_const_no_len_test);
+    etest_run(estr_compare_const_null_test);
+    etest_run(estr_compare_const_empty_string_test);
+    etest_run(estr_compare_const_true_test);
+    etest_run(estr_compare_const_false_test);
+    etest_run(estr_compare_const_mismatched_lens_false_test);
+    etest_run(estr_compare_const_partial_comparison_true_test);
+    etest_run(estr_compare_const_partial_comparison_false_test);
 
-    eskilib_test_finish();
+    etest_finish();
 }
 
-#ifndef ESKILIB_TEST_ALL
+#ifndef etest_ALL
 int main(void)
 {
     estr_tests();
 
     return EXIT_SUCCESS;
 }
-#endif /* ifndef ESKILIB_TEST_ALL */
+#endif /* ifndef etest_ALL */

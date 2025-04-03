@@ -7,11 +7,11 @@ void eskilib_list_tests(void)
 	eskilib_list_struct_tests();
 }
 
-#ifndef ESKILIB_TEST_ALL
+#ifndef etest_ALL
 int main(void)
 {
 	eskilib_list_tests();
 
 	return 0;
 }
-#endif /* ifndef eskilib_TEST_ALL */
+#endif /* ifndef etest_ALL */

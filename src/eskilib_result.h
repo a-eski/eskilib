@@ -3,6 +3,10 @@
 #ifndef ESKILIB_RESULT_H_
 #define ESKILIB_RESULT_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum eskilib_Result {
     E_FAILURE_BAD_STRING = -8,
     E_FAILURE_NOT_FOUND = -7,
@@ -17,5 +21,9 @@ enum eskilib_Result {
     E_NO_OP = 2,
     E_NO_OP_MAX_LIMIT_REACHED = 3
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // !ESKILIB_RESULT_H_
