@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "eskilib_doublylinkedlist.h"
+#include "edllist.h"
 
-eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc(void)
+edllist* edllist_malloc(void)
 {
-	eskilib_DoublyLinkedList* linkedList = malloc(sizeof(eskilib_DoublyLinkedList));
+	edllist* linkedList = malloc(sizeof(edllist));
 
 	if (linkedList == NULL) {
 		return NULL;
@@ -17,10 +17,10 @@ eskilib_DoublyLinkedList* eskilib_doublylinkedlist_malloc(void)
 	return linkedList;
 }
 
-void eskilib_doublylinkedlist_free(eskilib_DoublyLinkedList* linkedList)
+void edllist_free(edllist* linkedList)
 {
-	eskilib_DoublyLinkedList_LinkedNode* currentNode = NULL;
-	eskilib_DoublyLinkedList_LinkedNode* previousNode = NULL;
+	edllist_LinkedNode* currentNode = NULL;
+	edllist_LinkedNode* previousNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL) {
@@ -39,16 +39,16 @@ void eskilib_doublylinkedlist_free(eskilib_DoublyLinkedList* linkedList)
 	free(linkedList);
 }
 
-eskilib_DoublyLinkedList_LinkedNode* eskilib_doublylinkedlist_linkednode_malloc(void* value)
+edllist_LinkedNode* edllist_linkednode_malloc(void* value)
 {
-	eskilib_DoublyLinkedList_LinkedNode* node = NULL;
+	edllist_LinkedNode* node = NULL;
 
 	assert(value != NULL);
 	if (value == NULL) {
 		return NULL;
 	}
 
-	node = malloc(sizeof(eskilib_DoublyLinkedList_LinkedNode));
+	node = malloc(sizeof(edllist_LinkedNode));
 
 	if (node == NULL) {
 		return NULL;
@@ -61,9 +61,9 @@ eskilib_DoublyLinkedList_LinkedNode* eskilib_doublylinkedlist_linkednode_malloc(
 	return node;
 }
 
-enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_first(eskilib_DoublyLinkedList_LinkedNode* nodeToSetFirst, eskilib_DoublyLinkedList* linkedList)
+enum edllist_Result edllist_set_first(edllist_LinkedNode* nodeToSetFirst, edllist* linkedList)
 {
-	eskilib_DoublyLinkedList_LinkedNode* temporaryNode = NULL;
+	edllist_LinkedNode* temporaryNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL)
@@ -103,9 +103,9 @@ enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_first(eskilib_
 	return SUCCESS;
 }
 
-enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_last(eskilib_DoublyLinkedList_LinkedNode* nodeToSetLast, eskilib_DoublyLinkedList* linkedList)
+enum edllist_Result edllist_set_last(edllist_LinkedNode* nodeToSetLast, edllist* linkedList)
 {
-	eskilib_DoublyLinkedList_LinkedNode* temporaryNode = NULL;
+	edllist_LinkedNode* temporaryNode = NULL;
 
 	assert(linkedList != NULL);
 	if (linkedList == NULL)
@@ -145,11 +145,11 @@ enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_last(eskilib_D
 	return SUCCESS;
 }
 
-enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_after(eskilib_DoublyLinkedList_LinkedNode* currentNode,
-					eskilib_DoublyLinkedList_LinkedNode* nodeToSetAfter,
-					eskilib_DoublyLinkedList* linkedList)
+enum edllist_Result edllist_set_after(edllist_LinkedNode* currentNode,
+					edllist_LinkedNode* nodeToSetAfter,
+					edllist* linkedList)
 {
-	eskilib_DoublyLinkedList_LinkedNode* temporaryNode = NULL;
+	edllist_LinkedNode* temporaryNode = NULL;
 
 	assert(currentNode != NULL);
 	if (currentNode == NULL)
@@ -160,7 +160,7 @@ enum eskilib_DoublyLinkedList_Result eskilib_doublylinkedlist_set_after(eskilib_
 		return FAILURE_NULL_NODE;
 
 	if (currentNode == linkedList->last)
-		return eskilib_doublylinkedlist_set_last(nodeToSetAfter, linkedList);
+		return edllist_set_last(nodeToSetAfter, linkedList);
 
 	assert(nodeToSetAfter->next == NULL);
 	if (nodeToSetAfter->next != NULL)

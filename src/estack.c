@@ -5,18 +5,18 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#include "eskilib_stack.h"
+#include "estack.h"
 
-eskilib_Stack* eskilib_stack_malloc(const size_t sizeOfStack, const size_t sizeOfElements)
+estack* estack_malloc(const size_t sizeOfStack, const size_t sizeOfElements)
 {
-	eskilib_Stack* stack = NULL;
+	estack* stack = NULL;
 
 	assert(sizeOfStack != 0);
 	assert(sizeOfElements != 0);
 	if (sizeOfStack == 0 || sizeOfElements == 0)
 		return NULL;
 
-	stack = malloc(sizeof(eskilib_Stack));
+	stack = malloc(sizeof(estack));
 
 	if (stack == NULL) {
 		return NULL;
@@ -35,7 +35,7 @@ eskilib_Stack* eskilib_stack_malloc(const size_t sizeOfStack, const size_t sizeO
 	return stack;
 }
 
-void* eskilib_stack_pop(eskilib_Stack* stack)
+void* estack_pop(estack* stack)
 {
 	void* elementToPop = NULL;
 
@@ -52,7 +52,7 @@ void* eskilib_stack_pop(eskilib_Stack* stack)
 	return elementToPop;
 }
 
-enum eskilib_Stack_Result eskilib_stack_push(void* element, eskilib_Stack* stack)
+enum estack_Result estack_push(void* element, estack* stack)
 {
 	assert(stack != NULL);
 	if (stack == NULL)
@@ -75,7 +75,7 @@ enum eskilib_Stack_Result eskilib_stack_push(void* element, eskilib_Stack* stack
 	return SUCCESS;
 }
 
-void eskilib_stack_free(eskilib_Stack* stack)
+void estack_free(estack* stack)
 {
 	assert(stack != NULL);
 	if (stack == NULL)

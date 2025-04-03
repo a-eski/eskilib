@@ -13,8 +13,9 @@
 enodiscard
 etrie* etrie_malloc() {
 	etrie* trie = calloc(1, sizeof(etrie));
-	if (!trie)
+	if (!trie) {
 		return NULL;
+	}
 
 	trie->is_end_of_a_word = false;
 	return trie;
@@ -64,7 +65,7 @@ void etrie_add_str(estr str, etrie* trie)
 	int index = 0;
 	for (size_t i = 0; i < str.len - 1; i++) { //str.len - 1 because it includes null terminator
 		index = etrie_index_get(str.val[i]);
-		if (trie->nodes[index] == NULL) {
+		if (!trie->nodes[index]) {
 			trie->nodes[index] = calloc(1, sizeof(etrie));
 			trie->nodes[index]->is_end_of_a_word = false;
 			trie->nodes[index]->letter = str.val[i];
@@ -93,7 +94,7 @@ etrie* etrie_search(char* str, size_t len, etrie* trie)
 	int index = 0;
 	for (size_t i = 0; i < len - 1; i++) {
 		index = etrie_index_get(str[i]);
-		if (trie->nodes[index] == NULL) {
+		if (!trie->nodes[index]) {
 			return NULL;
 		}
 
@@ -111,7 +112,7 @@ etrie* etrie_search_str(estr str, etrie* trie)
 	int index = 0;
 	for (size_t i = 0; i < str.len - 1; i++) {
 		index = etrie_index_get(str.val[i]);
-		if (trie->nodes[index] == NULL) {
+		if (!trie->nodes[index]) {
 			return NULL;
 		}
 
@@ -131,7 +132,7 @@ void etrie_match(char* matches[],
 		if (trie->nodes[i] != NULL) {
 			if (matches[*matches_position] == NULL) {
 				matches[*matches_position] = malloc(sizeof(char) * max_match_len);
-				if (matches[*matches_position] == NULL) {
+				if (!matches[*matches_position]) {
 					return;
 				}
 
@@ -150,7 +151,7 @@ void etrie_match(char* matches[],
 
 			etrie_match(matches, str_pos, matches_position, max_match_len, trie->nodes[i]);
 
-			if (matches[*matches_position] != NULL) {
+			if (matches[*matches_position]) {
 				++*matches_position;
 			}
 
@@ -178,7 +179,7 @@ size_t etrie_get(char* search,
 		 etrie* trie)
 {
 	etrie *search_result = etrie_search(search, search_len, trie);
-	if (search_result == NULL) {
+	if (!search_result) {
 		return 0;
 	}
 
