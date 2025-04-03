@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-#include "eskilib_colors.h"
+#include "ecolors.h"
 #include "etest.h"
 
 static bool test_failed;

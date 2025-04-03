@@ -3,26 +3,26 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "eskilib_list.h"
+#include "eda.h"
 
-#define eskilib_LIST_DEFAULT_SIZE 8
+#define EDA_DEFAULT_SIZE 8
 
-eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfElements)
+eda* eda_malloc(const size_t sizeOfList, const size_t sizeOfElements)
 {
-	eskilib_List* list = NULL;
+	eda* list = NULL;
 	size_t listSize = 0;
 
 	assert(sizeOfElements != 0);
 	if (sizeOfElements == 0)
 		return NULL;
 
-	list = (eskilib_List*)malloc(sizeof(eskilib_List));
+	list = (eda*)malloc(sizeof(eda));
 
 	if (!list) {
 		return NULL;
 	}
 
-	listSize = sizeOfList == 0 ? eskilib_LIST_DEFAULT_SIZE : sizeOfList;
+	listSize = sizeOfList == 0 ? EDA_DEFAULT_SIZE : sizeOfList;
 
 	list->elements = (void**)malloc(listSize * sizeOfElements);
 
@@ -36,7 +36,7 @@ eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfEl
 	return list;
 }
 
-void eskilib_list_free(eskilib_List* list)
+void eda_free(eda* list)
 {
 	assert(list != NULL);
 	if (list == NULL)
@@ -49,7 +49,7 @@ void eskilib_list_free(eskilib_List* list)
 	list = NULL;
 }
 
-enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list)
+enum eda_Result eda_add(void* element, eda* list)
 {
 	assert(list != NULL);
 	if (list == NULL)

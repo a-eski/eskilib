@@ -1,7 +1,7 @@
 /* Copyright (C) eskilib by Alex Eski 2024 */
 
-#ifndef eskilib_queue_h
-#define eskilib_queue_h
+#ifndef ESKILIB_EQUEUE_H_
+#define ESKILIB_EQUEUE_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -11,7 +11,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdbool.h>
 
-enum eskilib_Queue_Result
+enum equeue_Result
 {
 	FAILURE_OVERFLOW_PROTECTION = -3,
 	FAILURE_NULL_ELEMENT = -2,
@@ -27,18 +27,18 @@ typedef struct
 	size_t size;
 	bool isEmpty;
 	void** elements;
-} eskilib_Queue;
+} equeue;
 
-eskilib_Queue* eskilib_queue_malloc(const size_t sizeOfQueue, const size_t sizeOfElements);
+equeue* equeue_malloc(const size_t sizeOfQueue, const size_t sizeOfElements);
 
-void eskilib_queue_free(eskilib_Queue* queue);
+void equeue_free(equeue* queue);
 
-enum eskilib_Queue_Result eskilib_queue_enqueue(void* element, eskilib_Queue* queue);
+enum equeue_Result equeue_enqueue(void* element, equeue* queue);
 
-void* eskilib_queue_dequeue(eskilib_Queue* queue);
+void* equeue_dequeue(equeue* queue);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* !eskilib_queue_h */
+#endif /* !ESKILIB_EQUEUE_H_ */

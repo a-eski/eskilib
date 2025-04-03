@@ -1,7 +1,7 @@
 /* Copyright (C) eskilib by Alex Eski 2024 */
 
-#ifndef ESKILIB_LIST_H_
-#define ESKILIB_LIST_H_
+#ifndef ESKILIB_EDA_H_
+#define ESKILIB_EDA_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,7 +10,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 
-enum eskilib_List_Result
+enum eda_Result
 {
 	FAILURE_MALLOC = -4,
 	FAILURE_OVERFLOW_PROTECTION = -3,
@@ -20,21 +20,22 @@ enum eskilib_List_Result
 	SUCCESS = 1
 };
 
-typedef struct
+struct eda
 {
 	size_t size;
 	size_t position;
 	void** elements;
-} eskilib_List;
+};
+typedef struct eda eda;
 
-eskilib_List* eskilib_list_malloc(const size_t sizeOfList, const size_t sizeOfElements);
+eda* eda_malloc(const size_t sizeOfList, const size_t sizeOfElements);
 
-void eskilib_list_free(eskilib_List* list);
+void eda_free(eda* list);
 
-enum eskilib_List_Result eskilib_list_add(void* element, eskilib_List* list);
+enum eda_Result eda_add(void* element, eda* list);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* !ESKILIB_LIST_H_ */
+#endif /* !ESKILIB_EDA_H_ */

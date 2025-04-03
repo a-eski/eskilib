@@ -1,13 +1,13 @@
 /* Copyright (C) eskilib by Alex Eski 2024 */
 
-#ifndef ESKILIB_RESULT_H_
-#define ESKILIB_RESULT_H_
+#ifndef ESKILIB_ERESULT_H_
+#define ESKILIB_ERESULT_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-enum eskilib_Result {
+enum eresult {
     E_FAILURE_BAD_STRING = -8,
     E_FAILURE_NOT_FOUND = -7,
     E_FAILURE_ZERO_LENGTH = -6,
@@ -26,4 +26,4 @@ enum eskilib_Result {
 }
 #endif
 
-#endif // !ESKILIB_RESULT_H_
+#endif // !ESKILIB_ERESULT_H_
