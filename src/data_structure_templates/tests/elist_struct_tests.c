@@ -40,22 +40,6 @@ void elist_malloc_nondefault_size_struct_test(void)
 	elist_free(list);
 }
 
-// void elist_add_null_element_struct_test(void)
-// {
-// 	const size_t size = 16;
-// 	elist* list = NULL;
-// 	enum elist_Result addResult = FAILURE;
-//
-// 	list = elist_malloc(size);
-//
-// 	addResult = elist_add(NULL, list);
-//
-// 	eassert(addResult == FAILURE_NULL_ELEMENT);
-// 	eassert(list->position == 0);
-//
-// 	elist_free(list);
-// }
-
 void elist_add_null_list_struct_test(void)
 {
 	struct eskilib_Data data = { .count = 1, .name = "A" };
@@ -151,7 +135,6 @@ void elist_add_10_struct_test(void)
 
 void elist_release_struct_tests(void)
 {
-	// etest_run(elist_add_null_element_struct_test);
 	etest_run(elist_add_null_list_struct_test);
 }
 
