@@ -1,3 +1,8 @@
+/* Copyright (C) eskilib by Alex Eski 2024 */
+/* elist.h: a generic list implementation that doesn't rely on macros */
+/* You must define ELIST_TYPE before including this header */
+/* If you want null checks for your ELIST_TYPE, you can define ELIST_NULL_CHECKS */
+
 #ifndef ESKILIB_ELIST_H_
 #define ESKILIB_ELIST_H_
 
@@ -6,7 +11,8 @@
 #include <stdint.h>
 #include <assert.h>
 
-#define elist_DEFAULT_SIZE 8
+
+#define ELIST_DEFAULT_SIZE 8
 
 enum elist_Result {
 	FAILURE_OUT_OF_MEMORY = -4,
@@ -28,22 +34,22 @@ struct elist {
 	size_t position;
 	ELIST_TYPE* elements;
 };
+typedef struct elist elist;
 
 static inline
-struct elist* elist_malloc(const size_t sizeOfList) {
-	struct elist* list = NULL;
+elist* elist_malloc(const size_t sizeOfList) {
+	elist* list = NULL;
 	size_t listSize = 0;
 
-	list = malloc(sizeof(struct elist));
+	list = malloc(sizeof(elist));
 
 	if (!list) {
 		return NULL;
 	}
 
-	listSize = sizeOfList == 0 ? elist_DEFAULT_SIZE : sizeOfList;
+	listSize = sizeOfList == 0 ? ELIST_DEFAULT_SIZE : sizeOfList;
 
 	list->elements = malloc(listSize * sizeof(ELIST_TYPE));
-
 	if (!list->elements) {
 		return NULL;
 	}
@@ -55,33 +61,40 @@ struct elist* elist_malloc(const size_t sizeOfList) {
 }
 
 static inline
-void elist_free(struct elist* list) {
-	assert(list != NULL);
-	if (list == NULL)
+void elist_free(elist* list) {
+	assert(list);
+	if (!list) {
 		return;
+	}
 
-	free(list->elements);
-	list->elements = NULL;
+	if (list->elements) {
+		free(list->elements);
+		list->elements = NULL;
+	}
 
 	free(list);
 	list = NULL;
 }
 
 static inline
-enum elist_Result elist_add(ELIST_TYPE element, struct elist* list) {
-	assert(list != NULL);
-	if (list == NULL)
+enum elist_Result elist_add(ELIST_TYPE element, elist* list) {
+	assert(list);
+	if (!list) {
 		return FAILURE_NULL_LIST;
+	}
 
-	// assert(element != NULL);
-	// if (element == NULL)
-	// 	return FAILURE_NULL_ELEMENT;
+#	ifdef ELIST_NULL_CHECKS
+	assert(element);
+	if (!element) {
+		return FAILURE_NULL_ELEMENT;
+	}
+#	endif /* ELIST_NULL_CHECKS */
 
-	if (list->position > list->size || list->position == SIZE_MAX - 1)
+	if (list->position > list->size || list->position == SIZE_MAX - 1) {
 		return FAILURE_OVERFLOW_PROTECTION;
+	}
 
-	if (list->position == list->size)
-	{
+	if (list->position == list->size) {
 		list->size *= 2;
 		list->elements = realloc(list->elements, list->size * sizeof(element));
 
@@ -96,3 +109,4 @@ enum elist_Result elist_add(ELIST_TYPE element, struct elist* list) {
 }
 
 #undef ELIST_TYPE
+#undef ELIST_NULL_CHECKS

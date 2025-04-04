@@ -1,7 +1,7 @@
 /* Copyright (C) eskilib by Alex Eski 2025 */
 
-#ifndef ESKILIB_DEFS_H_
-#define ESKILIB_DEFS_H_
+#ifndef ESKILIB_EDEFS_H_
+#define ESKILIB_EDEFS_H_
 
 // enodiscard: an attribute qualifier wrapper for [[nodiscard]].
 // If not using c2x/c23, does nothing, otherwise use [[nodiscard]] attribute.
@@ -21,4 +21,4 @@
 #define enodiscard
 #endif
 
-#endif // !ESKILIB_DEFS_H_
+#endif // !ESKILIB_EDEFS_H_

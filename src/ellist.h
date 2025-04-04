@@ -1,7 +1,7 @@
 /* Copyright (C) eskilib by Alex Eski 2024 */
 
-#ifndef ellist_H_
-#define ellist_H_
+#ifndef ESKILIB_ELLIST_H_
+#define ESKILIB_ELLIST_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,4 +45,4 @@ enum ellist_Result ellist_set_after(ellist_Node* currentNode, ellist_Node* nodeT
 }
 #endif // __cplusplus
 
-#endif /* !ellist_H_ */
+#endif /* !ESKILIB_ELLIST_H_ */

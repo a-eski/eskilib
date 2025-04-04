@@ -6,7 +6,7 @@
 
 void elist_malloc_default_size_value_test(void)
 {
-	struct elist* list = NULL;
+	elist* list = NULL;
 
 	list = elist_malloc(0);
 
@@ -21,7 +21,7 @@ void elist_malloc_default_size_value_test(void)
 void elist_malloc_nondefault_size_value_test(void)
 {
 	const size_t size = 16;
-	struct elist* list = NULL;
+	elist* list = NULL;
 
 	list = elist_malloc(size);
 
@@ -32,22 +32,6 @@ void elist_malloc_nondefault_size_value_test(void)
 
 	elist_free(list);
 }
-
-// void elist_add_null_element_value_test(void)
-// {
-// 	const size_t size = 16;
-// 	elist* list = NULL;
-// 	enum elist_Result addResult = FAILURE;
-//
-// 	list = elist_malloc(size);
-//
-// 	addResult = elist_add(NULL, list);
-//
-// 	eassert(addResult == FAILURE_NULL_ELEMENT);
-// 	eassert(list->position == 0);
-//
-// 	elist_free(list);
-// }
 
 void elist_add_null_list_value_test(void)
 {
@@ -61,7 +45,7 @@ void elist_add_null_list_value_test(void)
 void elist_add_one_element_value_test(void)
 {
 	const size_t size = 16;
-	struct elist* list = NULL;
+	elist* list = NULL;
 	size_t element = 1001;
 	enum elist_Result addResult = FAILURE;
 
@@ -80,7 +64,7 @@ void elist_add_one_element_value_test(void)
 void elist_add_until_size_expanded_value_test(void)
 {
 	const size_t size = 2;
-	struct elist* list = NULL;
+	elist* list = NULL;
 	size_t elementOne = 1001;
 	size_t elementTwo = 2002;
 	size_t elementThree = 3003;
@@ -106,7 +90,7 @@ void elist_add_until_size_expanded_value_test(void)
 
 void elist_add_10_value_test(void)
 {
-	struct elist* list = NULL;
+	elist* list = NULL;
 	size_t element = 1001;
 	enum elist_Result addResult = FAILURE;
 
@@ -127,7 +111,6 @@ void elist_add_10_value_test(void)
 
 void elist_release_value_tests(void)
 {
-	// etest_run("elist_add_null_element_value_test", elist_add_null_element_value_test);
 	etest_run(elist_add_null_list_value_test);
 }
 

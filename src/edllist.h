@@ -1,5 +1,5 @@
-#ifndef edllist_H_
-#define edllist_H_
+#ifndef ESKILIB_EDLLIST_H_
+#define ESKILIB_EDLLIST_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,4 +50,4 @@ enum edllist_Result edllist_set_before(edllist_LinkedNode* currentNode, edllist_
 }
 #endif // __cplusplus
 
-#endif /* !edllist_H_ */
+#endif /* !ESKILIB_EDLLIST_H_ */
